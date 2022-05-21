@@ -1,0 +1,49 @@
+<!-- nav.html -->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+                    data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img src="/img/student-48.png" alt="logo" />
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+
+                <li>
+                    <a href="/horarios">
+                        Consultar horarios
+                    </a>
+                </li>
+
+                <li id="marks-menu" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Gestión de jornada <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/jornada/verJornada">Consultar jornada</a></li>
+                        <li><a href="/jornada/solicitarVacaciones">Solicitar vacaciones</a></li>
+                        <li><a href="/jornada/portalSolicitudes">Portal de solicitudes</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/employee/perfil">
+                        Ver perfil
+                    </a>
+                </li>
+                <li>
+                    <a href="/login" th:text="#{login.message}">
+                        <span class="glyphicon glyphicon-log-in"></span>
+                        Identifícate
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
