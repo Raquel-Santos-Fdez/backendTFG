@@ -1,0 +1,8 @@
+﻿route_id;route_short_name;route_long_name;route_type;route_color;route_text_color
+20T0001C1;C1  ;Gijon (Sanz Crespo)-Puente L.Fierros   ;2;FF0000;0
+20T0002C1;C1  ;Puente L.Fierros - Gijon (Sanz Crespo);2;FF0000;0
+20T0003C2;C2  ;Oviedo - El Entrego;2;00FF00;0
+20T0004C2;C2  ;El Entrego  -Oviedo;2;00FF00;0
+20T0005C3;C3  ;Llamaquique  -San Juan de Nieva;2;3366FF;0
+20T0006C3;C3  ;San Juan de Nieva -Llamaquique;2;3366FF;0
+20T0007C2;C2  ;Gijon (Sanz Crespo)   -  ;2;00FF00;0

@@ -2,7 +2,11 @@ package com.uniovi.entities;
 
 //import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -22,11 +26,15 @@ public class Employee {
     @Transient //propiedad que no se almacena e la tabla.
     private String passwordConfirm;
 
+    @OneToMany(mappedBy="employee")
+    private Set<Jornada> jornadas;
+
     public Employee(String username, String name, String surname){
         super();
         this.username=username;
         this.name=name;
         this.surname=surname;
+//        this.jornadas=jornadas;
 
     }
 

@@ -38,7 +38,7 @@ public class EmployeesService {
         employeeRepository.deleteById(id);
     }
 
-    public Employee getEmployeeByUsername(String username){
+    public List<Employee> getEmployeeByUsername(String username){
         return employeeRepository.findByUsername(username);
     }
 }

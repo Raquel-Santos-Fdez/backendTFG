@@ -1,14 +1,16 @@
 package com.uniovi.controllers;
 
-import com.uniovi.entities.Estacion;
+import com.uniovi.entities.Jornada;
+import com.uniovi.entities.Route;
+import com.uniovi.entities.Stop;
+import com.uniovi.entities.Stop_time;
 import com.uniovi.services.EstacionesService;
 import com.uniovi.services.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,6 +23,7 @@ public class HomeController {
     private EstacionesService estacionesService;
 
     @RequestMapping("/")
+    @CrossOrigin(origins="*", maxAge = 3600)
     public String inicio(){
         return "inicio";
     }
@@ -31,9 +34,30 @@ public class HomeController {
         return "horarios";
     }
 
-    @RequestMapping(value = "/estaciones")
-    public List<Estacion> getEstaciones() {
-        return estacionesService.getEstaciones();
+    @RequestMapping(value = "/stops")
+    public List<Stop> getStops() {
+        return estacionesService.getStops();
     }
+
+    @RequestMapping(value = "/stop_times")
+    public List<Stop_time> getStopTimes() {
+        return estacionesService.getStopTimes();
+    }
+
+    @RequestMapping(value = "/routes")
+    public List<Route> getRoutes() {
+        return estacionesService.getRoutes();
+    }
+
+    @RequestMapping(value = "/routes/{id}")
+    public Route getRouteById(@PathVariable String id) {
+        return estacionesService.getRouteById(id);
+    }
+
+    @RequestMapping(value = "/stop_times/{id}/{nombreRuta}")
+    public List<Stop_time> findStopTimeByRouteId(@PathVariable String id,@PathVariable String nombreRuta) {
+        return estacionesService.findStopTimeByRouteId(id, nombreRuta);
+    }
+
 
 }
