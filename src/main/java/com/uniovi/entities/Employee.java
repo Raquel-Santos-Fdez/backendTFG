@@ -3,8 +3,10 @@ package com.uniovi.entities;
 //import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +30,11 @@ public class Employee {
 
     @OneToMany(mappedBy="employee")
     private Set<Jornada> jornadas;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<Solicitud> solicitudes = new HashSet<>();
+
 
     public Employee(String username, String name, String surname){
         super();

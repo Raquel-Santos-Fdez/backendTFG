@@ -1,8 +1,12 @@
 package com.uniovi.entities;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity(name="stop")
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 public class Stop {
 
     @Id
@@ -10,6 +14,11 @@ public class Stop {
     public String stop_name;
     public double stop_lat;
     public double stop_lon;
+
+    @OneToMany(mappedBy = "stop")
+    @JsonManagedReference
+    private Set<Tarea_stops> tareas=new HashSet<>();
+
 
     public Stop(){
 
