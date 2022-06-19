@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,6 +52,12 @@ public class JornadaController {
         return solicitudes;
     }
 
+    @RequestMapping(value="/jornada/checkCambioJornada/{id}/{fecha}/{fechaDescanso}")
+    public List<String> chackCambioJornada(@PathVariable Long id,@PathVariable String fecha, @PathVariable String fechaDescanso){
+        List<String> jornadas=jornadaService.chackCambioJornada(id,  fecha, fechaDescanso);
+        return jornadas;
+    }
+
     //Put
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -61,6 +70,18 @@ public class JornadaController {
     @PutMapping(value="jornada/rechazar_solicitud")
     public void rechazarSolicitud(@RequestBody Long id){
         jornadaService.rechazarSolicitud(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping(value="jornada/reasignar")
+    public void reasignar(@RequestBody SolicitudIntercambio solicitud){
+        jornadaService.reasignar(solicitud);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping(value="jornada/realizarCambio")
+    public void realizarCambio(@RequestBody Long idSolicitud, @RequestBody Long idNuevoEmpleado){
+        jornadaService.realizarCambio(idSolicitud, idNuevoEmpleado);
     }
 
     //Post
@@ -77,7 +98,7 @@ public class JornadaController {
 
     @PostMapping(value="/jornada/solicitar_intercambio")
     public void addSolicitudIntercambio(@RequestBody SolicitudIntercambio solicitud){
-        System.out.println("ENTRA EN LA PETICION");
         jornadaService.addSolicitudIntercambio(solicitud);
     }
+
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface SolicitudIntercambioRepository extends CrudRepository<SolicitudIntercambio, Long> {
 
-    @Query("select s from SolicitudIntercambio s  where s.estado='PENDIENTE'")
+    @Query("select s from SolicitudIntercambio s  where s.estado='PENDIENTE' or s.estado='REASIGNADA'")
     List<SolicitudIntercambio> findAllPending();
 
 

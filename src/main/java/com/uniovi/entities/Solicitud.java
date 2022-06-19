@@ -3,14 +3,13 @@ package com.uniovi.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Solicitud {
 
     public enum EstadoSolicitud{
-        PENDIENTE, ACEPTADA, RECHAZADA
+        PENDIENTE, ACEPTADA, RECHAZADA, REASIGNADA
     }
 
     @Id
