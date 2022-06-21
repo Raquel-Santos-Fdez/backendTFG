@@ -41,4 +41,8 @@ public class EmployeesService {
     public List<Employee> getEmployeeByUsername(String username){
         return employeeRepository.findByUsername(username);
     }
+
+    public List<Employee> findByUsernamePassword(String username, String password) {
+        return employeeRepository.findByUsernamePassword(username,password);
+    }
 }

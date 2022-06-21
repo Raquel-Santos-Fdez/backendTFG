@@ -87,8 +87,8 @@ public class JornadaController {
     //Post
 
     @PostMapping("/jornada/consultar")
-    public List<Tarea> getJornadaByDateAndEmpleoyee(@RequestBody Date date){
-        return jornadaService.getJornadaByDateAndEmpleoyee(Long.parseLong("1"), date);
+    public List<Tarea> getJornadaByDateAndEmpleoyee(@RequestBody Date date, @RequestBody Long idEmployee){
+        return jornadaService.getJornadaByDateAndEmpleoyee(idEmployee, date);
     }
 
     @PostMapping(value="/jornada/solicitar_vacaciones")

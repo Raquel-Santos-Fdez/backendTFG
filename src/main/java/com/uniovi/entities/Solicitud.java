@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Solicitud {
+public class Solicitud {
 
     public enum EstadoSolicitud{
         PENDIENTE, ACEPTADA, RECHAZADA, REASIGNADA
