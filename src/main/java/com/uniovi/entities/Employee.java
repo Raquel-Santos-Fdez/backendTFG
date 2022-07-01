@@ -25,8 +25,8 @@ public class Employee {
     private String role;
 
     private String password;
-    @Transient //propiedad que no se almacena e la tabla.
-    private String passwordConfirm;
+//    @Transient //propiedad que no se almacena e la tabla.
+//    private String passwordConfirm;
 
     @OneToMany(mappedBy="employee")
     private Set<Jornada> jornadas;
@@ -89,9 +89,9 @@ public class Employee {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
+//    public String getPasswordConfirm() {
+//        return passwordConfirm;
+//    }
 
     public String getRole() {
         return role;
@@ -101,7 +101,7 @@ public class Employee {
         this.role = role;
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
+//    public void setPasswordConfirm(String passwordConfirm) {
+//        this.passwordConfirm = passwordConfirm;
+//    }
 }

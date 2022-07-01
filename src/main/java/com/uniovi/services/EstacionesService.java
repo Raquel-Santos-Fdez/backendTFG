@@ -87,4 +87,16 @@ public class EstacionesService {
         stopTimeRepository.findStopTimeByRouteId(id, nombreParcial).forEach(stopTimes::add);
         return stopTimes;
     }
+
+    public List<Route> getRoutesByStop(String id) {
+        return routeRepository.getRoutesByStop(id);
+    }
+
+    public List<Stop_time> findStopTimeByRouteStop(String routeId, String stopId) {
+        return stopTimeRepository.findStopTimeByRouteStop(routeId, stopId);
+    }
+
+    public List<Route_stop> findRoutesByStops(String origenId, String destinoId) {
+        return routeRepository.findRoutesByStops(origenId, destinoId);
+    }
 }

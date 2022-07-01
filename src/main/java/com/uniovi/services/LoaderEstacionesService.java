@@ -74,6 +74,14 @@ public class LoaderEstacionesService {
         return routes;
     }
 
+    private void loadStopToRoute(){
+
+        List<Stop> paradas=estacionesService.getStops();
+        List<Route> lineas=estacionesService.getRoutes();
+
+//        lineas.get
+    }
+
     @PostConstruct
     public void init() {
 

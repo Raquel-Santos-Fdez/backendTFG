@@ -1,14 +1,24 @@
 package com.uniovi.entities;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity(name="route")
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
 public class Route {
 
     @Id
     private String route_id;
     private String route_short_name;
     private String route_long_name;
+
+    @OneToMany(mappedBy = "route")
+//    @JsonManagedReference
+    @JsonBackReference
+    private Set<Route_stop> stops=new HashSet<>();
 
     public Route(){
 
@@ -44,4 +54,14 @@ public class Route {
     public void setRoute_long_name(String route_long_name) {
         this.route_long_name = route_long_name;
     }
+
+    public Set<Route_stop> getStops() {
+        return stops;
+    }
+
+    public void setStops(Set<Route_stop> stops) {
+        this.stops = stops;
+    }
+
+
 }

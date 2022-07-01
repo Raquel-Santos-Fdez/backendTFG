@@ -1,5 +1,6 @@
 package com.uniovi.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -18,6 +19,11 @@ public class Stop {
     @OneToMany(mappedBy = "stop")
     @JsonManagedReference
     private Set<Tarea_stops> tareas=new HashSet<>();
+
+    @OneToMany(mappedBy = "stop")
+    @JsonBackReference
+//    @JsonManagedReference
+    private Set<Route_stop> routes=new HashSet<>();
 
 
     public Stop(){
@@ -64,4 +70,21 @@ public class Stop {
     public void setStop_name(String stop_name) {
         this.stop_name = stop_name;
     }
+
+    public Set<Tarea_stops> getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(Set<Tarea_stops> tareas) {
+        this.tareas = tareas;
+    }
+
+    public Set<Route_stop> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(Set<Route_stop> routes) {
+        this.routes = routes;
+    }
+
 }

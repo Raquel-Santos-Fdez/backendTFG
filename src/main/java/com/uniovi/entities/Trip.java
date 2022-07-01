@@ -2,7 +2,7 @@ package com.uniovi.entities;
 
 import javax.persistence.*;
 
-@Entity(name = "trip")
+@Entity
 public class Trip {
 
     @Id

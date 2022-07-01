@@ -26,7 +26,7 @@ public class Tarea_stops {
     @JsonBackReference
     private Tarea tarea;
 
-    Tarea_stops(){
+    public Tarea_stops(){
 
     }
 
