@@ -1,13 +1,10 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,8 +19,8 @@ public class Jornada {
     private Date date;
 
     @OneToMany(mappedBy = "jornada", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<Tarea> tareas = new HashSet<Tarea>();
+    @JsonManagedReference (value = "jornada-tarea")
+    private Set<Tarea> tareas = new HashSet<>();
 
 
     public Jornada(){

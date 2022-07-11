@@ -18,12 +18,12 @@ public class Tarea_stops {
     @Enumerated(EnumType.STRING)
     private Situacion situacion=Situacion.INICIO;
 
-    @ManyToOne
-    @JsonBackReference
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JsonBackReference (value="stopT-stop")
     private Stop stop;
 
-    @ManyToOne
-    @JsonBackReference
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JsonBackReference (value="stopT-tarea")
     private Tarea tarea;
 
     public Tarea_stops(){

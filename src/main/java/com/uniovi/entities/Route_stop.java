@@ -16,11 +16,9 @@ public class Route_stop {
     private Long id;
 
     @ManyToOne
-    @JsonManagedReference
     private Stop stop;
 
     @ManyToOne
-    @JsonManagedReference
     private Route route;
 
     private int orderParada;

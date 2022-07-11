@@ -16,13 +16,12 @@ public class Stop {
     public double stop_lat;
     public double stop_lon;
 
-    @OneToMany(mappedBy = "stop")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "stop", cascade = CascadeType.ALL)
+    @JsonManagedReference  (value="stopT-stop")
     private Set<Tarea_stops> tareas=new HashSet<>();
 
     @OneToMany(mappedBy = "stop")
     @JsonBackReference
-//    @JsonManagedReference
     private Set<Route_stop> routes=new HashSet<>();
 
 

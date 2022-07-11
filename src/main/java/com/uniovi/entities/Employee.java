@@ -21,6 +21,8 @@ public class Employee {
     private String username;
     private String name;
     private String surname;
+    private String email;
+    private String dni;
 
     private String role;
 
@@ -89,10 +91,6 @@ public class Employee {
         this.password = password;
     }
 
-//    public String getPasswordConfirm() {
-//        return passwordConfirm;
-//    }
-
     public String getRole() {
         return role;
     }
@@ -101,7 +99,20 @@ public class Employee {
         this.role = role;
     }
 
-//    public void setPasswordConfirm(String passwordConfirm) {
-//        this.passwordConfirm = passwordConfirm;
-//    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 }

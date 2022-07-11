@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeesService {
@@ -30,7 +31,6 @@ public class EmployeesService {
     }
 
     public void addEmployee(Employee employee){
-        //employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employeeRepository.save(employee);
     }
 
@@ -44,5 +44,9 @@ public class EmployeesService {
 
     public List<Employee> findByUsernamePassword(String username, String password) {
         return employeeRepository.findByUsernamePassword(username,password);
+    }
+
+    public Optional<Employee> getEmployeeById(Long id) {
+        return employeeRepository.findById(id);
     }
 }

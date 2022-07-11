@@ -27,4 +27,13 @@ public interface JornadaRepository extends CrudRepository<Jornada, Long> {
     @Modifying
     @Query("update Jornada j set j.date=?1 where j.date=?2 and j.employee.id=?3")
     void cambiarJornadaEmpleadoNuevo(Date fechaAnterior, Date fechaNueva, Long idNuevoEmpleado);
+
+    @Query("select j from Jornada j join j.employee e where e.id=?1")
+    List<Jornada> findJornadaByEmpleado(Long id);
+
+    @Query("select j from Jornada j where j.date=?1")
+    List<Jornada> findJornadaByDate(java.sql.Date date);
+
+    @Query("select j from Jornada j join j.employee e where j.date=?1 and e.id=?2")
+    List<Jornada> findJornadaByDateEmployee(java.sql.Date date, Long id);
 }

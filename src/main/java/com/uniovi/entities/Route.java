@@ -16,7 +16,6 @@ public class Route {
     private String route_long_name;
 
     @OneToMany(mappedBy = "route")
-//    @JsonManagedReference
     @JsonBackReference
     private Set<Route_stop> stops=new HashSet<>();
 

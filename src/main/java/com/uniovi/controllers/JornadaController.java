@@ -1,16 +1,11 @@
 package com.uniovi.controllers;
 
 import com.uniovi.entities.*;
-import com.uniovi.repositories.JornadaRepository;
 import com.uniovi.services.JornadaService;
+import com.uniovi.services.TareaStopsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -20,42 +15,54 @@ public class JornadaController {
     @Autowired
     private JornadaService jornadaService;
 
+    @Autowired
+    private TareaStopsService tareaStopsService;
+
    //Get
 
     @RequestMapping(value="/jornada/consultar/{date}/{id}")
     public List<Tarea> getTareasByDateAndEmpleoyee(@PathVariable Date date, @PathVariable String id){
-        List<Tarea> tareas=jornadaService.getJornadaByDateAndEmpleoyee(Long.parseLong(id), date);
-        return tareas;
+        return jornadaService.getJornadaByDateAndEmpleoyee(Long.parseLong(id), date);
     }
 
     @RequestMapping(value="/jornada/ver_solicitudes_vacaciones")
     public List<Solicitud> getAllSolicitudesPendientes(){
-        List<Solicitud> solicitudes=jornadaService.getAllSolicitudesPendientes();
-        return solicitudes;
+        return jornadaService.getAllSolicitudesPendientes();
     }
 
     @RequestMapping(value="/tarea_stop/{id}")
     public Stop findStopByTarea(@PathVariable Long id){
-        Stop stops=jornadaService.findStopByTarea(id);
-        return stops;
+        return jornadaService.findStopByTarea(id);
     }
 
     @RequestMapping(value="/jornada/find_others_solicitudes/{id}")
     public List<SolicitudIntercambio> findOthersSolicitudesPending(@PathVariable Long id){
-        List<SolicitudIntercambio> solicitudes=jornadaService.findOthersSolicitudesPending(id);
-        return solicitudes;
+        return jornadaService.findOthersSolicitudesPending(id);
     }
 
     @RequestMapping(value="/jornada/find_own_solicitudes/{id}")
     public List<SolicitudIntercambio> findOwnSolicitudes(@PathVariable Long id){
-        List<SolicitudIntercambio> solicitudes=jornadaService.findOwnSolicitudes(id);
-        return solicitudes;
+        return jornadaService.findOwnSolicitudes(id);
     }
 
     @RequestMapping(value="/jornada/checkCambioJornada/{id}/{fecha}/{fechaDescanso}")
     public List<String> chackCambioJornada(@PathVariable Long id,@PathVariable String fecha, @PathVariable String fechaDescanso){
-        List<String> jornadas=jornadaService.chackCambioJornada(id,  fecha, fechaDescanso);
-        return jornadas;
+        return jornadaService.chackCambioJornada(id,  fecha, fechaDescanso);
+    }
+
+    @RequestMapping(value="/jornada/findByEmpleado/{id}")
+    public List<Jornada> findJornadaByEmpleado(@PathVariable Long id){
+        return jornadaService.findJornadaByEmpleado(id);
+    }
+
+    @RequestMapping(value="/jornada/findByDate/{date}")
+    public List<Jornada> findJornadaByDate(@PathVariable Date date){
+        return jornadaService.findJornadaByDate(date);
+    }
+
+    @RequestMapping(value="/jornada/findJornadaByDateEmpleado/{date}/{id}")
+    public List<Jornada> findJornadaByDateEmployee(@PathVariable Date date, @PathVariable Long id){
+        return jornadaService.findJornadaByDateEmployee(date, id);
     }
 
     //Put
@@ -99,6 +106,22 @@ public class JornadaController {
     @PostMapping(value="/jornada/solicitar_intercambio")
     public void addSolicitudIntercambio(@RequestBody SolicitudIntercambio solicitud){
         jornadaService.addSolicitudIntercambio(solicitud);
+    }
+
+    @PostMapping(value="/tarea/addTarea")
+    public void addTarea(@RequestBody Tarea tarea){
+        jornadaService.addTarea(tarea);
+    }
+
+    @PostMapping(value="/jornada/addJornada")
+    public void addJornada(@RequestBody Jornada jornada){
+        jornadaService.addJornada(jornada);
+    }
+
+    @PostMapping(value="/tarea_stop/addTareaStop")
+    public void addTareaStop(@RequestBody Tarea tarea, @RequestBody Stop origen, @RequestBody String inicio){
+        System.out.println("esto es una prueba");
+        tareaStopsService.addTareaStop(tarea, origen, inicio);
     }
 
 }

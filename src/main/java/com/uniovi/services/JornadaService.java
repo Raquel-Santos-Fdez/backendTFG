@@ -110,4 +110,22 @@ public class JornadaService {
         jornadaRepository.cambiarJornadaEmpleadoNuevo(new java.sql.Date(Long.parseLong(sIntercambio.getFecha())),
                 new java.sql.Date(Long.parseLong(sIntercambio.getFechaDescanso())), idNuevoEmpleado);
     }
+
+    public List<Jornada> findJornadaByEmpleado(Long id) {
+        return jornadaRepository.findJornadaByEmpleado(id);
+    }
+
+    public List<Jornada> findJornadaByDate(Date date) {
+        return jornadaRepository.findJornadaByDate(new java.sql.Date(date.getTime()));
+    }
+
+    public List<Jornada> findJornadaByDateEmployee(Date date, Long id) {
+        return jornadaRepository.findJornadaByDateEmployee(new java.sql.Date(date.getTime()), id);
+
+    }
+
+    public void addJornada(Jornada jornada) {
+        jornadaRepository.save(jornada);
+    }
+
 }

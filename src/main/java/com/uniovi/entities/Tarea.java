@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,22 +18,23 @@ public class Tarea {
     private String descripcion;
 
     private LocalTime horaSalida;
+    private LocalTime horaFin;
 
     private int anden;
 
     @OneToOne
-    @JoinColumn(name="tren_id")
+    @JoinColumn(name = "tren_id")
     private Tren tren;
 
-    @OneToMany(mappedBy = "tarea")
-    @JsonManagedReference
-    private Set<Tarea_stops> stops=new HashSet<>();
+    @OneToMany(mappedBy = "tarea", cascade = CascadeType.MERGE)
+    @JsonManagedReference (value="stopT-tarea")
+    private Set<Tarea_stops> stops = new HashSet<>();
 
-    @ManyToOne
-    @JsonBackReference
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JsonBackReference(value = "jornada-tarea")
     private Jornada jornada;
 
-    public Tarea(){
+    public Tarea() {
 
     }
 
@@ -96,5 +96,13 @@ public class Tarea {
 
     public void setJornada(Jornada jornada) {
         this.jornada = jornada;
+    }
+
+    public LocalTime getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
     }
 }

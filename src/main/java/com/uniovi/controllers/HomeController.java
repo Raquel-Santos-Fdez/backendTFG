@@ -33,11 +33,6 @@ public class HomeController {
         return estacionesService.getStopTimes();
     }
 
-    @RequestMapping(value = "/routes")
-    public List<Route> getRoutes() {
-        return estacionesService.getRoutes();
-    }
-
     @RequestMapping(value = "/routes/{id}")
     public Route getRouteById(@PathVariable String id) {
         return estacionesService.getRouteById(id);
@@ -58,9 +53,4 @@ public class HomeController {
         return estacionesService.findStopTimeByRouteStop(routeId, stopId);
     }
 
-    @RequestMapping(value = "/route/{origenId}/{destinoId}")
-    public List<Route_stop> findRoutesByStops(@PathVariable String origenId, @PathVariable String destinoId) {
-        List<Route_stop> rutas=estacionesService.findRoutesByStops(origenId, destinoId);
-        return rutas;
-    }
 }
