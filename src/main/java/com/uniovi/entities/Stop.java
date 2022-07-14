@@ -16,7 +16,7 @@ public class Stop {
     public double stop_lat;
     public double stop_lon;
 
-    @OneToMany(mappedBy = "stop", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "stop", cascade = CascadeType.MERGE)
     @JsonManagedReference  (value="stopT-stop")
     private Set<Tarea_stops> tareas=new HashSet<>();
 

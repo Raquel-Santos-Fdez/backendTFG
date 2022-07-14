@@ -20,7 +20,7 @@ public class EstacionesService {
     public StopTimeRepository stopTimeRepository;
 
     @Autowired
-    public RouteRepository routeRepository;
+    public RutaRepository rutaRepository;
 
     @Autowired
     public TripRepository tripRepository;
@@ -54,17 +54,13 @@ public class EstacionesService {
     }
 
     public void addRoute(Route route) {
-        routeRepository.save(route);
+        rutaRepository.save(route);
     }
 
-    public List<Route> getRoutes() {
-        List<Route> routes=new ArrayList<>();
-        routeRepository.findAll().forEach(routes::add);
-        return routes;
-    }
+
 
     public Route getRouteById(String id) {
-        Optional<Route> route= routeRepository.findById(id);
+        Optional<Route> route= rutaRepository.findById(id);
         if(route.isPresent())
             return route.get();
         return null;
@@ -89,14 +85,12 @@ public class EstacionesService {
     }
 
     public List<Route> getRoutesByStop(String id) {
-        return routeRepository.getRoutesByStop(id);
+        return rutaRepository.getRoutesByStop(id);
     }
 
     public List<Stop_time> findStopTimeByRouteStop(String routeId, String stopId) {
         return stopTimeRepository.findStopTimeByRouteStop(routeId, stopId);
     }
 
-    public List<Route_stop> findRoutesByStops(String origenId, String destinoId) {
-        return routeRepository.findRoutesByStops(origenId, destinoId);
-    }
+
 }

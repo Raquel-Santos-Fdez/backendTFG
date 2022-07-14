@@ -109,8 +109,8 @@ public class JornadaController {
     }
 
     @PostMapping(value="/tarea/addTarea")
-    public void addTarea(@RequestBody Tarea tarea){
-        jornadaService.addTarea(tarea);
+    public Tarea addTarea(@RequestBody Tarea tarea){
+        return jornadaService.addTarea(tarea);
     }
 
     @PostMapping(value="/jornada/addJornada")
@@ -118,10 +118,21 @@ public class JornadaController {
         jornadaService.addJornada(jornada);
     }
 
-    @PostMapping(value="/tarea_stop/addTareaStop")
-    public void addTareaStop(@RequestBody Tarea tarea, @RequestBody Stop origen, @RequestBody String inicio){
-        System.out.println("esto es una prueba");
-        tareaStopsService.addTareaStop(tarea, origen, inicio);
-    }
+//    @PostMapping(value="/tarea-stop/addTareaStop")
+//    public void addTareaStop( @RequestBody Stop origen, @RequestBody String inicio){
+//        System.out.println("esto es una prueba");
+//        tareaStopsService.addTareaStop(origen, inicio);
+//    }
+//
+//    @CrossOrigin(origins = "http://localhost:4200")
+//    @PutMapping(value="/tarea-stop/asignarTareaStop")
+//    public void asignarTareaStop(@RequestBody Long idTareaStop, @RequestBody Tarea tarea){
+//        tareaStopsService.asignarTareaStop(idTareaStop, tarea);
+//    }
 
+    @PostMapping(value="/tarea-stop/addTareaStop")
+    public void addTareaStop( @RequestBody Stop origen, @RequestBody String inicio, @RequestBody Tarea tarea){
+        System.out.println("esto es una prueba");
+        tareaStopsService.addTareaStop(origen, inicio, tarea);
+    }
 }

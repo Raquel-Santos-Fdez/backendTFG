@@ -36,6 +36,11 @@ public class Tarea_stops {
         this.tarea = tarea;
     }
 
+    public Tarea_stops(Situacion situacion, Stop stop) {
+        this.situacion = situacion;
+        this.stop = stop;
+    }
+
     public Long getId() {
         return id;
     }

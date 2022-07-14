@@ -63,8 +63,8 @@ public class JornadaService {
         solicitudRepository.reasignar(solicitud.getId());
     }
 
-    public void addTarea(Tarea t) {
-        tareaRepository.save(t);
+    public Tarea addTarea(Tarea t) {
+        return tareaRepository.save(t);
     }
 
     public Stop findStopByTarea(Long id) {

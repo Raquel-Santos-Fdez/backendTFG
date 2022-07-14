@@ -14,12 +14,36 @@ public class TareaStopsService {
     private TareaStopsRepository tareaStopsRepository;
 
 
-    public Tarea_stops addTareaStop(Tarea tarea, Stop origen, String inicio) {
+//    public Tarea_stops addTareaStop(Stop origen, String inicio) {
+//        Tarea_stops tarea_stop;
+//        if(inicio.equals("INICIO"))
+//            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.INICIO,origen );
+//        else
+//            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.FINAL,origen );
+//        return tareaStopsRepository.save(tarea_stop);
+//    }
+
+//    public Tarea_stops addTareaStop(Stop origen, String inicio, Tarea tarea) {
+//        Tarea_stops tarea_stop;
+//        if(inicio.equals("INICIO"))
+//            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.INICIO,origen );
+//        else
+//            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.FINAL,origen );
+//        tarea_stop.setTarea(tarea);
+//        return tareaStopsRepository.save(tarea_stop);
+//    }
+
+    public Tarea_stops addTareaStop(Stop origen, String inicio, Tarea tarea) {
         Tarea_stops tarea_stop;
         if(inicio.equals("INICIO"))
-            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.INICIO,origen, tarea );
+            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.INICIO,origen );
         else
-            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.FINAL,origen, tarea );
+            tarea_stop=new Tarea_stops(Tarea_stops.Situacion.FINAL,origen );
+        tarea_stop.setTarea(tarea);
         return tareaStopsRepository.save(tarea_stop);
+    }
+
+    public void asignarTareaStop(Long idTareaStop, Tarea tarea) {
+        tareaStopsRepository.asignarTareaStop(idTareaStop, tarea);
     }
 }

@@ -16,6 +16,9 @@ public class LoaderEstacionesService {
     @Autowired
     private EstacionesService estacionesService;
 
+    @Autowired
+    private RutaService rutaService;
+
     //Leemos de fichero
     private LectorCSV lector=new LectorCSV();
 
@@ -77,7 +80,7 @@ public class LoaderEstacionesService {
     private void loadStopToRoute(){
 
         List<Stop> paradas=estacionesService.getStops();
-        List<Route> lineas=estacionesService.getRoutes();
+        List<Route> lineas=rutaService.getRoutes();
 
 //        lineas.get
     }
