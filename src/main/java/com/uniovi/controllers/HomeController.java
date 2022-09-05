@@ -1,12 +1,10 @@
 package com.uniovi.controllers;
 
-import com.uniovi.entities.Route;
-import com.uniovi.entities.Route_stop;
-import com.uniovi.entities.Stop;
+import com.uniovi.entities.Estacion;
+import com.uniovi.entities.Ruta;
 import com.uniovi.entities.Stop_time;
-import com.uniovi.services.EstacionesService;
+import com.uniovi.services.EstacionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    private EstacionesService estacionesService;
+    private EstacionService estacionService;
 
     @RequestMapping("/")
     @CrossOrigin(origins="*", maxAge = 3600)
@@ -24,18 +22,18 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/stops")
-    public List<Stop> getStops() {
-        return estacionesService.getStops();
+    public List<Estacion> getStops() {
+        return estacionService.getStops();
     }
 
-    @RequestMapping(value = "/stop_times")
+    @RequestMapping(value = "/stopTimes")
     public List<Stop_time> getStopTimes() {
-        return estacionesService.getStopTimes();
+        return estacionService.getStopTimes();
     }
 
-    @RequestMapping(value = "/routes/{id}")
-    public Route getRouteById(@PathVariable String id) {
-        return estacionesService.getRouteById(id);
+    @RequestMapping(value = "/rutas/{id}")
+    public Ruta getRutaById(@PathVariable String id) {
+        return estacionService.getRouteById(id);
     }
 
 //    @RequestMapping(value = "/stop_times/{id}/{nombreRuta}")
@@ -43,14 +41,14 @@ public class HomeController {
 //        return estacionesService.findStopTimeByRouteId(id, nombreRuta);
 //    }
 
-    @RequestMapping(value = "/route_by_stop/{stopId}")
-    public List<Route> getRoutesByStop(@PathVariable String stopId) {
-        return estacionesService.getRoutesByStop(stopId);
-    }
+//    @RequestMapping(value = "/route-by-estacion/{stopId}")
+//    public List<Ruta> getRoutesByStop(@PathVariable String stopId) {
+//        return estacionesService.getRoutesByStop(stopId);
+//    }
 
-    @RequestMapping(value = "/stop_times/{routeId}/{stopId}")
-    public List<Stop_time> findStopTimeByRouteStop(@PathVariable String routeId,@PathVariable String stopId) {
-        return estacionesService.findStopTimeByRouteStop(routeId, stopId);
+    @RequestMapping(value = "/stopTimes/{rutaId}/{stopId}")
+    public List<Stop_time> findStopTimeByRouteStop(@PathVariable String rutaId,@PathVariable String stopId) {
+        return estacionService.findStopTimeByRouteStop(rutaId, stopId);
     }
 
 }

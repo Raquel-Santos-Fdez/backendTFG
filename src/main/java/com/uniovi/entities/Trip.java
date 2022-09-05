@@ -9,12 +9,12 @@ public class Trip {
     private String trip_id;
 
     @ManyToOne
-    private Route route;
+    private Ruta ruta;
 
-    public Trip(String trip_id, Route route) {
+    public Trip(String trip_id, Ruta ruta) {
         super();
         this.trip_id = trip_id;
-        this.route = route;
+        this.ruta = ruta;
     }
 
     public Trip() {
@@ -29,11 +29,11 @@ public class Trip {
         this.trip_id = trip_id;
     }
 
-    public Route getRoute() {
-        return route;
+    public Ruta getRoute() {
+        return ruta;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRoute(Ruta ruta) {
+        this.ruta = ruta;
     }
 }

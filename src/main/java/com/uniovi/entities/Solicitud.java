@@ -1,6 +1,6 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -20,8 +20,7 @@ public class Solicitud {
     private String motivo;
 
     @ManyToOne
-    @JsonBackReference
-    private Employee employee;
+    private Empleado empleado;
 
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado=EstadoSolicitud.PENDIENTE;
@@ -67,5 +66,11 @@ public class Solicitud {
         this.estado = estado;
     }
 
+    public Empleado getEmpleado() {
+        return empleado;
+    }
 
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
 }

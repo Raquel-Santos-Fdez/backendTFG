@@ -1,8 +1,5 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,10 +13,10 @@ public class Route_stop {
     private Long id;
 
     @ManyToOne
-    private Stop stop;
+    private Estacion estacion;
 
     @ManyToOne
-    private Route route;
+    private Ruta ruta;
 
     private int orderParada;
 
@@ -27,10 +24,10 @@ public class Route_stop {
 
     }
 
-    public Route_stop(Stop stop, Route route, int orderParada) {
+    public Route_stop(Estacion estacion, Ruta ruta, int orderParada) {
         super();
-        this.stop = stop;
-        this.route = route;
+        this.estacion = estacion;
+        this.ruta = ruta;
         this.orderParada = orderParada;
     }
 
@@ -42,20 +39,20 @@ public class Route_stop {
         this.id = id;
     }
 
-    public Stop getStop() {
-        return stop;
+    public Estacion getStop() {
+        return estacion;
     }
 
-    public void setStop(Stop stop) {
-        this.stop = stop;
+    public void setStop(Estacion estacion) {
+        this.estacion = estacion;
     }
 
-    public Route getRoute() {
-        return route;
+    public Ruta getRuta() {
+        return ruta;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setRuta(Ruta ruta) {
+        this.ruta = ruta;
     }
 
     public int getOrderParada() {

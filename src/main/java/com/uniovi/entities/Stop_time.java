@@ -13,7 +13,7 @@ public class Stop_time {
     public Trip trip;
 
     @ManyToOne
-    public Stop stop;
+    public Estacion estacion;
 
     public String arrival_time;
     public String departure_time;
@@ -23,10 +23,10 @@ public class Stop_time {
 
     }
 
-    public Stop_time(Trip trip, Stop stop, String arrival_time, String departure_time, String stop_sequence){
+    public Stop_time(Trip trip, Estacion estacion, String arrival_time, String departure_time, String stop_sequence){
         super();
         this.trip = trip;
-        this.stop = stop;
+        this.estacion = estacion;
         this.arrival_time=arrival_time;
         this.departure_time=departure_time;
         this.stop_sequence=stop_sequence;
@@ -48,12 +48,12 @@ public class Stop_time {
         this.trip = trip;
     }
 
-    public Stop getStop() {
-        return stop;
+    public Estacion getStop() {
+        return estacion;
     }
 
-    public void setStop(Stop stop) {
-        this.stop = stop;
+    public void setStop(Estacion estacion) {
+        this.estacion = estacion;
     }
 
     public String getArrival_time() {

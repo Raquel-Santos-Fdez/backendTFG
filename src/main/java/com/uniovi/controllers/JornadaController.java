@@ -2,6 +2,7 @@ package com.uniovi.controllers;
 
 import com.uniovi.entities.*;
 import com.uniovi.services.JornadaService;
+import com.uniovi.services.TareaService;
 import com.uniovi.services.TareaStopsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ public class JornadaController {
     @Autowired
     private TareaStopsService tareaStopsService;
 
+    @Autowired
+    private TareaService tareaService;
+
    //Get
 
     @RequestMapping(value="/jornada/consultar/{date}/{id}")
@@ -25,23 +29,23 @@ public class JornadaController {
         return jornadaService.getJornadaByDateAndEmpleoyee(Long.parseLong(id), date);
     }
 
-    @RequestMapping(value="/jornada/ver_solicitudes_vacaciones")
+    @RequestMapping(value="/jornada/ver-solicitudes-vacaciones")
     public List<Solicitud> getAllSolicitudesPendientes(){
         return jornadaService.getAllSolicitudesPendientes();
     }
 
-    @RequestMapping(value="/tarea_stop/{id}")
-    public Stop findStopByTarea(@PathVariable Long id){
+    @RequestMapping(value="/tareaStop/{id}")
+    public Estacion findStopByTarea(@PathVariable Long id){
         return jornadaService.findStopByTarea(id);
     }
 
-    @RequestMapping(value="/jornada/find_others_solicitudes/{id}")
-    public List<SolicitudIntercambio> findOthersSolicitudesPending(@PathVariable Long id){
+    @RequestMapping(value="/jornada/find-others-solicitudes/{id}")
+    public List<SolicitudIntercambio> findOthersSolicitudesPending(@PathVariable Long id ){
         return jornadaService.findOthersSolicitudesPending(id);
     }
 
-    @RequestMapping(value="/jornada/find_own_solicitudes/{id}")
-    public List<SolicitudIntercambio> findOwnSolicitudes(@PathVariable Long id){
+    @RequestMapping(value="/jornada/find-own-solicitudes/{id}")
+    public List<Solicitud> findOwnSolicitudes(@PathVariable Long id){
         return jornadaService.findOwnSolicitudes(id);
     }
 
@@ -65,16 +69,21 @@ public class JornadaController {
         return jornadaService.findJornadaByDateEmployee(date, id);
     }
 
+    @RequestMapping(value="/tarea/{id}")
+    public Tarea findTareaById(@PathVariable Long id){
+        return tareaService.findTareaById(id);
+    }
+
     //Put
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping(value="jornada/aceptar_solicitud")
+    @PutMapping(value="jornada/aceptar-solicitud")
     public void aceptarSolicitud(@RequestBody Long id){
         jornadaService.aceptarSolicitud(id);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping(value="jornada/rechazar_solicitud")
+    @PutMapping(value="jornada/rechazar-solicitud")
     public void rechazarSolicitud(@RequestBody Long id){
         jornadaService.rechazarSolicitud(id);
     }
@@ -98,41 +107,29 @@ public class JornadaController {
         return jornadaService.getJornadaByDateAndEmpleoyee(idEmployee, date);
     }
 
-    @PostMapping(value="/jornada/solicitar_vacaciones")
+    @PostMapping(value="/jornada/solicitar-vacaciones")
     public void setSolicitud(@RequestBody SolicitudSimple solicitud){
         jornadaService.setSolicitud(solicitud);
     }
 
-    @PostMapping(value="/jornada/solicitar_intercambio")
+    @PostMapping(value="/jornada/solicitar-intercambio")
     public void addSolicitudIntercambio(@RequestBody SolicitudIntercambio solicitud){
         jornadaService.addSolicitudIntercambio(solicitud);
     }
 
     @PostMapping(value="/tarea/addTarea")
     public Tarea addTarea(@RequestBody Tarea tarea){
-        return jornadaService.addTarea(tarea);
+        return tareaService.addTarea(tarea);
     }
 
     @PostMapping(value="/jornada/addJornada")
-    public void addJornada(@RequestBody Jornada jornada){
-        jornadaService.addJornada(jornada);
+    public Jornada addJornada(@RequestBody Jornada jornada){
+        return jornadaService.addJornada(jornada);
     }
 
-//    @PostMapping(value="/tarea-stop/addTareaStop")
-//    public void addTareaStop( @RequestBody Stop origen, @RequestBody String inicio){
-//        System.out.println("esto es una prueba");
-//        tareaStopsService.addTareaStop(origen, inicio);
-//    }
-//
-//    @CrossOrigin(origins = "http://localhost:4200")
-//    @PutMapping(value="/tarea-stop/asignarTareaStop")
-//    public void asignarTareaStop(@RequestBody Long idTareaStop, @RequestBody Tarea tarea){
-//        tareaStopsService.asignarTareaStop(idTareaStop, tarea);
-//    }
 
-    @PostMapping(value="/tarea-stop/addTareaStop")
-    public void addTareaStop( @RequestBody Stop origen, @RequestBody String inicio, @RequestBody Tarea tarea){
-        System.out.println("esto es una prueba");
-        tareaStopsService.addTareaStop(origen, inicio, tarea);
+    @PostMapping(value="/tareaStop/addNuevaTareaStop")
+    public void addNuevaTareaStop(@RequestBody Tarea_stops tarea_stops ){
+        tareaStopsService.addNuevaTareaStop(tarea_stops);
     }
 }

@@ -1,6 +1,6 @@
 package com.uniovi.services;
 
-import com.uniovi.entities.Route;
+import com.uniovi.entities.Ruta;
 import com.uniovi.entities.Route_stop;
 import com.uniovi.repositories.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,10 @@ public class RutaService {
     @Autowired
     public RutaRepository rutaRepository;
 
-    public List<Route> getRoutes() {
-        List<Route> routes=new ArrayList<>();
-        rutaRepository.findAll().forEach(routes::add);
-        return routes;
+    public List<Ruta> getRutas() {
+        List<Ruta> rutas =new ArrayList<>();
+        rutaRepository.findAll().forEach(rutas::add);
+        return rutas;
     }
 
     public List<Route_stop> findRutaByEstaciones(String origenId, String destinoId) {

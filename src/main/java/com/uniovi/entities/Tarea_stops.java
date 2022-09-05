@@ -1,7 +1,5 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 
 @Entity(name="tarea_stops")
@@ -18,28 +16,24 @@ public class Tarea_stops {
     @Enumerated(EnumType.STRING)
     private Situacion situacion=Situacion.INICIO;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JsonBackReference (value="stopT-stop")
-    private Stop stop;
+    @ManyToOne
+    private Estacion estacion;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JsonBackReference (value="stopT-tarea")
+    @ManyToOne
+    @JoinColumn(name="tarea_id")
     private Tarea tarea;
 
     public Tarea_stops(){
 
     }
 
-    public Tarea_stops(Situacion situacion, Stop stop, Tarea tarea) {
+    public Tarea_stops(Situacion situacion, Estacion estacion, Tarea tarea) {
         this.situacion = situacion;
-        this.stop = stop;
+        this.estacion = estacion;
         this.tarea = tarea;
     }
 
-    public Tarea_stops(Situacion situacion, Stop stop) {
-        this.situacion = situacion;
-        this.stop = stop;
-    }
+
 
     public Long getId() {
         return id;
@@ -57,12 +51,12 @@ public class Tarea_stops {
         this.situacion = situacion;
     }
 
-    public Stop getStop() {
-        return stop;
+    public Estacion getEstacion() {
+        return estacion;
     }
 
-    public void setStop(Stop stop) {
-        this.stop = stop;
+    public void setEstacion(Estacion estacion) {
+        this.estacion = estacion;
     }
 
     public Tarea getTarea() {

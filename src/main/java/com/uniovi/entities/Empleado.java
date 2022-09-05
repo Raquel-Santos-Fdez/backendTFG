@@ -1,18 +1,15 @@
 package com.uniovi.entities;
 
-//import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "employee")
-public class Employee {
+public class Empleado {
 
     @Id
     @GeneratedValue
@@ -24,21 +21,26 @@ public class Employee {
     private String email;
     private String dni;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Rol role;
 
     private String password;
-//    @Transient //propiedad que no se almacena e la tabla.
-//    private String passwordConfirm;
 
-    @OneToMany(mappedBy="employee")
+
+    public enum Rol{
+        MAQUINISTA, REVISOR, ADMIN
+    }
+
+    @OneToMany(mappedBy="empleado", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "empleado", allowSetters = true)
     private Set<Jornada> jornadas;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.MERGE)
+    @JsonIgnoreProperties(value = "empleado")
     private Set<Solicitud> solicitudes = new HashSet<>();
 
 
-    public Employee(String username, String name, String surname){
+    public Empleado(String username, String name, String surname){
         super();
         this.username=username;
         this.name=name;
@@ -47,7 +49,7 @@ public class Employee {
 
     }
 
-    public Employee() {
+    public Empleado() {
 
     }
 
@@ -91,11 +93,11 @@ public class Employee {
         this.password = password;
     }
 
-    public String getRole() {
+    public Rol getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Rol role) {
         this.role = role;
     }
 
@@ -114,5 +116,21 @@ public class Employee {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public Set<Jornada> getJornadas() {
+        return jornadas;
+    }
+
+    public void setJornadas(Set<Jornada> jornadas) {
+        this.jornadas = jornadas;
+    }
+
+    public Set<Solicitud> getSolicitudes() {
+        return solicitudes;
+    }
+
+    public void setSolicitudes(Set<Solicitud> solicitudes) {
+        this.solicitudes = solicitudes;
     }
 }

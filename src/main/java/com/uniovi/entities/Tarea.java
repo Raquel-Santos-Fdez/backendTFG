@@ -1,7 +1,6 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -26,13 +25,9 @@ public class Tarea {
     @JoinColumn(name = "tren_id")
     private Tren tren;
 
-    @OneToMany(mappedBy = "tarea", cascade = CascadeType.MERGE)
-    @JsonManagedReference (value="stopT-tarea")
+    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value="tarea", allowSetters = true)
     private Set<Tarea_stops> stops = new HashSet<>();
-
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JsonBackReference(value = "jornada-tarea")
-    private Jornada jornada;
 
     public Tarea() {
 
@@ -52,14 +47,6 @@ public class Tarea {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Jornada getJornada() {
-        return jornada;
-    }
-
-    public void _setJornada(Jornada jornada) {
-        this.jornada = jornada;
     }
 
     public LocalTime getHoraSalida() {
@@ -92,10 +79,6 @@ public class Tarea {
 
     public void setStops(Set<Tarea_stops> stops) {
         this.stops = stops;
-    }
-
-    public void setJornada(Jornada jornada) {
-        this.jornada = jornada;
     }
 
     public LocalTime getHoraFin() {

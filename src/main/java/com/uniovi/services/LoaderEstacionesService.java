@@ -3,7 +3,6 @@ package com.uniovi.services;
 import com.uniovi.entities.*;
 import com.uniovi.util.LectorCSV;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
@@ -14,7 +13,7 @@ import java.util.List;
 public class LoaderEstacionesService {
 
     @Autowired
-    private EstacionesService estacionesService;
+    private EstacionService estacionService;
 
     @Autowired
     private RutaService rutaService;
@@ -24,16 +23,16 @@ public class LoaderEstacionesService {
 
     public List<String> stopsIds=new ArrayList<>();
 
-    private List<Stop> getStopsFromFile() throws  FileNotFoundException{
+    private List<Estacion> getStopsFromFile() throws  FileNotFoundException{
         List<String> lineas=lector.readLines("listadoEstaciones.csv");
         String[] stop;
-        List<Stop> stops=new ArrayList<>();
+        List<Estacion> estacions =new ArrayList<>();
         for(int i=1; i<lineas.size();i++){
             stop=lineas.get(i).split(";");
             stopsIds.add(stop[0]);
-            stops.add(new Stop(stop[0],stop[1], Double.parseDouble(stop[2]), Double.parseDouble(stop[3])));
+            estacions.add(new Estacion(stop[0],stop[1], Double.parseDouble(stop[2]), Double.parseDouble(stop[3])));
         }
-        return stops;
+        return estacions;
     }
 
     private List<Stop_time> getStopTimes() throws  FileNotFoundException{
@@ -43,11 +42,10 @@ public class LoaderEstacionesService {
         for(int i=1; i<lineas.size();i++){
             stop_time=lineas.get(i).split(";");
             //hacerlo por consulta o en una clase apropiada
-            System.out.println(i);
-            Stop stop=estacionesService.getStopById(stop_time[3]);
-            Trip trip=estacionesService.getTripById(stop_time[0]);
-            if(stop!=null && trip!=null)
-                stop_times.add(new Stop_time(trip,stop ,
+            Estacion estacion = estacionService.getStopById(stop_time[3]);
+            Trip trip= estacionService.getTripById(stop_time[0]);
+            if(estacion !=null && trip!=null)
+                stop_times.add(new Stop_time(trip, estacion,
                         stop_time[1], stop_time[2], stop_time[4]));
         }
         return stop_times;
@@ -59,28 +57,28 @@ public class LoaderEstacionesService {
         List<Trip> trips=new ArrayList<>();
         for(int i=1; i<lineas.size();i++){
             trip=lineas.get(i).split(";");
-            Route route=estacionesService.getRouteById(trip[1]);
-            if(route!=null && trip[0].contains("L"))
-                trips.add(new Trip(trip[0], route));
+            Ruta ruta = estacionService.getRouteById(trip[1]);
+            if(ruta !=null && trip[0].contains("L"))
+                trips.add(new Trip(trip[0], ruta));
         }
         return trips;
     }
 
-    private List<Route> getRoutes() throws  FileNotFoundException{
+    private List<Ruta> getRutas() throws  FileNotFoundException{
         List<String> lineas=lector.readLines("rutas.csv");
-        String[] route;
-        List<Route> routes=new ArrayList<>();
+        String[] ruta;
+        List<Ruta> rutas =new ArrayList<>();
         for(int i=1; i<lineas.size();i++){
-            route=lineas.get(i).split(";");
-            routes.add(new Route(route[0], route[1], route[2]));
+            ruta=lineas.get(i).split(";");
+            rutas.add(new Ruta(ruta[0], ruta[1], ruta[2]));
         }
-        return routes;
+        return rutas;
     }
 
     private void loadStopToRoute(){
 
-        List<Stop> paradas=estacionesService.getStops();
-        List<Route> lineas=rutaService.getRoutes();
+        List<Estacion> estaciones= estacionService.getStops();
+        List<Ruta> lineas=rutaService.getRutas();
 
 //        lineas.get
     }
@@ -89,17 +87,17 @@ public class LoaderEstacionesService {
     public void init() {
 
         try {
-            for(Stop stop:getStopsFromFile())
-                estacionesService.addStop(stop);
+            for(Estacion estacion :getStopsFromFile())
+                estacionService.addStop(estacion);
 
-            for(Route route:getRoutes())
-                estacionesService.addRoute(route);
+            for(Ruta ruta : getRutas())
+                estacionService.addRuta(ruta);
 
             for(Trip trip:getTrips())
-                estacionesService.addTrip(trip);
+                estacionService.addTrip(trip);
 
             for(Stop_time st:getStopTimes())
-                estacionesService.addStopTimes(st);
+                estacionService.addStopTimes(st);
 
 
 

@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EstacionesService {
+public class EstacionService {
 
 
     @Autowired
-    public StopsRepository stopsRepository;
+    public EstacionRepository estacionRepository;
 
     @Autowired
     public StopTimeRepository stopTimeRepository;
@@ -26,18 +26,18 @@ public class EstacionesService {
     public TripRepository tripRepository;
 
 
-    public void addStop(Stop stop) {
-        stopsRepository.save(stop);
+    public void addStop(Estacion estacion) {
+        estacionRepository.save(estacion);
     }
 
-    public List<Stop> getStops() {
-        List<Stop> stops=new ArrayList<>();
-        stopsRepository.findAll().forEach(stops::add);
-        return stops;
+    public List<Estacion> getStops() {
+        List<Estacion> estacions =new ArrayList<>();
+        estacionRepository.findAll().forEach(estacions::add);
+        return estacions;
     }
 
-    public Stop getStopById(String id) {
-        Optional<Stop> stop= stopsRepository.findById(id);
+    public Estacion getStopById(String id) {
+        Optional<Estacion> stop= estacionRepository.findById(id);
         if(stop.isPresent())
             return stop.get();
         return null;
@@ -53,16 +53,16 @@ public class EstacionesService {
         return stopTimes;
     }
 
-    public void addRoute(Route route) {
-        rutaRepository.save(route);
+    public void addRuta(Ruta ruta) {
+        rutaRepository.save(ruta);
     }
 
 
 
-    public Route getRouteById(String id) {
-        Optional<Route> route= rutaRepository.findById(id);
-        if(route.isPresent())
-            return route.get();
+    public Ruta getRouteById(String id) {
+        Optional<Ruta> ruta= rutaRepository.findById(id);
+        if(ruta.isPresent())
+            return ruta.get();
         return null;
     }
 
@@ -84,7 +84,7 @@ public class EstacionesService {
         return stopTimes;
     }
 
-    public List<Route> getRoutesByStop(String id) {
+    public List<Ruta> getRoutesByStop(String id) {
         return rutaRepository.getRoutesByStop(id);
     }
 

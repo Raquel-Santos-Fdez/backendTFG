@@ -1,8 +1,12 @@
 package com.uniovi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,11 +19,18 @@ public class Jornada {
     private Long id;
 
     @ManyToOne
-    private Employee employee;
+//    @JsonManagedReference (value = "jornada-empleado")
+    private Empleado empleado;
+
+//    private LocalDateTime date;
+//    private Timestamp
     private Date date;
 
-    @OneToMany(mappedBy = "jornada", cascade = CascadeType.ALL)
-    @JsonManagedReference (value = "jornada-tarea")
+//    @OneToMany(mappedBy = "jornada", cascade = CascadeType.MERGE)
+//    @JsonManagedReference (value = "jornada-tareas")
+//    @JsonIgnoreProperties ("jornada")
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="jornada_id")
     private Set<Tarea> tareas = new HashSet<>();
 
 
@@ -39,12 +50,12 @@ public class Jornada {
         this.id = id;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
     public Date getDate() {
@@ -55,11 +66,11 @@ public class Jornada {
         this.date = date;
     }
 
-    public Set<Tarea> getTarea() {
+    public Set<Tarea> getTareas() {
         return new HashSet<Tarea>(tareas);
     }
 
-    public void setTarea(Set<Tarea> tareas) {
+    public void setTareas(Set<Tarea> tareas) {
         this.tareas = tareas;
     }
 }

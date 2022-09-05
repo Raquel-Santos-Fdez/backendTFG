@@ -11,13 +11,15 @@ import java.util.List;
 
 public interface JornadaRepository extends CrudRepository<Jornada, Long> {
 
-    @Query("select t from Tarea t join t.jornada j join j.employee e where e.id=?1 and j.date=?2" +
+//    @Query("select t from Tarea t join t.jornada j join j.empleado e where e.id=?1 and j.date=?2" +
+//            " order by t.horaSalida")
+    @Query("select t from Jornada j join j.tareas t join j.empleado e where e.id=?1 and j.date=?2" +
             " order by t.horaSalida")
-    List<Tarea> findByDateAndEmployee(Long id, Date date);
+    List<Tarea> findTareaByDateAndEmpleado(Long id, Date date);
 
-    @Query("select j.id from Jornada j where j.employee.id=?1 and j.employee.id not in " +
-            "(select j2.employee.id from Jornada j2 where j2.date=?2) and j.employee.id  in " +
-            "(select j3.employee.id from Jornada j3 where j3.date=?3)")
+    @Query("select j.id from Jornada j where j.empleado.id=?1 and j.empleado.id not in " +
+            "(select j2.empleado.id from Jornada j2 where j2.date=?2) and j.empleado.id  in " +
+            "(select j3.empleado.id from Jornada j3 where j3.date=?3)")
     List<String> chackCambioJornada(Long id,Date fecha, Date fechaDescanso);
 
     @Modifying
@@ -25,15 +27,18 @@ public interface JornadaRepository extends CrudRepository<Jornada, Long> {
     void cambiarJornadaEmpleadoViejo(Date fechaAnterior, Date fechaNueva);
 
     @Modifying
-    @Query("update Jornada j set j.date=?1 where j.date=?2 and j.employee.id=?3")
+    @Query("update Jornada j set j.date=?1 where j.date=?2 and j.empleado.id=?3")
     void cambiarJornadaEmpleadoNuevo(Date fechaAnterior, Date fechaNueva, Long idNuevoEmpleado);
 
-    @Query("select j from Jornada j join j.employee e where e.id=?1")
+    @Query("select j from Jornada j join j.empleado e where e.id=?1")
     List<Jornada> findJornadaByEmpleado(Long id);
 
     @Query("select j from Jornada j where j.date=?1")
     List<Jornada> findJornadaByDate(java.sql.Date date);
 
-    @Query("select j from Jornada j join j.employee e where j.date=?1 and e.id=?2")
-    List<Jornada> findJornadaByDateEmployee(java.sql.Date date, Long id);
+//    @Query("select j from Jornada j join j.empleado e where j.date=?1 and e.id=?2")
+    @Query("select j from Jornada j where j.empleado.id=?2 and j.date=?1 ")
+    List<Jornada> findJornadaByDateEmpleado(java.sql.Date date, Long id);
+
+
 }
