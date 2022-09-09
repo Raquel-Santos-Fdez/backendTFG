@@ -14,7 +14,7 @@ public class Empleado {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(unique=true)
+    @Column(unique = true)
     private String username;
     private String name;
     private String surname;
@@ -26,12 +26,13 @@ public class Empleado {
 
     private String password;
 
+    private int nDiasLibres;
 
-    public enum Rol{
+    public enum Rol {
         MAQUINISTA, REVISOR, ADMIN
     }
 
-    @OneToMany(mappedBy="empleado", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "empleado", allowSetters = true)
     private Set<Jornada> jornadas;
 
@@ -40,11 +41,12 @@ public class Empleado {
     private Set<Solicitud> solicitudes = new HashSet<>();
 
 
-    public Empleado(String username, String name, String surname){
+    public Empleado(String username, String name, String surname, int nDiasLibres) {
         super();
-        this.username=username;
-        this.name=name;
-        this.surname=surname;
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.nDiasLibres=nDiasLibres;
 //        this.jornadas=jornadas;
 
     }
@@ -85,6 +87,7 @@ public class Empleado {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
     public String getPassword() {
         return password;
     }
@@ -132,5 +135,13 @@ public class Empleado {
 
     public void setSolicitudes(Set<Solicitud> solicitudes) {
         this.solicitudes = solicitudes;
+    }
+
+    public int getnDiasLibres() {
+        return nDiasLibres;
+    }
+
+    public void setnDiasLibres(int nDiasLibres) {
+        this.nDiasLibres = nDiasLibres;
     }
 }

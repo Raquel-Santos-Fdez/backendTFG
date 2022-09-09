@@ -50,4 +50,9 @@ public class EmpleadoService {
     public Optional<Empleado> getEmployeeById(Long id) {
         return empleadoRepository.findById(id);
     }
+
+
+    public void actualizarPassword(Empleado empleado) {
+        empleadoRepository.actualizarPassword(empleado.getId(), empleado.getPassword());
+    }
 }

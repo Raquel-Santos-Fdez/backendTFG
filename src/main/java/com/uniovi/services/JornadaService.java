@@ -122,13 +122,14 @@ public class JornadaService {
     }
 
     public List<Jornada> findJornadaByDateEmployee(Date date, Long id) {
-        System.out.println(date);
-        System.out.println(id);
-        System.out.println(new java.sql.Date(date.getTime()));
-//        findJornadaByEmpleado(id);
-        List<Jornada> jornada= jornadaRepository.findJornadaByDateEmpleado(new java.sql.Date(date.getTime()), id);
-//        List<Jornada> jornada= jornadaRepository.findJornadaByDateEmpleado(date, id);
-        System.out.println(jornada);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        List<Jornada> jornada=new ArrayList<>();
+        try {
+           jornada = jornadaRepository.findJornadaByDateEmpleado(format.parse(new java.sql.Date(date.getTime()).toString()), id);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return jornada;
 
     }

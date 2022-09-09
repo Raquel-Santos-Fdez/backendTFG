@@ -1,6 +1,7 @@
 package com.uniovi.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
 

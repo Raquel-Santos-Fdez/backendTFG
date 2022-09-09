@@ -23,33 +23,39 @@ public class EmpleadoController {
 //        return "employee/list";
 //    }
 
-    @PostMapping(value="/login")
-    public Empleado login(@RequestBody Empleado empleado){
+    @PostMapping(value = "/login")
+    public Empleado login(@RequestBody Empleado empleado) {
         List<Empleado> empleados = empleadoService.findByUsernamePassword(empleado.getUsername(), empleado.getPassword());
-        if(!empleados.isEmpty())
+        if (!empleados.isEmpty())
             return empleados.get(0);
         return null;
     }
 
     @GetMapping("/empleados")
-    public List<Empleado> getEmpleados(){
+    public List<Empleado> getEmpleados() {
         return empleadoService.getEmpleados();
     }
 
     @GetMapping("/empleado/{id}")
-    public Empleado getEmployeeById(@PathVariable Long id){
+    public Empleado getEmployeeById(@PathVariable Long id) {
         return empleadoService.getEmployeeById(id).get();
     }
 
-    @PostMapping(value="/empleados/addEmpleado")
-    public void addEmpleado(@RequestBody Empleado empleado){
+    @PostMapping(value = "/empleados/addEmpleado")
+    public void addEmpleado(@RequestBody Empleado empleado) {
         empleadoService.addEmployee(empleado);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @DeleteMapping(value="/empleados/eliminarEmpleado/{id}")
-    public void eliminarEmpleado(@PathVariable Long id){
+    @DeleteMapping(value = "/empleados/eliminarEmpleado/{id}")
+    public void eliminarEmpleado(@PathVariable Long id) {
         empleadoService.deleteEmployee(id);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping(value = "/empleados/actualizarEmpleado/")
+    public void actualizarPassword(@RequestBody Empleado empleado) {
+         empleadoService.actualizarPassword(empleado);
     }
 
 }
