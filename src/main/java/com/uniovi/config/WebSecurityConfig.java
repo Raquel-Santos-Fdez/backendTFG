@@ -1,5 +1,13 @@
-package com.uniovi;
+package com.uniovi.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import com.uniovi.entities.Solicitud;
+import com.uniovi.entities.SolicitudIntercambio;
+import com.uniovi.entities.SolicitudSimple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +21,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 ////
 @Configuration
 //@EnableWebSecurity
@@ -22,10 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
+
+
 //        http
 //                .httpBasic()
 //                .and()
@@ -48,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .permitAll();
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception

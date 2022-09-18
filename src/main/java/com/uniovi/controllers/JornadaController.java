@@ -74,19 +74,7 @@ public class JornadaController {
         return tareaService.findTareaById(id);
     }
 
-    //Put
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping(value="jornada/aceptar-solicitud")
-    public void aceptarSolicitud(@RequestBody Long id){
-        jornadaService.aceptarSolicitud(id);
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping(value="jornada/rechazar-solicitud")
-    public void rechazarSolicitud(@RequestBody Long id){
-        jornadaService.rechazarSolicitud(id);
-    }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value="jornada/reasignar")

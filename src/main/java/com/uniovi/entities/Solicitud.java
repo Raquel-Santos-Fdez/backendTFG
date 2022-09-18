@@ -1,13 +1,18 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.DiscriminatorOptions;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Solicitud {
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY,  property="type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value=SolicitudIntercambio.class, name="solicitudIntercambio"),
+        @JsonSubTypes.Type(value = SolicitudSimple.class, name="solicitudSimple")
+})
+public abstract class Solicitud {
 
     public enum EstadoSolicitud{
         PENDIENTE, ACEPTADA, RECHAZADA, REASIGNADA
@@ -26,13 +31,15 @@ public class Solicitud {
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado=EstadoSolicitud.PENDIENTE;
 
-    public Solicitud(){
-
-    }
-
-    public Solicitud(String fecha, String motivo){
+    protected Solicitud(Long id, String fecha, String motivo, Empleado empleado, EstadoSolicitud estado) {
+        this.id = id;
         this.fecha = fecha;
-        this.motivo=motivo;
+        this.motivo = motivo;
+        this.empleado = empleado;
+        this.estado = estado;
+    }
+    protected Solicitud(){
+
     }
 
     public Long getId() {

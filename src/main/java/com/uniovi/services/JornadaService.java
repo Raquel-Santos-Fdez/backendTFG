@@ -49,16 +49,6 @@ public class JornadaService {
     }
 
     @Transactional
-    public void aceptarSolicitud(Long id) {
-        solicitudRepository.aceptarSolicitud(id);
-    }
-
-    @Transactional
-    public void rechazarSolicitud(Long id) {
-        solicitudRepository.rechazarSolicitud(id);
-    }
-
-    @Transactional
     public void reasignar(SolicitudIntercambio solicitud) {
         solicitudRepository.reasignar(solicitud.getId());
     }

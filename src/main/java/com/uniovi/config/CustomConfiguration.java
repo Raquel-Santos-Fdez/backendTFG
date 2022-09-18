@@ -1,4 +1,4 @@
-package com.uniovi;
+package com.uniovi.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,5 @@
 package com.uniovi.entities;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -13,16 +12,13 @@ public class SolicitudIntercambio extends Solicitud{
     private Empleado nuevoEmpleado;
 
     public SolicitudIntercambio(){
-        super();
+
     }
 
-    public SolicitudIntercambio(String fechaDescanso) {
+    public SolicitudIntercambio(Long id, String fecha, String motivo, Empleado empleado, EstadoSolicitud estado, String fechaDescanso, Empleado nuevoEmpleado) {
+        super(id, fecha, motivo, empleado, estado);
         this.fechaDescanso = fechaDescanso;
-    }
-
-    public SolicitudIntercambio(String fecha, String motivo, String fechaDescanso) {
-        super(fecha, motivo);
-        this.fechaDescanso = fechaDescanso;
+        this.nuevoEmpleado = nuevoEmpleado;
     }
 
     public String getFechaDescanso() {
@@ -40,4 +36,5 @@ public class SolicitudIntercambio extends Solicitud{
     public void setNuevoEmpleado(Empleado nuevoEmpleado) {
         this.nuevoEmpleado = nuevoEmpleado;
     }
+
 }

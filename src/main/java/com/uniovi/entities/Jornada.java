@@ -1,8 +1,5 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -19,16 +16,12 @@ public class Jornada {
     private Long id;
 
     @ManyToOne
-//    @JsonManagedReference (value = "jornada-empleado")
     private Empleado empleado;
 
-//    private LocalDateTime date;
-//    private Timestamp
     private Date date;
 
-//    @OneToMany(mappedBy = "jornada", cascade = CascadeType.MERGE)
-//    @JsonManagedReference (value = "jornada-tareas")
-//    @JsonIgnoreProperties ("jornada")
+    private boolean isDiaLibre;
+
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name="jornada_id")
     private Set<Tarea> tareas = new HashSet<>();
@@ -72,5 +65,13 @@ public class Jornada {
 
     public void setTareas(Set<Tarea> tareas) {
         this.tareas = tareas;
+    }
+
+    public boolean isDiaLibre() {
+        return isDiaLibre;
+    }
+
+    public void setDiaLibre(boolean diaLibre) {
+        isDiaLibre = diaLibre;
     }
 }

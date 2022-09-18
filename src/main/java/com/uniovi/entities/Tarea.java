@@ -1,6 +1,10 @@
 package com.uniovi.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -16,7 +20,12 @@ public class Tarea {
 
     private String descripcion;
 
+    @JsonSerialize(using = LocalTimeSerializer.class)
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime horaSalida;
+
+    @JsonSerialize(using = LocalTimeSerializer.class)
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime horaFin;
 
     private int anden;

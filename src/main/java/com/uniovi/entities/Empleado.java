@@ -2,6 +2,7 @@ package com.uniovi.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -37,7 +38,7 @@ public class Empleado {
     private Set<Jornada> jornadas;
 
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties(value = "empleado")
+    @JsonIgnore
     private Set<Solicitud> solicitudes = new HashSet<>();
 
 
