@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY,  property="type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value=SolicitudIntercambio.class, name="solicitudIntercambio"),
+        @JsonSubTypes.Type(value = SolicitudIntercambio.class, name="solicitudIntercambio"),
         @JsonSubTypes.Type(value = SolicitudSimple.class, name="solicitudSimple")
 })
 public abstract class Solicitud {

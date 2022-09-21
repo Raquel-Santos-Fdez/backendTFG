@@ -1,6 +1,9 @@
 package com.uniovi.entities;
 
+
 public class SolicitudMapper {
+
+    public SolicitudMapper(){}
 
     private Solicitud solicitudMapeada;
 

@@ -39,15 +39,7 @@ public class JornadaController {
         return jornadaService.findStopByTarea(id);
     }
 
-    @RequestMapping(value="/jornada/find-others-solicitudes/{id}")
-    public List<SolicitudIntercambio> findOthersSolicitudesPending(@PathVariable Long id ){
-        return jornadaService.findOthersSolicitudesPending(id);
-    }
 
-    @RequestMapping(value="/jornada/find-own-solicitudes/{id}")
-    public List<Solicitud> findOwnSolicitudes(@PathVariable Long id){
-        return jornadaService.findOwnSolicitudes(id);
-    }
 
     @RequestMapping(value="/jornada/checkCambioJornada/{id}/{fecha}/{fechaDescanso}")
     public List<String> chackCambioJornada(@PathVariable Long id,@PathVariable String fecha, @PathVariable String fechaDescanso){
@@ -95,13 +87,10 @@ public class JornadaController {
         return jornadaService.getJornadaByDateAndEmpleoyee(idEmployee, date);
     }
 
-    @PostMapping(value="/jornada/solicitar-vacaciones")
-    public void setSolicitud(@RequestBody SolicitudSimple solicitud){
-        jornadaService.setSolicitud(solicitud);
-    }
+
 
     @PostMapping(value="/jornada/solicitar-intercambio")
-    public void addSolicitudIntercambio(@RequestBody SolicitudIntercambio solicitud){
+    public void addSolicitudIntercambio(@RequestBody Solicitud solicitud){
         jornadaService.addSolicitudIntercambio(solicitud);
     }
 

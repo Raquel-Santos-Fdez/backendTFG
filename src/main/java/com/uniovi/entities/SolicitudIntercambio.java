@@ -1,5 +1,7 @@
 package com.uniovi.entities;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 

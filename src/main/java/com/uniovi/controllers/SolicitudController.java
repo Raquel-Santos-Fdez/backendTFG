@@ -1,6 +1,8 @@
 package com.uniovi.controllers;
 
 import com.uniovi.entities.Solicitud;
+import com.uniovi.entities.SolicitudIntercambio;
+import com.uniovi.entities.SolicitudSimple;
 import com.uniovi.services.SolicitudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,16 @@ public class SolicitudController {
 //         return solicitudService.gestionarSolicitudAceptada(solicitud);
 //    }
 
+    @RequestMapping(value="/solicitudes/find-own-solicitudes/{id}")
+    public List<Solicitud> findOwnSolicitudes(@PathVariable Long id){
+        return solicitudService.findOwnSolicitudes(id);
+    }
+
+    @RequestMapping(value="/solicitudes/find-others-solicitudes/{id}")
+    public List<SolicitudIntercambio> findOthersSolicitudesPending(@PathVariable Long id ){
+        return solicitudService.findOthersSolicitudesPending(id);
+    }
+
     //Put
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -42,5 +54,11 @@ public class SolicitudController {
     @PutMapping(value="/solicitudes/gestionarSolicitudAceptada")
     public void gestionarSolicitudAceptada(@RequestBody Solicitud solicitud ){
          solicitudService.gestionarSolicitudAceptada(solicitud);
+    }
+
+
+    @PostMapping(value="/jornada/solicitar-vacaciones")
+    public void setSolicitud(@RequestBody SolicitudSimple solicitud){
+        solicitudService.setSolicitud(solicitud);
     }
 }

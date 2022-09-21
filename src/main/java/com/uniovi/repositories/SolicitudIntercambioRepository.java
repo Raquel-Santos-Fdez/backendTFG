@@ -17,7 +17,8 @@ public interface SolicitudIntercambioRepository extends CrudRepository<Solicitud
     @Query("select s from SolicitudIntercambio s where s.estado='PENDIENTE' and s.empleado.id<>?1")
     List<SolicitudIntercambio> findOthersSolicitudesPending(Long id);
 
-    @Query("select s from Solicitud s where s.empleado.id=?1")
-    List<Solicitud> findOwnSolicitudes(Long id);
+    @Query("select s from SolicitudIntercambio s where s.empleado.id=?1")
+    List<SolicitudIntercambio> findOwnSolicitudesIntercambio(Long id);
+
 
 }

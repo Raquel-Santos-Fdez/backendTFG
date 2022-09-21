@@ -37,9 +37,7 @@ public class JornadaService {
         return jornadas;
     }
 
-    public void setSolicitud(SolicitudSimple solicitud) {
-        solicitudSimpleRepository.save(solicitud);
-    }
+
 
     public List<Solicitud> getAllSolicitudesPendientes() {
         List<Solicitud> solicitudes = new ArrayList<>();
@@ -58,16 +56,12 @@ public class JornadaService {
         return tareaRepository.findStopByTarea(id).get(0);
     }
 
-    public List<SolicitudIntercambio> findOthersSolicitudesPending(Long id) {
-        return solicitudIntercambioRepository.findOthersSolicitudesPending(id);
-    }
+    @Transactional
+    public void addSolicitudIntercambio(Solicitud solicitud) {
+        SolicitudMapper solicitudMapper = Mapper.convertirObjectSolicitud(solicitud);
 
-    public List<Solicitud> findOwnSolicitudes(Long id) {
-        return solicitudIntercambioRepository.findOwnSolicitudes(id);
-    }
-
-    public void addSolicitudIntercambio(SolicitudIntercambio solicitud) {
-        solicitudIntercambioRepository.save(solicitud);
+        if(solicitudMapper.getSolicitudMapeada() instanceof SolicitudIntercambio)
+            solicitudIntercambioRepository.save((SolicitudIntercambio)solicitudMapper.getSolicitudMapeada());
     }
 
     public List<String> chackCambioJornada(Long id, String fecha, String fechaDescanso) {

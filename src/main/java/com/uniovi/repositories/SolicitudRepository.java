@@ -26,4 +26,5 @@ public interface SolicitudRepository extends CrudRepository<Solicitud, Long> {
     List<Solicitud> findSolicitudByFechaEmpleado(String date, Long id);
 
 
+
 }
