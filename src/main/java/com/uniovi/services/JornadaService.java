@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class JornadaService {
@@ -38,7 +38,6 @@ public class JornadaService {
     }
 
 
-
     public List<Solicitud> getAllSolicitudesPendientes() {
         List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudIntercambioRepository.findAllPending());
@@ -48,7 +47,32 @@ public class JornadaService {
 
     @Transactional
     public void reasignar(SolicitudIntercambio solicitud) {
+        solicitudIntercambioRepository.asignarNuevoEmpleado(solicitud.getId(), solicitud.getNuevoEmpleado());
+        realizarCambio(solicitud);
         solicitudRepository.reasignar(solicitud.getId());
+    }
+
+    private void realizarCambio(SolicitudIntercambio solicitudIntercambio) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        Date fechaDescanso = null;
+        try {
+            fecha = sdf.parse(solicitudIntercambio.getFecha());
+            fechaDescanso = sdf.parse(solicitudIntercambio.getFechaDescanso());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Jornada jornadaEmpleadoViejo = jornadaRepository.findJornadaByDateEmpleado(new java.sql.Date(fecha.getTime()),
+                solicitudIntercambio.getEmpleado().getId()).get(0);
+        Jornada jornadaEmpleadoNuevo = jornadaRepository.findJornadaByDateEmpleado(new java.sql.Date(fechaDescanso.getTime()),
+                solicitudIntercambio.getNuevoEmpleado().getId()).get(0);
+
+        //la jornada del empleado viejo pasa a ser la fecha de descanso
+        jornadaRepository.cambiarJornadaEmpleado(solicitudIntercambio.getNuevoEmpleado(), jornadaEmpleadoViejo.getId());
+
+        //la jornada del nuevo empelado pasa a ser la fecha
+        jornadaRepository.cambiarJornadaEmpleado(solicitudIntercambio.getEmpleado(), jornadaEmpleadoNuevo.getId());
     }
 
 
@@ -60,47 +84,18 @@ public class JornadaService {
     public void addSolicitudIntercambio(Solicitud solicitud) {
         SolicitudMapper solicitudMapper = Mapper.convertirObjectSolicitud(solicitud);
 
-        if(solicitudMapper.getSolicitudMapeada() instanceof SolicitudIntercambio)
-            solicitudIntercambioRepository.save((SolicitudIntercambio)solicitudMapper.getSolicitudMapeada());
+        if (solicitudMapper.getSolicitudMapeada() instanceof SolicitudIntercambio)
+            solicitudIntercambioRepository.save((SolicitudIntercambio) solicitudMapper.getSolicitudMapeada());
     }
 
-    public List<String> chackCambioJornada(Long id, String fecha, String fechaDescanso) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date fechaD = formato.parse(fecha);
-            Date fechaDescansoD = formato.parse(fechaDescanso);
-            List<String> jornadas = jornadaRepository.chackCambioJornada(
-                    id, new java.sql.Date(fechaD.getTime()), new java.sql.Date(fechaDescansoD.getTime()));
-            return jornadas;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-
-    }
-
-
-    public void realizarCambio(Long idSolicitud, Long idNuevoEmpleado) {
-        //FALTA ASIGNAR EL NUEVO EMPLEADO ID
-        Optional<SolicitudIntercambio> optionalSolicitudIntercambio = solicitudIntercambioRepository.findById(idSolicitud);
-        SolicitudIntercambio sIntercambio = optionalSolicitudIntercambio.get();
-        //la jornada del empleado viejo pasa a ser la fecha de descanso
-        jornadaRepository.cambiarJornadaEmpleadoViejo(new java.sql.Date(Long.parseLong(sIntercambio.getFecha())),
-                new java.sql.Date(Long.parseLong(sIntercambio.getFechaDescanso())));
-        //la jornada del nuevo empelado pasa a ser la fecha
-        jornadaRepository.cambiarJornadaEmpleadoNuevo(new java.sql.Date(Long.parseLong(sIntercambio.getFecha())),
-                new java.sql.Date(Long.parseLong(sIntercambio.getFechaDescanso())), idNuevoEmpleado);
-    }
 
     public List<Jornada> findJornadaByEmpleado(Long id) {
-        List<Jornada> jornadas=jornadaRepository.findJornadaByEmpleado(id);
-//        for(Jornada j: jornadas)
-//            System.out.println(j.getDate().getTime());
+        List<Jornada> jornadas = jornadaRepository.findJornadaByEmpleado(id);
         return jornadas;
     }
 
     public List<Jornada> findJornadaByDate(Date date) {
-        List<Jornada> jornadas= jornadaRepository.findJornadaByDate(new java.sql.Date(date.getTime()));
+        List<Jornada> jornadas = jornadaRepository.findJornadaByDate(new java.sql.Date(date.getTime()));
 
         return jornadas;
     }
@@ -108,9 +103,9 @@ public class JornadaService {
     public List<Jornada> findJornadaByDateEmployee(Date date, Long id) {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        List<Jornada> jornada=new ArrayList<>();
+        List<Jornada> jornada = new ArrayList<>();
         try {
-           jornada = jornadaRepository.findJornadaByDateEmpleado(format.parse(new java.sql.Date(date.getTime()).toString()), id);
+            jornada = jornadaRepository.findJornadaByDateEmpleado(format.parse(new java.sql.Date(date.getTime()).toString()), id);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -122,7 +117,4 @@ public class JornadaService {
         return jornadaRepository.save(jornada);
     }
 
-//    public void addTareaJornada(Jornada jornada) {
-//        jornadaRepository.addTareaJornada(jornada);
-//    }
 }

@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,8 +28,14 @@ public class SolicitudService {
     @Autowired
     public SolicitudSimpleRepository solicitudSimpleRepository;
 
+    @Autowired
+    public JornadaService jornadaService;
+
     public List<Solicitud> findSolicitudByFechaEmpleado(String date, Long id) {
-        return solicitudRepository.findSolicitudByFechaEmpleado(date, id);
+        List<Solicitud> solicitudes=new ArrayList<>();
+        solicitudes.addAll(solicitudIntercambioRepository.findSolicitudIntercambioByFechaEmpleado(date,id));
+        solicitudes.addAll(solicitudSimpleRepository.findSolicitudSimpleByFechaEmpleado(date,id));
+        return solicitudes;
     }
 
     @Transactional
@@ -61,7 +70,26 @@ public class SolicitudService {
     }
 
     public List<SolicitudIntercambio> findOthersSolicitudesPending(Long id) {
-        return solicitudIntercambioRepository.findOthersSolicitudesPending(id);
+        List<SolicitudIntercambio> solicitudesIntercambio=new ArrayList<>();
+        List<SolicitudIntercambio> solicitudesPending=solicitudIntercambioRepository.findOthersSolicitudesPending(id);
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha=null;
+        Date fechaDescanso=null;
+
+        for(SolicitudIntercambio s:solicitudesPending){
+            try {
+                fecha= sdf.parse(s.getFecha());
+                fechaDescanso=sdf.parse(s.getFechaDescanso());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if((jornadaService.findJornadaByDateEmployee(fechaDescanso, id).size()>0) &&
+                    jornadaService.findJornadaByDateEmployee(fecha,id).size()==0)
+                solicitudesIntercambio.add(s);
+        }
+        return solicitudesIntercambio;
+
     }
 
 

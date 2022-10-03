@@ -5,9 +5,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Date;
-import java.util.List;
-
 public interface SolicitudRepository extends CrudRepository<Solicitud, Long> {
 
     @Modifying
@@ -22,8 +19,7 @@ public interface SolicitudRepository extends CrudRepository<Solicitud, Long> {
     @Query("update Solicitud s set s.estado='REASIGNADA' where s.id=?1")
     void reasignar(Long id);
 
-    @Query("select s from Solicitud s where s.fecha=?1 and s.empleado.id=?2")
-    List<Solicitud> findSolicitudByFechaEmpleado(String date, Long id);
+
 
 
 

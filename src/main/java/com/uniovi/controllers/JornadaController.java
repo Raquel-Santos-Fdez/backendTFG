@@ -39,13 +39,6 @@ public class JornadaController {
         return jornadaService.findStopByTarea(id);
     }
 
-
-
-    @RequestMapping(value="/jornada/checkCambioJornada/{id}/{fecha}/{fechaDescanso}")
-    public List<String> chackCambioJornada(@PathVariable Long id,@PathVariable String fecha, @PathVariable String fechaDescanso){
-        return jornadaService.chackCambioJornada(id,  fecha, fechaDescanso);
-    }
-
     @RequestMapping(value="/jornada/findByEmpleado/{id}")
     public List<Jornada> findJornadaByEmpleado(@PathVariable Long id){
         return jornadaService.findJornadaByEmpleado(id);
@@ -54,6 +47,7 @@ public class JornadaController {
     @RequestMapping(value="/jornada/findByDate/{date}")
     public List<Jornada> findJornadaByDate(@PathVariable Date date){
         return jornadaService.findJornadaByDate(date);
+
     }
 
     @RequestMapping(value="/jornada/findJornadaByDateEmpleado/{date}/{id}")
@@ -66,18 +60,10 @@ public class JornadaController {
         return tareaService.findTareaById(id);
     }
 
-
-
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value="jornada/reasignar")
     public void reasignar(@RequestBody SolicitudIntercambio solicitud){
         jornadaService.reasignar(solicitud);
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping(value="jornada/realizarCambio")
-    public void realizarCambio(@RequestBody Long idSolicitud, @RequestBody Long idNuevoEmpleado){
-        jornadaService.realizarCambio(idSolicitud, idNuevoEmpleado);
     }
 
     //Post
@@ -86,8 +72,6 @@ public class JornadaController {
     public List<Tarea> getJornadaByDateAndEmpleoyee(@RequestBody Date date, @RequestBody Long idEmployee){
         return jornadaService.getJornadaByDateAndEmpleoyee(idEmployee, date);
     }
-
-
 
     @PostMapping(value="/jornada/solicitar-intercambio")
     public void addSolicitudIntercambio(@RequestBody Solicitud solicitud){
@@ -103,7 +87,6 @@ public class JornadaController {
     public Jornada addJornada(@RequestBody Jornada jornada){
         return jornadaService.addJornada(jornada);
     }
-
 
     @PostMapping(value="/tareaStop/addNuevaTareaStop")
     public void addNuevaTareaStop(@RequestBody Tarea_stops tarea_stops ){

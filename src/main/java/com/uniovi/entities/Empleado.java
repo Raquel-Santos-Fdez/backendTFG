@@ -34,7 +34,8 @@ public class Empleado {
     }
 
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = "empleado", allowSetters = true)
+//    @JsonIgnoreProperties(value = "empleado", allowSetters = true)
+    @JsonIgnore
     private Set<Jornada> jornadas;
 
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.MERGE)

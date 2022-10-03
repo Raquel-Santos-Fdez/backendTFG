@@ -56,7 +56,6 @@ public class SolicitudController {
          solicitudService.gestionarSolicitudAceptada(solicitud);
     }
 
-
     @PostMapping(value="/jornada/solicitar-vacaciones")
     public void setSolicitud(@RequestBody SolicitudSimple solicitud){
         solicitudService.setSolicitud(solicitud);
