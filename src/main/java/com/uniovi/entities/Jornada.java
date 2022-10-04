@@ -31,9 +31,12 @@ public class Jornada {
 
     }
 
-    public Jornada( Date date){
+    public Jornada( Date date, Empleado empleado){
         this.date=date;
+        this.empleado=empleado;
     }
+
+
 
     public Long getId() {
         return id;

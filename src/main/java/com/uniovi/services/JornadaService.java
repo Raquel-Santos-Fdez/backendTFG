@@ -8,9 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -29,6 +27,9 @@ public class JornadaService {
     public SolicitudRepository solicitudRepository;
 
     @Autowired
+    public SolicitudVacacionesRepository solicitudVacacionesRepository;
+
+    @Autowired
     public TareaRepository tareaRepository;
 
 
@@ -40,8 +41,9 @@ public class JornadaService {
 
     public List<Solicitud> getAllSolicitudesPendientes() {
         List<Solicitud> solicitudes = new ArrayList<>();
-        solicitudes.addAll(solicitudIntercambioRepository.findAllPending());
+//        solicitudes.addAll(solicitudIntercambioRepository.findAllPending());
         solicitudes.addAll(solicitudSimpleRepository.findAllPending());
+        solicitudes.addAll(solicitudVacacionesRepository.findAllPending());
         return solicitudes;
     }
 
@@ -95,7 +97,7 @@ public class JornadaService {
     }
 
     public List<Jornada> findJornadaByDate(Date date) {
-        List<Jornada> jornadas = jornadaRepository.findJornadaByDate(new java.sql.Date(date.getTime()));
+        List<Jornada> jornadas = jornadaRepository.findJornadaByDate(date);
 
         return jornadas;
     }
@@ -117,4 +119,18 @@ public class JornadaService {
         return jornadaRepository.save(jornada);
     }
 
+    public void marcarDiaLibre(Date fecha, Empleado empleado) {
+
+        List<Jornada> jornadas = jornadaRepository.findJornadaByDateEmpleado(fecha, empleado.getId());
+        Jornada jornada;
+        if (jornadas.size() > 0)
+            jornada = jornadas.get(0);
+        else
+            jornada = new Jornada(fecha, empleado);
+        jornada.setDiaLibre(true);
+        jornada.setTareas(new HashSet<>());
+        jornadaRepository.save(jornada);
+
+
+    }
 }

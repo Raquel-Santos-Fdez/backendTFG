@@ -24,7 +24,7 @@ public interface JornadaRepository extends CrudRepository<Jornada, Long> {
     List<Jornada> findJornadaByEmpleado(Long id);
 
     @Query("select j from Jornada j where j.date=?1")
-    List<Jornada> findJornadaByDate(java.sql.Date date);
+    List<Jornada> findJornadaByDate(Date date);
 
     @Query("select j from Jornada j where j.empleado.id=?2 and j.date=?1 ")
     List<Jornada> findJornadaByDateEmpleado(Date date, Long id);

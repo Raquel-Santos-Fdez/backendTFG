@@ -10,7 +10,8 @@ import javax.persistence.*;
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY,  property="type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = SolicitudIntercambio.class, name="solicitudIntercambio"),
-        @JsonSubTypes.Type(value = SolicitudSimple.class, name="solicitudSimple")
+        @JsonSubTypes.Type(value = SolicitudSimple.class, name="solicitudSimple"),
+        @JsonSubTypes.Type(value = SolicitudVacaciones.class, name="solicitudVacaciones")
 })
 public abstract class Solicitud {
 
@@ -81,4 +82,6 @@ public abstract class Solicitud {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+
 }
