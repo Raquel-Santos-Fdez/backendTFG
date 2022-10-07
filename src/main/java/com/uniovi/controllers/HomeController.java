@@ -36,16 +36,6 @@ public class HomeController {
         return estacionService.getRouteById(id);
     }
 
-//    @RequestMapping(value = "/stop_times/{id}/{nombreRuta}")
-//    public List<Stop_time> findStopTimeByRouteId(@PathVariable String id,@PathVariable String nombreRuta) {
-//        return estacionesService.findStopTimeByRouteId(id, nombreRuta);
-//    }
-
-//    @RequestMapping(value = "/route-by-estacion/{stopId}")
-//    public List<Ruta> getRoutesByStop(@PathVariable String stopId) {
-//        return estacionesService.getRoutesByStop(stopId);
-//    }
-
     @RequestMapping(value = "/stopTimes/{rutaId}/{stopId}")
     public List<Stop_time> findStopTimeByRouteStop(@PathVariable String rutaId,@PathVariable String stopId) {
         return estacionService.findStopTimeByRouteStop(rutaId, stopId);

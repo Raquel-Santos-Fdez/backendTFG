@@ -1,12 +1,7 @@
 package com.uniovi.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.uniovi.entities.*;
-import com.uniovi.repositories.SolicitudIntercambioRepository;
-import com.uniovi.repositories.SolicitudRepository;
-import com.uniovi.repositories.SolicitudSimpleRepository;
-import com.uniovi.repositories.SolicitudVacacionesRepository;
+import com.uniovi.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +30,9 @@ public class SolicitudService {
     @Autowired
     public SolicitudVacacionesRepository solicitudVacacionesRepository;
 
+    @Autowired
+    public EmpleadoRepository empleadoRepository;
+
     public List<Solicitud> findSolicitudByFechaEmpleado(String date, Long id) {
         List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudIntercambioRepository.findSolicitudIntercambioByFechaEmpleado(date, id));
@@ -52,19 +50,20 @@ public class SolicitudService {
         //si es simple --> marcar la jornada como dia libre
         if (objectMapper.getSolicitudMapeada().getClass() == SolicitudSimple.class) {
 
-            Date fechaFormateada = null;
+            Date fechaFormateada;
             try {
                 fechaFormateada = format.parse(solicitud.getFecha());
                 jornadaService.marcarDiaLibre(fechaFormateada, solicitud.getEmpleado());
                 //decrementamos el número de días libres del empleado
                 solicitud.getEmpleado().setnDiasLibres(solicitud.getEmpleado().getnDiasLibres() - 1);
+                empleadoRepository.save(solicitud.getEmpleado());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
         //si es vacaciones --> marcar el rango como dias libres
         } else {
-            Date fechaInicio = null;
+            Date fechaInicio;
             Date fechaFinal = ((SolicitudVacaciones) solicitud).getFechaFinVacaciones();
             try {
                 fechaInicio = format.parse(solicitud.getFecha());
@@ -93,15 +92,15 @@ public class SolicitudService {
     }
 
     public List<Solicitud> findOwnSolicitudes(Long id) {
-        List<Solicitud> solicitudes = new ArrayList<Solicitud>();
+        List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudIntercambioRepository.findOwnSolicitudesIntercambio(id));
         solicitudes.addAll(solicitudSimpleRepository.findOwnSolicitudesSimples(id));
         return solicitudes;
     }
 
-    public List<SolicitudIntercambio> findOthersSolicitudesPending(Long id) {
+    public List<SolicitudIntercambio> findOthersSolicitudesPending(Empleado empleado) {
         List<SolicitudIntercambio> solicitudesIntercambio = new ArrayList<>();
-        List<SolicitudIntercambio> solicitudesPending = solicitudIntercambioRepository.findOthersSolicitudesPending(id);
+        List<SolicitudIntercambio> solicitudesPending = solicitudIntercambioRepository.findOthersSolicitudesPending(empleado.getId(), empleado.getRole());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -114,8 +113,8 @@ public class SolicitudService {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if ((jornadaService.findJornadaByDateEmployee(fechaDescanso, id).size() > 0) &&
-                    jornadaService.findJornadaByDateEmployee(fecha, id).size() == 0)
+            if ((jornadaService.findJornadaByDateEmployee(fechaDescanso, empleado.getId()).size() > 0) &&
+                    jornadaService.findJornadaByDateEmployee(fecha, empleado.getId()).size() == 0)
                 solicitudesIntercambio.add(s);
         }
         return solicitudesIntercambio;
@@ -128,5 +127,13 @@ public class SolicitudService {
 
     public void solicitarVacaciones(SolicitudVacaciones solicitud) {
         solicitudVacacionesRepository.save(solicitud);
+    }
+
+    public List<Solicitud> getAllSolicitudesPendientes() {
+        List<Solicitud> solicitudes = new ArrayList<>();
+//        solicitudes.addAll(solicitudIntercambioRepository.findAllPending());
+        solicitudes.addAll(solicitudSimpleRepository.findAllPending());
+        solicitudes.addAll(solicitudVacacionesRepository.findAllPending());
+        return solicitudes;
     }
 }

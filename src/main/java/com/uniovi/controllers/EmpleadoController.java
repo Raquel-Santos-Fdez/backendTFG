@@ -17,12 +17,6 @@ public class EmpleadoController {
     @Autowired
     private EmpleadoService empleadoService;
 
-//    @RequestMapping("/employee/list")
-//    public String getList(Model model){
-//        model.addAttribute("employeesList", empleadoService.getEmployees());
-//        return "employee/list";
-//    }
-
     @PostMapping(value = "/login")
     public Empleado login(@RequestBody Empleado empleado) {
         List<Empleado> empleados = empleadoService.findByUsernamePassword(empleado.getUsername(), empleado.getPassword());

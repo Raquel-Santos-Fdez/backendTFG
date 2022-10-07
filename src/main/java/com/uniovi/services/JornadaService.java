@@ -39,13 +39,6 @@ public class JornadaService {
     }
 
 
-    public List<Solicitud> getAllSolicitudesPendientes() {
-        List<Solicitud> solicitudes = new ArrayList<>();
-//        solicitudes.addAll(solicitudIntercambioRepository.findAllPending());
-        solicitudes.addAll(solicitudSimpleRepository.findAllPending());
-        solicitudes.addAll(solicitudVacacionesRepository.findAllPending());
-        return solicitudes;
-    }
 
     @Transactional
     public void reasignar(SolicitudIntercambio solicitud) {

@@ -1,9 +1,6 @@
 package com.uniovi.controllers;
 
-import com.uniovi.entities.Solicitud;
-import com.uniovi.entities.SolicitudIntercambio;
-import com.uniovi.entities.SolicitudSimple;
-import com.uniovi.entities.SolicitudVacaciones;
+import com.uniovi.entities.*;
 import com.uniovi.services.SolicitudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,17 +24,25 @@ public class SolicitudController {
         return solicitudService.findOwnSolicitudes(id);
     }
 
-    @RequestMapping(value = "/solicitudes/find-others-solicitudes/{id}")
-    public List<SolicitudIntercambio> findOthersSolicitudesPending(@PathVariable Long id) {
-        return solicitudService.findOthersSolicitudesPending(id);
-    }
+
 
     @RequestMapping(value = "/solicitudes/find-solicitudes-vacaciones/{id}")
     public List<SolicitudVacaciones> findSolicitudesVacaciones(@PathVariable Long id) {
         return solicitudService.findSolicitudesVacaciones(id);
     }
 
+    @RequestMapping(value="/solicitudes/ver-solicitudes-vacaciones")
+    public List<Solicitud> getAllSolicitudesPendientes(){
+        return solicitudService.getAllSolicitudesPendientes();
+    }
+
     //Put
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PutMapping(value = "/solicitudes/find-others-solicitudes")
+    public List<SolicitudIntercambio> findOthersSolicitudesPending(@RequestBody Empleado empleado) {
+        return solicitudService.findOthersSolicitudesPending(empleado);
+    }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value = "solicitudes/aceptar-solicitud")

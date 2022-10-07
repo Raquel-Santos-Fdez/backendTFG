@@ -29,10 +29,6 @@ public class JornadaController {
         return jornadaService.getJornadaByDateAndEmpleoyee(Long.parseLong(id), date);
     }
 
-    @RequestMapping(value="/jornada/ver-solicitudes-vacaciones")
-    public List<Solicitud> getAllSolicitudesPendientes(){
-        return jornadaService.getAllSolicitudesPendientes();
-    }
 
     @RequestMapping(value="/tareaStop/{id}")
     public Estacion findStopByTarea(@PathVariable Long id){
