@@ -1,6 +1,6 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,10 +13,9 @@ public class Tren {
     @GeneratedValue
     private Long id;
 
-
     @OneToMany(mappedBy = "tren", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    Set<Incidencia> incidencias=new HashSet<>();
+    @JsonIgnore
+    private Set<Incidencia> incidencias=new HashSet<>();
 
 
     public Long getId() {
@@ -27,5 +26,11 @@ public class Tren {
         this.id = id;
     }
 
+    public Set<Incidencia> getIncidencias() {
+        return incidencias;
+    }
 
+    public void setIncidencias(Set<Incidencia> incidencias) {
+        this.incidencias = incidencias;
+    }
 }

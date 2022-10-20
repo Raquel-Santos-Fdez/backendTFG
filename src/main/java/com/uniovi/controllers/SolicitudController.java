@@ -31,7 +31,7 @@ public class SolicitudController {
         return solicitudService.findSolicitudesVacaciones(id);
     }
 
-    @RequestMapping(value="/solicitudes/ver-solicitudes-vacaciones")
+    @RequestMapping(value="/solicitudes/ver-solicitudes-pendientes")
     public List<Solicitud> getAllSolicitudesPendientes(){
         return solicitudService.getAllSolicitudesPendientes();
     }
@@ -40,8 +40,8 @@ public class SolicitudController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value = "/solicitudes/find-others-solicitudes")
-    public List<SolicitudIntercambio> findOthersSolicitudesPending(@RequestBody Empleado empleado) {
-        return solicitudService.findOthersSolicitudesPending(empleado);
+    public List<SolicitudIntercambio> findOthersSolicitudesPendientes(@RequestBody Empleado empleado) {
+        return solicitudService.findOthersSolicitudesPendientes(empleado);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -56,15 +56,23 @@ public class SolicitudController {
         solicitudService.rechazarSolicitud(id);
     }
 
-    @PostMapping(value = "/jornada/enviar-solicitud")
+    //Post
+
+    @PostMapping(value = "/solicitudes/enviar-solicitud")
     public void setSolicitud(@RequestBody SolicitudSimple solicitud) {
         solicitudService.setSolicitud(solicitud);
     }
 
-    @PostMapping(value = "/jornada/solicitar-vacaciones")
+    @PostMapping(value = "/solicitudes/solicitar-vacaciones")
     public void solicitarVacaciones(@RequestBody SolicitudVacaciones solicitud) {
         solicitudService.solicitarVacaciones(solicitud);
     }
+
+    @PostMapping(value="/solicitudes/solicitar-intercambio")
+    public void addSolicitudIntercambio(@RequestBody Solicitud solicitud){
+        solicitudService.addSolicitudIntercambio(solicitud);
+    }
+
 
 
 

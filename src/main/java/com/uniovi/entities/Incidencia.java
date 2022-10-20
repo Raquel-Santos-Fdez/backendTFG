@@ -1,13 +1,13 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.uniovi.validators.ArgumentValidator;
 
 import javax.persistence.*;
 
 @Entity
 public class Incidencia {
 
-    enum EstadoIncidencia{
+    public enum EstadoIncidencia{
         PENDIENTE, RESUELTA
     }
 
@@ -21,8 +21,22 @@ public class Incidencia {
     private String descripcion;
 
     @ManyToOne
-    @JsonBackReference
     private Tren tren;
+
+    public Incidencia(){
+
+    }
+
+    public Incidencia(String descripcion, Tren tren){
+        super();
+        ArgumentValidator.isNotEmpty(descripcion);
+        ArgumentValidator.isNotNull(tren);
+
+        this.estado=EstadoIncidencia.PENDIENTE;
+        this.descripcion=descripcion;
+        this.tren=tren;
+
+    }
 
     public Long getId() {
         return id;
@@ -46,5 +60,13 @@ public class Incidencia {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Tren getTren() {
+        return tren;
+    }
+
+    public void setTren(Tren tren) {
+        this.tren = tren;
     }
 }

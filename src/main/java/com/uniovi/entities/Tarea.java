@@ -1,5 +1,7 @@
 package com.uniovi.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -34,8 +36,8 @@ public class Tarea {
     @JoinColumn(name = "tren_id")
     private Tren tren;
 
-    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value="tarea", allowSetters = true)
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinColumn(name="tarea_id")
     private Set<Tarea_stops> stops = new HashSet<>();
 
     public Tarea() {

@@ -1,8 +1,11 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.uniovi.validators.ArgumentValidator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,31 +13,34 @@ import java.util.Set;
 public class Ruta {
 
     @Id
-    private String ruta_id;
+    private String id;
     private String ruta_corto;
     private String ruta_largo;
 
     @OneToMany(mappedBy = "ruta")
-    @JsonBackReference
+    @JsonIgnore
     private Set<Route_stop> stops=new HashSet<>();
 
     public Ruta(){
 
     }
 
-    public Ruta(String ruta_id, String ruta_corto, String ruta_largo){
+    public Ruta(String id, String ruta_corto, String ruta_largo){
         super();
-        this.ruta_id = ruta_id;
+        ArgumentValidator.isNotEmpty(id);
+        ArgumentValidator.isNotEmpty(ruta_corto);
+        ArgumentValidator.isNotEmpty(ruta_largo);
+        this.id = id;
         this.ruta_corto = ruta_corto;
         this.ruta_largo = ruta_largo;
     }
 
     public String getRuta_id() {
-        return ruta_id;
+        return id;
     }
 
     public void setRuta_id(String ruta_id) {
-        this.ruta_id = ruta_id;
+        this.id = ruta_id;
     }
 
     public String getRuta_corto() {

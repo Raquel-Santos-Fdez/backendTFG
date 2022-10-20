@@ -1,8 +1,7 @@
 package com.uniovi.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.uniovi.validators.ArgumentValidator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,18 +11,18 @@ import java.util.Set;
 public class Estacion {
 
     @Id
-    public String id;
-    public String nombre;
-    public double latitud;
-    public double longitud;
+    private String id;
+    @Column(unique = true)
+    private String nombre;
+    private double latitud;
+    private double longitud;
 
     @OneToMany(mappedBy = "estacion", cascade = CascadeType.ALL)
-//    @JsonManagedReference  (value="stopT-estacion")
-    @JsonIgnoreProperties(value="estacion")
+    @JsonIgnore
     private Set<Tarea_stops> tareas=new HashSet<>();
 
     @OneToMany(mappedBy = "estacion")
-    @JsonBackReference
+    @JsonIgnore
     private Set<Route_stop> routes=new HashSet<>();
 
 
@@ -33,6 +32,8 @@ public class Estacion {
 
     public Estacion(String id, String nombre, double latitud, double longitud){
         super();
+        ArgumentValidator.isNotEmpty(id);
+        ArgumentValidator.isNotEmpty(nombre);
         this.id = id;
         this.nombre = nombre;
         this.latitud = latitud;
@@ -72,14 +73,6 @@ public class Estacion {
         this.nombre = nombre;
     }
 
-//    public Set<Tarea_stops> getTareas() {
-//        return tareas;
-//    }
-//
-//    public void setTareas(Set<Tarea_stops> tareas) {
-//        this.tareas = tareas;
-//    }
-
     public Set<Route_stop> getRoutes() {
         return routes;
     }
@@ -88,4 +81,11 @@ public class Estacion {
         this.routes = routes;
     }
 
+    public Set<Tarea_stops> getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(Set<Tarea_stops> tareas) {
+        this.tareas = tareas;
+    }
 }

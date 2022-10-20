@@ -1,9 +1,6 @@
 package com.uniovi.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Route_stop {
@@ -24,7 +21,7 @@ public class Route_stop {
 
     }
 
-    public Route_stop(Estacion estacion, Ruta ruta, int orderParada) {
+    public Route_stop(int orderParada, Estacion estacion, Ruta ruta ) {
         super();
         this.estacion = estacion;
         this.ruta = ruta;

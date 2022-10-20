@@ -1,6 +1,9 @@
 package com.uniovi.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity(name="stop_times")
 public class Stop_time {
@@ -10,14 +13,14 @@ public class Stop_time {
     private Long id;
 
     @ManyToOne
-    public Trip trip;
+    private Trip trip;
 
     @ManyToOne
-    public Estacion estacion;
+    private Estacion estacion;
 
-    public String arrival_time;
-    public String departure_time;
-    public String stop_sequence;
+    private String arrival_time;
+    private String departure_time;
+    private String stop_sequence;
 
     public Stop_time(){
 
@@ -78,5 +81,13 @@ public class Stop_time {
 
     public void setStop_sequence(String stop_sequence) {
         this.stop_sequence = stop_sequence;
+    }
+
+    public Estacion getEstacion() {
+        return estacion;
+    }
+
+    public void setEstacion(Estacion estacion) {
+        this.estacion = estacion;
     }
 }

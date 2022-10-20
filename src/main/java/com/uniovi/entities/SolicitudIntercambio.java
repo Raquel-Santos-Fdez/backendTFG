@@ -1,24 +1,29 @@
 package com.uniovi.entities;
 
+import com.uniovi.validators.ArgumentValidator;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class SolicitudIntercambio extends Solicitud{
 
-    public String fechaDescanso;
+    private String fechaDescanso;
 
     @ManyToOne
     private Empleado nuevoEmpleado;
 
-    public SolicitudIntercambio(){
 
-    }
 
-    public SolicitudIntercambio(Long id, String fecha, String motivo, Empleado empleado, EstadoSolicitud estado, String fechaDescanso, Empleado nuevoEmpleado) {
-        super(id, fecha, motivo, empleado, estado);
+    public SolicitudIntercambio( String fecha, String motivo, Empleado empleado, String fechaDescanso, Empleado nuevoEmpleado) {
+        super( fecha, motivo, empleado);
+        ArgumentValidator.isNotEmpty(fechaDescanso);
         this.fechaDescanso = fechaDescanso;
         this.nuevoEmpleado = nuevoEmpleado;
+    }
+
+    public SolicitudIntercambio() {
+        super();
     }
 
     public String getFechaDescanso() {
@@ -36,5 +41,6 @@ public class SolicitudIntercambio extends Solicitud{
     public void setNuevoEmpleado(Empleado nuevoEmpleado) {
         this.nuevoEmpleado = nuevoEmpleado;
     }
+
 
 }

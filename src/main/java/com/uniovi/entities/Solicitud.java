@@ -2,6 +2,7 @@ package com.uniovi.entities;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.uniovi.validators.ArgumentValidator;
 
 import javax.persistence.*;
 
@@ -32,14 +33,19 @@ public abstract class Solicitud {
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado=EstadoSolicitud.PENDIENTE;
 
-    protected Solicitud(Long id, String fecha, String motivo, Empleado empleado, EstadoSolicitud estado) {
-        this.id = id;
+    public  Solicitud( String fecha, String motivo, Empleado empleado) {
+        super();
+        ArgumentValidator.isNotEmpty(fecha);
+        ArgumentValidator.isNotEmpty(motivo);
+        ArgumentValidator.isNotNull(empleado);
+
         this.fecha = fecha;
         this.motivo = motivo;
         this.empleado = empleado;
-        this.estado = estado;
+        this.estado = EstadoSolicitud.PENDIENTE;
     }
-    protected Solicitud(){
+
+    public Solicitud(){
 
     }
 

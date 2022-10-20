@@ -1,9 +1,8 @@
 package com.uniovi.controllers;
 
 import com.uniovi.entities.Incidencia;
-import com.uniovi.entities.SolicitudIntercambio;
 import com.uniovi.entities.Tren;
-import com.uniovi.services.IncidenciasService;
+import com.uniovi.services.IncidenciaService;
 import com.uniovi.services.TrenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +13,14 @@ import java.util.List;
 public class TrenController {
 
     @Autowired
-    private IncidenciasService incidenciasService;
+    private IncidenciaService incidenciaService;
 
     @Autowired
     private TrenService trenService;
 
     @RequestMapping(value="/tren/getIncidenciasPending/{id}")
     public List<Incidencia> getIncidenciasPending(@PathVariable Long id){
-        List<Incidencia> incidencias=incidenciasService.getIncidenciasPending(id);
+        List<Incidencia> incidencias= incidenciaService.getIncidenciasPending(id);
         return incidencias;
     }
 
@@ -30,10 +29,16 @@ public class TrenController {
         return trenService.findTrenById(id);
     }
 
+    @RequestMapping(value="/tren/findAll")
+    public List<Tren> findAll(){
+        return trenService.findAll();
+    }
+
     @PostMapping(value="/tren/addIncidencia")
     public void addInicidencia(@RequestBody Incidencia incidencia){
-        incidenciasService.addInicidencia(incidencia);
+        incidenciaService.addInicidencia(incidencia);
     }
+
 
 
 }

@@ -10,12 +10,9 @@ import java.util.List;
 
 public interface SolicitudIntercambioRepository extends CrudRepository<SolicitudIntercambio, Long> {
 
-    @Query("select s from SolicitudIntercambio s  where s.estado='PENDIENTE' or s.estado='REASIGNADA'")
-    List<SolicitudIntercambio> findAllPending();
-
 
     @Query("select s from SolicitudIntercambio s where s.estado='PENDIENTE' and s.empleado.id<>?1 and s.empleado.role=?2")
-    List<SolicitudIntercambio> findOthersSolicitudesPending(Long idEmpleado, Empleado.Rol rol);
+    List<SolicitudIntercambio> findOthersSolicitudesPendientes(Long idEmpleado, Empleado.Rol rol);
 
 
     @Query("select s from SolicitudIntercambio s where s.empleado.id=?1")

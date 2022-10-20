@@ -1,5 +1,7 @@
 package com.uniovi.entities;
 
+import com.uniovi.validators.ArgumentValidator;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -19,7 +21,7 @@ public class Jornada {
 
     private boolean isDiaLibre;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name="jornada_id")
     private Set<Tarea> tareas = new HashSet<>();
 
@@ -29,8 +31,16 @@ public class Jornada {
     }
 
     public Jornada( Date date, Empleado empleado){
+        super();
+        ArgumentValidator.isNotNull(date);
+        ArgumentValidator.isNotNull(empleado);
         this.date=date;
         this.empleado=empleado;
+    }
+
+    public Jornada( Date date, Empleado empleado, boolean isDiaLibre){
+        this(date, empleado);
+        this.isDiaLibre=isDiaLibre;
     }
 
 

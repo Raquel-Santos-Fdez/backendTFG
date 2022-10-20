@@ -1,50 +1,50 @@
 package com.uniovi.services;
 
+import com.uniovi.config.Mapper;
+import com.uniovi.config.SolicitudMapper;
 import com.uniovi.entities.*;
 import com.uniovi.repositories.*;
+import com.uniovi.validators.ArgumentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 
 
 @Service
 public class JornadaService {
 
     @Autowired
-    public JornadaRepository jornadaRepository;
+    private JornadaRepository jornadaRepository;
 
     @Autowired
-    public SolicitudIntercambioRepository solicitudIntercambioRepository;
+    private SolicitudIntercambioRepository solicitudIntercambioRepository;
+
 
     @Autowired
-    public SolicitudSimpleRepository solicitudSimpleRepository;
-
-    @Autowired
-    public SolicitudRepository solicitudRepository;
-
-    @Autowired
-    public SolicitudVacacionesRepository solicitudVacacionesRepository;
-
-    @Autowired
-    public TareaRepository tareaRepository;
+    private SolicitudRepository solicitudRepository;
 
 
-    public List<Tarea> getJornadaByDateAndEmpleoyee(Long id, Date date) {
-        List<Tarea> jornadas = jornadaRepository.findTareaByDateAndEmpleado(id, new java.sql.Date(date.getTime()));
+    public List<Tarea> getTareasByFechaEmpleado(Long id, Date date) {
+        List<Tarea> jornadas = jornadaRepository.findTareaByFechaEmpleado(id, date);
         return jornadas;
     }
 
 
-
     @Transactional
     public void reasignar(SolicitudIntercambio solicitud) {
-        solicitudIntercambioRepository.asignarNuevoEmpleado(solicitud.getId(), solicitud.getNuevoEmpleado());
-        realizarCambio(solicitud);
-        solicitudRepository.reasignar(solicitud.getId());
+        if(solicitud!=null&& solicitud.getId()!=null && solicitud.getNuevoEmpleado()!=null) {
+            solicitudIntercambioRepository.asignarNuevoEmpleado(solicitud.getId(), solicitud.getNuevoEmpleado());
+            realizarCambio(solicitud);
+            solicitud.setEstado(Solicitud.EstadoSolicitud.REASIGNADA);
+            solicitudIntercambioRepository.save(solicitud);
+        }
     }
 
     private void realizarCambio(SolicitudIntercambio solicitudIntercambio) {
@@ -70,20 +70,6 @@ public class JornadaService {
         jornadaRepository.cambiarJornadaEmpleado(solicitudIntercambio.getEmpleado(), jornadaEmpleadoNuevo.getId());
     }
 
-
-    public Estacion findStopByTarea(Long id) {
-        return tareaRepository.findStopByTarea(id).get(0);
-    }
-
-    @Transactional
-    public void addSolicitudIntercambio(Solicitud solicitud) {
-        SolicitudMapper solicitudMapper = Mapper.convertirObjectSolicitud(solicitud);
-
-        if (solicitudMapper.getSolicitudMapeada() instanceof SolicitudIntercambio)
-            solicitudIntercambioRepository.save((SolicitudIntercambio) solicitudMapper.getSolicitudMapeada());
-    }
-
-
     public List<Jornada> findJornadaByEmpleado(Long id) {
         List<Jornada> jornadas = jornadaRepository.findJornadaByEmpleado(id);
         return jornadas;
@@ -95,7 +81,7 @@ public class JornadaService {
         return jornadas;
     }
 
-    public List<Jornada> findJornadaByDateEmployee(Date date, Long id) {
+    public List<Jornada> findJornadaByDateEmpleado(Date date, Long id) {
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         List<Jornada> jornada = new ArrayList<>();
@@ -125,5 +111,9 @@ public class JornadaService {
         jornadaRepository.save(jornada);
 
 
+    }
+
+    public void eliminarTodos(){
+        jornadaRepository.deleteAll();
     }
 }

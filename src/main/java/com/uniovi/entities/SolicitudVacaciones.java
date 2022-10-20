@@ -6,21 +6,26 @@ import java.util.Date;
 @Entity
 public class SolicitudVacaciones extends Solicitud{
 
-    private Date fechaFinVacaciones;
+    private String fechaFinVacaciones;
 
-    public SolicitudVacaciones(Long id, String fecha, String motivo, Empleado empleado, EstadoSolicitud estado) {
-        super(id, fecha, motivo, empleado, estado);
+    public SolicitudVacaciones(String fecha, String motivo, Empleado empleado) {
+        super( fecha, motivo, empleado);
+    }
+
+    public SolicitudVacaciones(String fecha, String motivo, Empleado empleado, String fechaFinVacaciones) {
+        super( fecha, motivo, empleado);
+        this.fechaFinVacaciones=fechaFinVacaciones;
     }
 
     public SolicitudVacaciones() {
         super();
     }
 
-    public Date getFechaFinVacaciones() {
+    public String getFechaFinVacaciones() {
         return fechaFinVacaciones;
     }
 
-    public void setFechaFinVacaciones(Date fechaFinVacaciones) {
+    public void setFechaFinVacaciones(String fechaFinVacaciones) {
         this.fechaFinVacaciones = fechaFinVacaciones;
     }
 }

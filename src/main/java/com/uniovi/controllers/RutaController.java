@@ -17,12 +17,17 @@ public class RutaController {
     private RutaService rutaService;
 
     @RequestMapping(value = "/rutas")
-    public List<Ruta> getRoutes() {
+    public List<Ruta> getRutas() {
         return rutaService.getRutas();
     }
 
     @RequestMapping(value = "/ruta/{origenId}/{destinoId}")
-    public List<Route_stop> findRoutesByStops(@PathVariable String origenId, @PathVariable String destinoId) {
+    public List<Route_stop> findRutaByEstaciones(@PathVariable String origenId, @PathVariable String destinoId) {
         return rutaService.findRutaByEstaciones(origenId, destinoId);
+    }
+
+    @RequestMapping(value = "/rutas/{id}")
+    public Ruta getRutaById(@PathVariable String id) {
+        return rutaService.getRutaById(id);
     }
 }

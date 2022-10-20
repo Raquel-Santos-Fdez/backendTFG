@@ -3,6 +3,7 @@ package com.uniovi.services;
 import com.uniovi.entities.*;
 import com.uniovi.util.LectorCSV;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
@@ -19,87 +20,96 @@ public class LoaderEstacionesService {
     private RutaService rutaService;
 
     //Leemos de fichero
-    private LectorCSV lector=new LectorCSV();
+    private final LectorCSV lector = new LectorCSV();
 
-    public List<String> stopsIds=new ArrayList<>();
+    private List<String> stopsIds = new ArrayList<>();
 
-    private List<Estacion> getStopsFromFile() throws  FileNotFoundException{
-        List<String> lineas=lector.readLines("listadoEstaciones.csv");
+    private List<Estacion> getEstacionesFromFile() throws FileNotFoundException {
+        List<String> lineas = lector.readLines("listadoEstaciones.csv");
         String[] stop;
-        List<Estacion> estacions =new ArrayList<>();
-        for(int i=1; i<lineas.size();i++){
-            stop=lineas.get(i).split(";");
+        List<Estacion> estacions = new ArrayList<>();
+        for (int i = 1; i < lineas.size(); i++) {
+            stop = lineas.get(i).split(";");
             stopsIds.add(stop[0]);
-            estacions.add(new Estacion(stop[0],stop[1], Double.parseDouble(stop[2]), Double.parseDouble(stop[3])));
+            estacions.add(new Estacion(stop[0], stop[1], Double.parseDouble(stop[2]), Double.parseDouble(stop[3])));
         }
         return estacions;
     }
 
-    private List<Stop_time> getStopTimes() throws  FileNotFoundException{
-        List<String> lineas=lector.readLines("stop_times.csv");
+    private List<Stop_time> getStopTimes() throws FileNotFoundException {
+        List<String> lineas = lector.readLines("stop_times.csv");
         String[] stop_time;
-        List<Stop_time> stop_times=new ArrayList<>();
-        for(int i=1; i<lineas.size();i++){
-            stop_time=lineas.get(i).split(";");
+        List<Stop_time> stop_times = new ArrayList<>();
+        for (int i = 1; i < lineas.size(); i++) {
+            stop_time = lineas.get(i).split(";");
             //hacerlo por consulta o en una clase apropiada
-            Estacion estacion = estacionService.getStopById(stop_time[3]);
-            Trip trip= estacionService.getTripById(stop_time[0]);
-            if(estacion !=null && trip!=null)
+            Estacion estacion = estacionService.getEstacionById(stop_time[3]);
+            Trip trip = estacionService.getTripById(stop_time[0]);
+            if (estacion != null && trip != null)
                 stop_times.add(new Stop_time(trip, estacion,
                         stop_time[1], stop_time[2], stop_time[4]));
         }
         return stop_times;
     }
 
-    private List<Trip> getTrips() throws  FileNotFoundException{
-        List<String> lineas=lector.readLines("trips.csv");
+    private List<Trip> getTrips() throws FileNotFoundException {
+        List<String> lineas = lector.readLines("trips.csv");
         String[] trip;
-        List<Trip> trips=new ArrayList<>();
-        for(int i=1; i<lineas.size();i++){
-            trip=lineas.get(i).split(";");
-            Ruta ruta = estacionService.getRouteById(trip[1]);
-            if(ruta !=null && trip[0].contains("L"))
+        List<Trip> trips = new ArrayList<>();
+        for (int i = 1; i < lineas.size(); i++) {
+            trip = lineas.get(i).split(";");
+            Ruta ruta = rutaService.getRutaById(trip[1]);
+//            Ruta ruta = estacionService.getRutaById(trip[1]);
+            if (ruta != null && trip[0].contains("L"))
                 trips.add(new Trip(trip[0], ruta));
         }
         return trips;
     }
 
-    private List<Ruta> getRutas() throws  FileNotFoundException{
-        List<String> lineas=lector.readLines("rutas.csv");
+    private List<Ruta> getRutas() throws FileNotFoundException {
+        List<String> lineas = lector.readLines("rutas.csv");
         String[] ruta;
-        List<Ruta> rutas =new ArrayList<>();
-        for(int i=1; i<lineas.size();i++){
-            ruta=lineas.get(i).split(";");
+        List<Ruta> rutas = new ArrayList<>();
+        for (int i = 1; i < lineas.size(); i++) {
+            ruta = lineas.get(i).split(";");
             rutas.add(new Ruta(ruta[0], ruta[1], ruta[2]));
         }
         return rutas;
     }
 
-    private void loadStopToRoute(){
-
-        List<Estacion> estaciones= estacionService.getStops();
-        List<Ruta> lineas=rutaService.getRutas();
-
-//        lineas.get
+    private List<Route_stop> getRutaStops() throws FileNotFoundException {
+        List<String> lineas = lector.readLines("ruta_stops.csv");
+        String[] ruta_stop;
+        List<Route_stop> rutas_stops = new ArrayList<>();
+        for (int i = 1; i < lineas.size(); i++) {
+            ruta_stop = lineas.get(i).split(";");
+            Estacion estacion = estacionService.getEstacionById(ruta_stop[1]);
+            Ruta ruta = rutaService.getRutaById(ruta_stop[2]);
+            if (estacion != null && ruta != null)
+                rutas_stops.add(new Route_stop(Integer.parseInt(ruta_stop[0]), estacion, ruta));
+        }
+        return rutas_stops;
     }
 
     @PostConstruct
     public void init() {
 
         try {
-            for(Estacion estacion :getStopsFromFile())
-                estacionService.addStop(estacion);
+            for (Estacion estacion : getEstacionesFromFile())
+                estacionService.addEstacion(estacion);
 
-            for(Ruta ruta : getRutas())
-                estacionService.addRuta(ruta);
+            for (Ruta ruta : getRutas())
+                rutaService.addRuta(ruta);
 
-            for(Trip trip:getTrips())
+            for (Trip trip : getTrips())
                 estacionService.addTrip(trip);
 
-            for(Stop_time st:getStopTimes())
+
+            for (Stop_time st : getStopTimes())
                 estacionService.addStopTimes(st);
 
-
+            for(Route_stop rs:getRutaStops())
+                rutaService.addRutaStop(rs);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

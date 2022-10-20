@@ -1,7 +1,11 @@
 package com.uniovi.services;
 
-import com.uniovi.entities.*;
-import com.uniovi.repositories.*;
+import com.uniovi.entities.Estacion;
+import com.uniovi.entities.Stop_time;
+import com.uniovi.entities.Trip;
+import com.uniovi.repositories.EstacionRepository;
+import com.uniovi.repositories.StopTimeRepository;
+import com.uniovi.repositories.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,31 +18,28 @@ public class EstacionService {
 
 
     @Autowired
-    public EstacionRepository estacionRepository;
+    private EstacionRepository estacionRepository;
 
     @Autowired
-    public StopTimeRepository stopTimeRepository;
+    private StopTimeRepository stopTimeRepository;
 
     @Autowired
-    public RutaRepository rutaRepository;
-
-    @Autowired
-    public TripRepository tripRepository;
+    private TripRepository tripRepository;
 
 
-    public void addStop(Estacion estacion) {
+    public void addEstacion(Estacion estacion) {
         estacionRepository.save(estacion);
     }
 
-    public List<Estacion> getStops() {
-        List<Estacion> estacions =new ArrayList<>();
+    public List<Estacion> getEstaciones() {
+        List<Estacion> estacions = new ArrayList<>();
         estacionRepository.findAll().forEach(estacions::add);
         return estacions;
     }
 
-    public Estacion getStopById(String id) {
-        Optional<Estacion> stop= estacionRepository.findById(id);
-        if(stop.isPresent())
+    public Estacion getEstacionById(String id) {
+        Optional<Estacion> stop = estacionRepository.findById(id);
+        if (stop.isPresent())
             return stop.get();
         return null;
     }
@@ -48,44 +49,21 @@ public class EstacionService {
     }
 
     public List<Stop_time> getStopTimes() {
-        List<Stop_time> stopTimes=new ArrayList<>();
+        List<Stop_time> stopTimes = new ArrayList<>();
         stopTimeRepository.findAll().forEach(stopTimes::add);
         return stopTimes;
     }
 
-    public void addRuta(Ruta ruta) {
-        rutaRepository.save(ruta);
-    }
-
-
-
-    public Ruta getRouteById(String id) {
-        Optional<Ruta> ruta= rutaRepository.findById(id);
-        if(ruta.isPresent())
-            return ruta.get();
-        return null;
-    }
 
     public void addTrip(Trip trip) {
         tripRepository.save(trip);
     }
 
     public Trip getTripById(String id) {
-        Optional<Trip> trip= tripRepository.findById(id);
-        if(trip.isPresent())
+        Optional<Trip> trip = tripRepository.findById(id);
+        if (trip.isPresent())
             return trip.get();
         return null;
-    }
-
-    public List<Stop_time> findStopTimeByRouteId(String id, String nombreRuta) {
-        List<Stop_time> stopTimes=new ArrayList<>();
-        String nombreParcial='%'+nombreRuta+'%';
-        stopTimeRepository.findStopTimeByRouteId(id, nombreParcial).forEach(stopTimes::add);
-        return stopTimes;
-    }
-
-    public List<Ruta> getRoutesByStop(String id) {
-        return rutaRepository.getRoutesByStop(id);
     }
 
     public List<Stop_time> findStopTimeByRouteStop(String routeId, String stopId) {
@@ -93,4 +71,8 @@ public class EstacionService {
     }
 
 
+    public void deleteEstacion(String id) {
+        if (getEstacionById(id) != null)
+            estacionRepository.deleteById(id);
+    }
 }

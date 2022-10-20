@@ -1,19 +1,21 @@
 package com.uniovi.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Trip {
 
     @Id
-    private String trip_id;
+    private String id;
 
     @ManyToOne
     private Ruta ruta;
 
-    public Trip(String trip_id, Ruta ruta) {
+    public Trip(String id, Ruta ruta) {
         super();
-        this.trip_id = trip_id;
+        this.id = id;
         this.ruta = ruta;
     }
 
@@ -21,12 +23,12 @@ public class Trip {
 
     }
 
-    public String getTrip_id() {
-        return trip_id;
+    public String getId() {
+        return id;
     }
 
-    public void setTrip_id(String trip_id) {
-        this.trip_id = trip_id;
+    public void setId(String trip_id) {
+        this.id = trip_id;
     }
 
     public Ruta getRoute() {

@@ -1,9 +1,10 @@
 package com.uniovi.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
+import com.uniovi.validators.ArgumentValidator;
+import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -19,7 +20,9 @@ public class Empleado {
     private String username;
     private String name;
     private String surname;
+    @Column(unique = true)
     private String email;
+    @Column(unique = true)
     private String dni;
 
     @Enumerated(EnumType.STRING)
@@ -34,7 +37,6 @@ public class Empleado {
     }
 
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties(value = "empleado", allowSetters = true)
     @JsonIgnore
     private Set<Jornada> jornadas;
 
@@ -43,20 +45,36 @@ public class Empleado {
     private Set<Solicitud> solicitudes = new HashSet<>();
 
 
-    public Empleado(String username, String name, String surname, int nDiasLibres) {
+    public Empleado(String username, String name, String surname, String email, String dni, String password, Rol rol, int nDiasLibres) {
         super();
+
+        ArgumentValidator.isNotEmpty(username);
+        ArgumentValidator.isNotEmpty(name);
+        ArgumentValidator.isNotEmpty(surname);
+        ArgumentValidator.isNotEmpty(email);
+        ArgumentValidator.isNotEmpty(dni);
+        ArgumentValidator.isNotEmpty(password);
+        ArgumentValidator.isNotNull(rol);
+
+        ArgumentValidator.checkEmail(email);
+        ArgumentValidator.checkDni(dni);
+        ArgumentValidator.checkPassword(password);
+
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.nDiasLibres=nDiasLibres;
-//        this.jornadas=jornadas;
+        this.email=email;
+        this.dni=dni;
+        this.role=rol;
+        this.password=password;
 
     }
 
     public Empleado() {
+        this.nDiasLibres=100;
 
     }
-
 
     public Long getId() {
         return id;

@@ -1,5 +1,7 @@
 package com.uniovi.entities;
 
+import com.uniovi.validators.ArgumentValidator;
+
 import javax.persistence.*;
 
 @Entity(name="tarea_stops")
@@ -19,18 +21,21 @@ public class Tarea_stops {
     @ManyToOne
     private Estacion estacion;
 
-    @ManyToOne
-    @JoinColumn(name="tarea_id")
-    private Tarea tarea;
+//    @ManyToOne
+//    @JoinColumn(name="tarea_id")
+//    private Tarea tarea;
 
     public Tarea_stops(){
 
     }
 
     public Tarea_stops(Situacion situacion, Estacion estacion, Tarea tarea) {
+        ArgumentValidator.isNotNull(situacion);
+        ArgumentValidator.isNotNull(estacion);
+        ArgumentValidator.isNotNull(tarea);
         this.situacion = situacion;
         this.estacion = estacion;
-        this.tarea = tarea;
+//        this.tarea = tarea;
     }
 
 
@@ -59,11 +64,11 @@ public class Tarea_stops {
         this.estacion = estacion;
     }
 
-    public Tarea getTarea() {
-        return tarea;
-    }
-
-    public void setTarea(Tarea tarea) {
-        this.tarea = tarea;
-    }
+//    public Tarea getTarea() {
+//        return tarea;
+//    }
+//
+//    public void setTarea(Tarea tarea) {
+//        this.tarea = tarea;
+//    }
 }
