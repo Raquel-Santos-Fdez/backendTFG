@@ -1,13 +1,7 @@
 package com.uniovi.unit;
 
-import com.uniovi.entities.Empleado;
-import com.uniovi.entities.Jornada;
-import com.uniovi.entities.Tarea;
-import com.uniovi.entities.Tarea_stops;
-import com.uniovi.services.EmpleadoService;
-import com.uniovi.services.JornadaService;
-import com.uniovi.services.TareaService;
-import com.uniovi.services.TareaStopsService;
+import com.uniovi.entities.*;
+import com.uniovi.services.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -34,19 +28,30 @@ public class TareaStopTest {
     @Autowired
     private TareaStopsService tareaStopsService;
 
+    @Autowired
+    private EstacionService estacionService;
+
     @Before
     public void antesDeCadaTest(){
         tareaStopsService.eliminarTodos();
+        if (estacionService.getEstacionById("1")!=null)
+            estacionService.deleteEstacion("1");
     }
 
     @After
     public void despuesDeCadaTest(){
         tareaStopsService.eliminarTodos();
+        if (estacionService.getEstacionById("1")!=null)
+            estacionService.deleteEstacion("1");
     }
 
     @Test
     public void pr01addNuevaTareaStopTest() {
-        tareaStopsService.addNuevaTareaStop(new Tarea_stops());
+        Estacion estacion = new Estacion("1", "Ferreros", 1.1, 1.1);
+        estacionService.addEstacion(estacion);
+        Tarea tarea=new Tarea();
+        Tarea_stops tarea_stops=new Tarea_stops(Tarea_stops.Situacion.INICIO, estacion, tarea );
+        tareaStopsService.addNuevaTareaStop(tarea_stops);
         assertEquals(tareaStopsService.getAll().size(),1);
     }
 

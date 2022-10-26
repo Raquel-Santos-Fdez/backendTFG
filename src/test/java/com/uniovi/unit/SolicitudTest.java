@@ -58,13 +58,10 @@ public class SolicitudTest {
 
     @Test
     public void pr02setSolicitudTest() {
-        solicitudService.setSolicitud(new SolicitudSimple());
+        Empleado empleado=new Empleado();
+        empleadoService.addEmpleado(empleado);
+        solicitudService.setSolicitud(new SolicitudSimple("2022-10-17", "Detraible", empleado));
         assertEquals(solicitudService.getAllSolicitudesPendientes().size(), 1);
-    }
-
-    @Test
-    public void pr03rechazarSolicitudInvalidaTest() {
-        solicitudService.rechazarSolicitud(null);
     }
 
     @Test
@@ -136,7 +133,8 @@ public class SolicitudTest {
     public void pr11addSolicitudIntercambioTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", "Licencia", empleado, "2022-11-17", null);
+        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", "Licencia",
+                empleado, "2022-11-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio);
         assertEquals(solicitudService.findOwnSolicitudes(empleado.getId()).size(), 1);
     }
@@ -236,7 +234,7 @@ public class SolicitudTest {
     }
 
     @Test
-    public void pr23findOthersSolicitudesPendientesFechasNoCoinicdentesTest() {
+    public void pr23findOthersSolicitudesPendientesFechasNoCoincidentesTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
         Empleado empleado2 = new Empleado();
@@ -374,9 +372,6 @@ public class SolicitudTest {
         solicitudService.setSolicitud(solicitudSimple);
 
         solicitudSimple = (SolicitudSimple) solicitudService.getAllSolicitudesPendientes().get(0);
-        solicitudService.aceptarSolicitud(solicitudSimple);
-
-        assertEquals(solicitudSimple.getEstado(), Solicitud.EstadoSolicitud.ACEPTADA);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -390,6 +385,10 @@ public class SolicitudTest {
             jornada.setTareas(tareas);
 
             jornadaService.addJornada(jornada);
+
+            solicitudService.aceptarSolicitud(solicitudSimple);
+
+            assertEquals(solicitudSimple.getEstado(), Solicitud.EstadoSolicitud.ACEPTADA);
 
             assertTrue(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
             assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).getTareas().size(), 0);
@@ -414,7 +413,6 @@ public class SolicitudTest {
             fechaFinal = sdf.parse("2022-10-20");
 
             SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", "Licencia", empleado, "2022-10-20");
-            //fechaFinal);
             solicitudService.solicitarVacaciones(solicitudVacaciones);
 
             solicitudService.aceptarSolicitud(solicitudVacaciones);

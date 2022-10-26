@@ -1,15 +1,14 @@
-package com.uniovi.tests.util;
-
-
-import java.util.List;
-
-import static org.junit.Assert.*;
+package com.uniovi.utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 public class SeleniumUtils {
 
@@ -90,5 +89,16 @@ public class SeleniumUtils {
 		return EsperaCargaPaginaxpath(driver, busqueda, timeout);
 	}
 
+	static public void esperarSegundos(WebDriver driver, int segundos){
+
+		synchronized(driver){
+			try {
+				driver.wait(segundos * 1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }

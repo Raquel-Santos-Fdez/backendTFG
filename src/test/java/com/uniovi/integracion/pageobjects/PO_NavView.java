@@ -2,8 +2,9 @@ package com.uniovi.integracion.pageobjects;
 
 import static org.junit.Assert.assertTrue;
 import java.util.List;
+
+import com.uniovi.utils.SeleniumUtils;
 import org.openqa.selenium.*;
-import com.uniovi.tests.util.SeleniumUtils;
 
 public class PO_NavView extends PO_View{
 

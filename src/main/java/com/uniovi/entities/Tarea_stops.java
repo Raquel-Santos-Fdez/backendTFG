@@ -64,11 +64,4 @@ public class Tarea_stops {
         this.estacion = estacion;
     }
 
-//    public Tarea getTarea() {
-//        return tarea;
-//    }
-//
-//    public void setTarea(Tarea tarea) {
-//        this.tarea = tarea;
-//    }
 }

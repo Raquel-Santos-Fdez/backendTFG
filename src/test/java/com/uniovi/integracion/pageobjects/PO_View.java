@@ -1,5 +1,6 @@
 package com.uniovi.integracion.pageobjects;
 
+import com.uniovi.utils.SeleniumUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -26,7 +27,13 @@ public class PO_View {
      * @return Se retornará la lista de elementos resultantes de la búsqueda.
      */
     static public List<WebElement> checkElement(WebDriver driver, String type, String text) {
-        List<WebElement> elementos = com.uniovi.tests.util.SeleniumUtils.EsperaCargaPagina(driver, type, text, getTimeout());
+        List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, type, text, getTimeout());
+        return elementos;
+    }
+
+    static public List<WebElement> comprobarElementos(WebDriver driver,  String text, int indice) {
+        List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", text, getTimeout());
+        elementos.get(indice).click();
         return elementos;
     }
 }

@@ -36,7 +36,7 @@ public class RutaTest {
     }
 
     @After
-    public void despuessDeCadaTest() {
+    public void despuesDeCadaTest() {
         rutaService.eliminarRutaStops();
         if (rutaService.getRutaById("1") != null)
             rutaService.eliminarRuta(rutaService.getRutaById("1"));
