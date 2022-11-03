@@ -37,13 +37,13 @@ public class JornadaController {
 
     @RequestMapping(value="/jornada/findByDate/{date}")
     public List<Jornada> findJornadaByFecha(@PathVariable Date date){
-        return jornadaService.findJornadaByDate(date);
+        return jornadaService.findJornadaByFecha(date);
 
     }
 
     @RequestMapping(value="/jornada/findJornadaByDateEmpleado/{date}/{id}")
     public List<Jornada> findJornadaByFechaEmpleado(@PathVariable Date date, @PathVariable Long id){
-        return jornadaService.findJornadaByDateEmpleado(date, id);
+        return jornadaService.findJornadaByFechaEmpleado(date, id);
     }
 
     @RequestMapping(value="/tarea/{id}")

@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class SeleniumUtils {
@@ -25,14 +26,27 @@ public class SeleniumUtils {
 	}
 
 	/**
+	 * Aborta si el elemento está presente en la página actual
+	 * @param driver: apuntando al navegador abierto actualmente.
+	 * @param path: elemento a buscar
+	 * @param timeout: timeout
+	 */
+	static public void elementoNoPresentePagina(WebDriver driver, String path, int timeout)
+	{
+		Boolean resultado =
+				(new WebDriverWait(driver, timeout)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(path)));
+		assertTrue(resultado);
+	}
+
+	/**
 	 * Aborta si el "texto" está presente en la página actual
 	 * @param driver: apuntando al navegador abierto actualmente.
 	 * @param texto: texto a buscar
 	 */
 	static public void textoNoPresentePagina(WebDriver driver, String texto)
 	{
-		List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + texto + "')]"));		
-		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);			
+		List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + texto + "')]"));
+		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);
 	}
 
 	/**
@@ -89,16 +103,17 @@ public class SeleniumUtils {
 		return EsperaCargaPaginaxpath(driver, busqueda, timeout);
 	}
 
-	static public void esperarSegundos(WebDriver driver, int segundos){
-
-		synchronized(driver){
-			try {
-				driver.wait(segundos * 1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	/**
+	 * Aborta si el "texto" está coincide con el valor del input
+	 * @param driver: apuntando al navegador abierto actualmente.
+	 * @param name: id del input
+	 * @param texto: texto a buscar
+	 */
+	static public void checkInput(WebDriver driver, String name,  String texto)
+	{
+		String inputText = driver.findElement(By.name(name)).getAttribute("value");
+		assertTrue("El texto "+texto+" no está presente", inputText.equals(texto));
 	}
+
 
 }

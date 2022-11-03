@@ -34,7 +34,7 @@ public class IncidenciaTest {
 
     @After
     public void despuesDeCadaTest(){
-        trenService.eliminarTodos();
+        trenService.deleteAll();
         incidenciaService.getAllIncidencias().forEach(s -> incidenciaService.deleteIncidencia(s.getId()));
     }
 

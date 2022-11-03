@@ -25,12 +25,12 @@ public class TrenTest {
 
     @Before
     public void antesDeCadaTest() {
-        trenService.eliminarTodos();
+        trenService.deleteAll();
     }
 
     @After
     public void despuesDeCadaTest() {
-        trenService.eliminarTodos();
+        trenService.deleteAll();
     }
 
     @Test

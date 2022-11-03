@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Servicios encargado de la gestión de las solicitudes
+ *
+ * @author UO266047
+ */
 @Service
 public class SolicitudService {
 
@@ -39,6 +44,12 @@ public class SolicitudService {
     private TareaService tareaService;
 
 
+    /**
+     * Busca las solicitudes por fecha y por id de empleado
+     * @param date fecha
+     * @param id del empleado
+     * @return Lista de las solicitudes
+     */
     public List<Solicitud> findSolicitudByFechaEmpleado(String date, Long id) {
         List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudIntercambioRepository.findSolicitudIntercambioByFechaEmpleado(date, id));
@@ -46,6 +57,10 @@ public class SolicitudService {
         return solicitudes;
     }
 
+    /**
+     * Acepta una solicitud simple o de vacaciones
+     * @param solicitud a aceptar
+     */
     @Transactional
     public void aceptarSolicitud(Solicitud solicitud) {
 
@@ -76,13 +91,11 @@ public class SolicitudService {
                 //marcamos la solicitud como aceptada
                 solicitud.setEstado(Solicitud.EstadoSolicitud.ACEPTADA);
                 solicitudRepository.save(solicitud);
-//                solicitudRepository.aceptarSolicitud(solicitud.getId());
 
                 //si es vacaciones --> marcar el rango como dias libres
             } else if (objectMapper.getSolicitudMapeada().getClass() == SolicitudVacaciones.class) {
                 Date fechaInicio;
                 Date fechaFinal;
-                //= ((SolicitudVacaciones) solicitud).getFechaFinVacaciones();
                 try {
                     fechaInicio = format.parse(solicitud.getFecha());
                     fechaFinal=format.parse(((SolicitudVacaciones) solicitud).getFechaFinVacaciones());
@@ -95,13 +108,16 @@ public class SolicitudService {
                 //marcamos la solicitud como aceptada
                 solicitud.setEstado(Solicitud.EstadoSolicitud.ACEPTADA);
                 solicitudRepository.save(solicitud);
-//                solicitudRepository.aceptarSolicitud(solicitud.getId());
             }
 
 
         }
     }
 
+    /**
+     * Añade una solicitud simple
+     * @param solicitud a añadir
+     */
     @Transactional
     public void setSolicitud(SolicitudSimple solicitud) {
         if (solicitud != null) {
@@ -110,18 +126,32 @@ public class SolicitudService {
         }
     }
 
+    /**
+     * Rechaza una solicitud dado su id
+     * @param idSolicitud id de la solicitud
+     */
     @Transactional
-    public void rechazarSolicitud(Long id) {
-        solicitudRepository.rechazarSolicitud(id);
+    public void rechazarSolicitud(Long idSolicitud) {
+        solicitudRepository.rechazarSolicitud(idSolicitud);
     }
 
-    public List<Solicitud> findOwnSolicitudes(Long id) {
+    /**
+     * Busca las solicitudes de intercambio y simples de un empleado dado su id
+     * @param idEmpleado id del empleado
+     * @return Lista de las solicitudes
+     */
+    public List<Solicitud> findOwnSolicitudes(Long idEmpleado) {
         List<Solicitud> solicitudes = new ArrayList<>();
-        solicitudes.addAll(solicitudIntercambioRepository.findOwnSolicitudesIntercambio(id));
-        solicitudes.addAll(solicitudSimpleRepository.findOwnSolicitudesSimples(id));
+        solicitudes.addAll(solicitudIntercambioRepository.findOwnSolicitudesIntercambio(idEmpleado));
+        solicitudes.addAll(solicitudSimpleRepository.findOwnSolicitudesSimples(idEmpleado));
         return solicitudes;
     }
 
+    /**
+     * Busca las solicitudes de intercambio enviadas por otros compañeros
+     * @param empleado que busca solicitudes
+     * @return Lista de las solicitudes
+     */
     public List<SolicitudIntercambio> findOthersSolicitudesPendientes(Empleado empleado) {
         List<SolicitudIntercambio> solicitudesIntercambio = new ArrayList<>();
 
@@ -139,19 +169,28 @@ public class SolicitudService {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                List<Jornada> jornadaDescanso = jornadaService.findJornadaByDateEmpleado(fechaDescanso, empleado.getId());
+                List<Jornada> jornadaDescanso = jornadaService.findJornadaByFechaEmpleado(fechaDescanso, empleado.getId());
                 if ((jornadaDescanso.size() > 0 && !jornadaDescanso.get(0).isDiaLibre()) &&
-                        jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).size() == 0)
+                        jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).size() == 0)
                     solicitudesIntercambio.add(s);
             }
         }
         return solicitudesIntercambio;
     }
 
+    /**
+     * Busca las solicitudes de vacaciones de un empleado
+     * @param idEmpleado id del empleado
+     * @return lista de las solicitudes de vacaciones
+     */
     public List<SolicitudVacaciones> findSolicitudesVacaciones(Long idEmpleado) {
         return solicitudVacacionesRepository.findByEmpleado(idEmpleado);
     }
 
+    /**
+     * Añade una solicitud de vacaciones
+     * @param solicitud a añadir
+     */
     public void solicitarVacaciones(SolicitudVacaciones solicitud) {
         if (solicitud != null)
             solicitudVacacionesRepository.save(solicitud);
@@ -164,6 +203,10 @@ public class SolicitudService {
         return solicitudes;
     }
 
+    /**
+     * Añade una solicitud de intercambio
+     * @param solicitud a añadir
+     */
     @Transactional
     public void addSolicitudIntercambio(Solicitud solicitud) {
         SolicitudMapper solicitudMapper = Mapper.convertirObjectSolicitud(solicitud);
@@ -172,6 +215,9 @@ public class SolicitudService {
             solicitudIntercambioRepository.save((SolicitudIntercambio) solicitudMapper.getSolicitudMapeada());
     }
 
+    /**
+     * Elimina todas las solicitudes
+     */
     public void deleteAllSolicitudes() {
         solicitudRepository.deleteAll();
         solicitudIntercambioRepository.deleteAll();

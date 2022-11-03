@@ -11,7 +11,7 @@ import java.util.List;
 public interface EmpleadoRepository extends CrudRepository<Empleado, Long> {
 
     @Query("select e from Empleado e where e.username=?1 and e.password=?2")
-    List<Empleado> findByUsernamePassword(String username, String password);
+    Empleado findByUsernamePassword(String username, String password);
 
     @Modifying
     @Transactional

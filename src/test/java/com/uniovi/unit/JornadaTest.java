@@ -67,7 +67,7 @@ public class JornadaTest {
             fecha = sdf.parse("2022-10-17");
             Jornada jornada = new Jornada(fecha, empleado, false);
             jornadaService.addJornada(jornada);
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).size(), 1);
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).size(), 1);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -93,7 +93,7 @@ public class JornadaTest {
             Jornada jornada2 = new Jornada(fecha, empleado2, false);
             jornadaService.addJornada(jornada);
             jornadaService.addJornada(jornada2);
-            assertEquals(jornadaService.findJornadaByDate(fecha).size(), 2);
+            assertEquals(jornadaService.findJornadaByFecha(fecha).size(), 2);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -106,7 +106,7 @@ public class JornadaTest {
         Date fecha = null;
         try {
             fecha = sdf.parse("2022-10-17");
-            assertEquals(jornadaService.findJornadaByDate(fecha).size(), 0);
+            assertEquals(jornadaService.findJornadaByFecha(fecha).size(), 0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -149,7 +149,7 @@ public class JornadaTest {
             fecha = sdf.parse("2022-10-17");
             Jornada jornada = new Jornada(fecha, empleado, false);
             jornadaService.addJornada(jornada);
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).size(), 1);
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).size(), 1);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -175,7 +175,7 @@ public class JornadaTest {
             assertEquals(jornadaService.getTareasByFechaEmpleado(empleado.getId(), fecha).size(), 1);
             jornadaService.marcarDiaLibre(fecha, empleado);
             assertEquals(jornadaService.getTareasByFechaEmpleado(empleado.getId(), fecha).size(), 0);
-            assertTrue(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
+            assertTrue(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -190,10 +190,10 @@ public class JornadaTest {
         Date fecha = null;
         try {
             fecha = sdf.parse("2022-01-17");
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).size(), 0);
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).size(), 0);
             jornadaService.marcarDiaLibre(fecha, empleado);
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).size(), 1);
-            assertTrue(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).size(), 1);
+            assertTrue(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -388,11 +388,11 @@ public class JornadaTest {
                     "2022-10-17", "Detraibe",empleado, "2022-11-17",empleado2);
             solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado2.getId()).size(),0);
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado2.getId()).size(),0);
             solicitudIntercambio=(SolicitudIntercambio) solicitudService.findOwnSolicitudes(empleado.getId()).get(0);
             jornadaService.reasignar(solicitudIntercambio);
 
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado2.getId()).size(),1);
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado2.getId()).size(),1);
             assertEquals(solicitudIntercambio.getEstado(), Solicitud.EstadoSolicitud.REASIGNADA);
 
         } catch (ParseException e) {

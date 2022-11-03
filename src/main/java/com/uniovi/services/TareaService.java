@@ -8,12 +8,22 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servicios encargado de la gestión de las tareas
+ *
+ * @author UO266047
+ */
 @Service
 public class TareaService {
 
     @Autowired
     private TareaRepository tareaRepository;
 
+    /**
+     * Busca una tarea por id
+     * @param id id de la tarea a buscar
+     * @return Tarea encontrada o null
+     */
     public Tarea findTareaById(Long id) {
         Tarea tarea = null;
         if (id != null) {
@@ -23,11 +33,19 @@ public class TareaService {
         return tarea;
     }
 
+    /**
+     * Elimina una tarea
+     * @param tarea tarea a eliminar
+     */
     public void eliminarTarea(Tarea tarea) {
         if (tarea != null)
             tareaRepository.delete(tarea);
     }
 
+    /**
+     * Busca todas las tareas
+     * @return Lista de todas las tareas
+     */
     public List<Tarea> getTareas() {
         List<Tarea> tareas = new ArrayList<>();
         tareaRepository.findAll().forEach(tareas::add);

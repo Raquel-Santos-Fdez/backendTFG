@@ -146,11 +146,13 @@ public class TestClass {
 
     @Test
     public void pr10verDetallesTarea(){
+        PO_Home.clickOption(driver, "/login", "class", "identificarse");
+        PO_Login.fillForm(driver, "admin1", "Password1");
 
         By boton=By.id("gestUJBtn");
         driver.findElement(boton).click();
 
-        PO_GestUsuarioJornada.verDetallesTarea(driver, "empleado2", "tarea prueba integracion 5oct");
+        PO_GestUsuarioJornada.verDetallesTarea(driver, "empleado1", "tarea prueba integracion 5oct");
 
         PO_View.checkElement(driver, "text", "Detalles de la tarea");
 
@@ -280,8 +282,6 @@ public class TestClass {
 
     @Test
     public void pr20verPerfil(){
-        PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "empleado1", "Password5");
 
         PO_Home.clickOption(driver, "/ver-perfil", "class", "verPerfil");
 
@@ -293,7 +293,7 @@ public class TestClass {
 
         PO_Home.clickOption(driver, "/ver-perfil", "class", "verPerfil");
 
-        PO_Perfil.modificarPassword(driver, "Password1");
+        PO_Perfil.modificarPassword(driver, "Password1", "Password1");
         PO_Perfil.comprobarPassword(driver, "Password1");
 
         PO_Home.logout(driver);
@@ -301,12 +301,21 @@ public class TestClass {
 
     @Test
     public void pr22modificarPasswordNoCoincidente(){
-        //TODO
+        PO_Home.clickOption(driver, "/ver-perfil", "class", "verPerfil");
+
+        PO_Perfil.modificarPassword(driver, "Password1", "Password5");
+        SeleniumUtils.textoPresentePagina(driver, "Las contraseñas no coinciden");
 
     }
 
     @Test
     public void pr23verSolicitudes(){
+        PO_Home.clickOption(driver, "/login", "class", "identificarse");
+        PO_Login.fillForm(driver, "admin1", "Password1");
+
+        By menu=By.id("verSolBtn");
+        driver.findElement(menu).click();
+
         //TODO
     }
 
@@ -318,30 +327,67 @@ public class TestClass {
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
 
-        PO_VerSolicitudes.aceptarSolicitudSimple(driver);
+        Calendar c=Calendar.getInstance();
 
+        int mes=c.get(Calendar.MONTH)+1;
 
+        PO_VerSolicitudes.aceptarSolicitud(driver, "2022-"+mes +"-30", "empleado1");
+
+        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-"+mes +"-30", "empleado1");
     }
 
     @Test
     public void pr25rechazarSolicitudSimple(){
-        //TODO
+        By menu=By.id("verSolBtn");
+        driver.findElement(menu).click();
+
+        pr13solicitarDiaLibre();
+
+        Calendar c=Calendar.getInstance();
+
+        int mes=c.get(Calendar.MONTH)+1;
+
+        PO_VerSolicitudes.rechazarSolicitud(driver,"2022-"+mes +"-30", "empleado1");
+
+        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-"+mes +"-30", "empleado1");
     }
 
     @Test
     public void pr26aceptarSolicitudVacaciones(){
+        PO_Home.clickOption(driver, "/login", "class", "identificarse");
+        PO_Login.fillForm(driver, "admin1", "Password1");
+
+        By menu=By.id("verSolBtn");
+        driver.findElement(menu).click();
+
+        PO_VerSolicitudes.aceptarSolicitud(driver, "2022-12-01 - 2022-12-20", "empleado1");
+        PO_VerSolicitudes.aceptarVacaciones(driver );
+
+        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-12-01 - 2022-12-20", "empleado1");
+    }
+
+    @Test
+    public void pr27filtarEmpleados(){
         //TODO
     }
 
     @Test
-    public void pr27aceptarSolicitudIntercambio(){
+    public void pr28aceptarSolicitudIntercambio(){
+        PO_Home.logout(driver);
+
+        PO_Home.clickOption(driver, "/login", "class", "identificarse");
+        PO_Login.fillForm(driver, "empleado2", "E5G2T1EA9J");
+
+        By menu=By.id("menuGestionBtn");
+        driver.findElement(menu).click();
+
         //TODO
+
+
+
     }
 
-    @Test
-    public void pr28filtarEmpleados(){
-        //TODO
-    }
+
 
 
 }

@@ -22,15 +22,12 @@ public class EmpleadoController {
 
     @GetMapping("/empleado/{id}")
     public Empleado getEmpleadoById(@PathVariable Long id) {
-        return empleadoService.getEmpleadoById(id).get();
+        return empleadoService.getEmpleadoById(id);
     }
 
     @PostMapping(value = "/login")
     public Empleado login(@RequestBody Empleado empleado) {
-        List<Empleado> empleados = empleadoService.findByUsernamePassword(empleado.getUsername(), empleado.getPassword());
-        if (!empleados.isEmpty())
-            return empleados.get(0);
-        return null;
+        return empleadoService.findByUsernamePassword(empleado.getUsername(), empleado.getPassword());
     }
 
     @PostMapping(value = "/empleados/addEmpleado")

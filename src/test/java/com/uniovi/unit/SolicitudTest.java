@@ -4,10 +4,7 @@ import com.uniovi.entities.*;
 import com.uniovi.services.EmpleadoService;
 import com.uniovi.services.JornadaService;
 import com.uniovi.services.SolicitudService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -353,8 +350,8 @@ public class SolicitudTest {
         Date fecha = null;
         try {
             fecha = sdf.parse("2022-10-17");
-            assertTrue(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).getTareas().size(), 0);
+            assertTrue(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).get(0).getTareas().size(), 0);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -390,8 +387,8 @@ public class SolicitudTest {
 
             assertEquals(solicitudSimple.getEstado(), Solicitud.EstadoSolicitud.ACEPTADA);
 
-            assertTrue(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
-            assertEquals(jornadaService.findJornadaByDateEmpleado(fecha, empleado.getId()).get(0).getTareas().size(), 0);
+            assertTrue(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).get(0).isDiaLibre());
+            assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado.getId()).get(0).getTareas().size(), 0);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -420,8 +417,8 @@ public class SolicitudTest {
             assertEquals(solicitudVacaciones.getEstado(), Solicitud.EstadoSolicitud.ACEPTADA);
 
             for (Date d = fecha; d.toInstant().isBefore(fechaFinal.toInstant()); d = new Date(d.getTime() + UN_DIA_EN_MILISEGUNDOS)) {
-                assertTrue(jornadaService.findJornadaByDateEmpleado(d, empleado.getId()).get(0).isDiaLibre());
-                assertEquals(jornadaService.findJornadaByDateEmpleado(d, empleado.getId()).get(0).getTareas().size(), 0);
+                assertTrue(jornadaService.findJornadaByFechaEmpleado(d, empleado.getId()).get(0).isDiaLibre());
+                assertEquals(jornadaService.findJornadaByFechaEmpleado(d, empleado.getId()).get(0).getTareas().size(), 0);
             }
         } catch (ParseException e) {
             e.printStackTrace();
