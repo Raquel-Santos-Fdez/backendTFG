@@ -1,10 +1,7 @@
 package com.uniovi.unit;
 
 import com.uniovi.entities.*;
-import com.uniovi.services.EmpleadoService;
-import com.uniovi.services.JornadaService;
-import com.uniovi.services.SolicitudService;
-import com.uniovi.services.TareaService;
+import com.uniovi.services.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -41,19 +38,25 @@ public class JornadaTest {
     @Autowired
     private SolicitudService solicitudService;
 
+    @Autowired
+    private TareaStopsService tareaStopsService;
+
     @Before
     public void antesDeCadaMetodo() {
-        jornadaService.eliminarTodos();
+
+        tareaStopsService.eliminarTodos();
         tareaService.getTareas().forEach(t-> tareaService.eliminarTarea(t));
+        jornadaService.eliminarTodos();
         solicitudService.deleteAllSolicitudes();
         empleadoService.getEmpleados().forEach(e -> empleadoService.deleteEmpleado(e.getId()));
     }
 
     @After
     public void despuesDeCadaMetodo() {
-        jornadaService.eliminarTodos();
+        tareaStopsService.eliminarTodos();
         tareaService.getTareas().forEach(t-> tareaService.eliminarTarea(t));
         solicitudService.deleteAllSolicitudes();
+        jornadaService.eliminarTodos();
         empleadoService.getEmpleados().forEach(e -> empleadoService.deleteEmpleado(e.getId()));
     }
 
@@ -167,6 +170,11 @@ public class JornadaTest {
 
             Tarea tarea = new Tarea();
             Set<Tarea> tareas = new HashSet<>();
+
+            Set<Tarea_stops> ts=new HashSet<>();
+            ts.add(new Tarea_stops());
+            tarea.setStops(ts);
+
             tareas.add(tarea);
             jornada.setTareas(tareas);
 

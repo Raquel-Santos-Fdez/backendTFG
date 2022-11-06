@@ -29,6 +29,9 @@ public class JornadaService {
     @Autowired
     private SolicitudIntercambioRepository solicitudIntercambioRepository;
 
+    @Autowired
+    private TareaStopsService tareaStopsService;
+
 
     /**
      * Obtiene las tareas de un empleado dado su id y una fecha

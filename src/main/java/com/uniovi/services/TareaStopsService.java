@@ -45,4 +45,5 @@ public class TareaStopsService {
     public void eliminarTodos(){
         tareaStopsRepository.deleteAll();
     }
+
 }

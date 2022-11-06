@@ -21,10 +21,6 @@ public class Tarea_stops {
     @ManyToOne
     private Estacion estacion;
 
-//    @ManyToOne
-//    @JoinColumn(name="tarea_id")
-//    private Tarea tarea;
-
     public Tarea_stops(){
 
     }
