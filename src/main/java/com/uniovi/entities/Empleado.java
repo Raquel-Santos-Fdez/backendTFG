@@ -2,15 +2,14 @@ package com.uniovi.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import com.uniovi.validators.ArgumentValidator;
-import org.hibernate.annotations.NotFound;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"username", "email", "dni"})})
 public class Empleado {
 
     @Id

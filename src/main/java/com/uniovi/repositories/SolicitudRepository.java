@@ -11,5 +11,4 @@ public interface SolicitudRepository extends CrudRepository<Solicitud, Long> {
     @Query("update Solicitud s set s.estado='RECHAZADA' where s.id=?1")
     void rechazarSolicitud(Long id);
 
-
 }

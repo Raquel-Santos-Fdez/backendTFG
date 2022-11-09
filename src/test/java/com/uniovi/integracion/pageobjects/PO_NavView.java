@@ -1,10 +1,12 @@
 package com.uniovi.integracion.pageobjects;
 
-import static org.junit.Assert.assertTrue;
+import com.uniovi.utils.SeleniumUtils;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 import java.util.List;
 
-import com.uniovi.utils.SeleniumUtils;
-import org.openqa.selenium.*;
+import static org.junit.Assert.assertTrue;
 
 public class PO_NavView extends PO_View{
 

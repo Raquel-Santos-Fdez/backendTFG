@@ -2,13 +2,13 @@ package com.uniovi.services;
 
 import com.uniovi.entities.Empleado;
 import com.uniovi.repositories.EmpleadoRepository;
-import com.uniovi.validators.ArgumentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Servicios encargado de la gestión de los empleados
@@ -20,6 +20,10 @@ public class EmpleadoService {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     /**
      * Busca todos los empleados
@@ -36,8 +40,10 @@ public class EmpleadoService {
      * @param empleado Empleado a añadir
      */
     public void addEmpleado(Empleado empleado) {
-        if (checkValues(empleado))
+        if (checkValues(empleado)) {
+//            empleado.setPassword(bCryptPasswordEncoder.encode(empleado.getPassword()));
             empleadoRepository.save(empleado);
+        }
     }
 
     /**

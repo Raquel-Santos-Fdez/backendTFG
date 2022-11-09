@@ -1,7 +1,8 @@
 package com.uniovi.services;
 
 import com.uniovi.entities.*;
-import com.uniovi.repositories.*;
+import com.uniovi.repositories.JornadaRepository;
+import com.uniovi.repositories.SolicitudIntercambioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

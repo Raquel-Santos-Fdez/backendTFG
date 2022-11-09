@@ -1,7 +1,7 @@
 package com.uniovi.repositories;
 
-import com.uniovi.entities.Ruta;
 import com.uniovi.entities.Route_stop;
+import com.uniovi.entities.Ruta;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

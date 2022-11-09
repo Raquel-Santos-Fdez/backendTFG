@@ -46,8 +46,9 @@ public class SolicitudService {
 
     /**
      * Busca las solicitudes por fecha y por id de empleado
+     *
      * @param date fecha
-     * @param id del empleado
+     * @param id   del empleado
      * @return Lista de las solicitudes
      */
     public List<Solicitud> findSolicitudByFechaEmpleado(String date, Long id) {
@@ -59,6 +60,7 @@ public class SolicitudService {
 
     /**
      * Acepta una solicitud simple o de vacaciones
+     *
      * @param solicitud a aceptar
      */
     @Transactional
@@ -98,7 +100,7 @@ public class SolicitudService {
                 Date fechaFinal;
                 try {
                     fechaInicio = format.parse(solicitud.getFecha());
-                    fechaFinal=format.parse(((SolicitudVacaciones) solicitud).getFechaFinVacaciones());
+                    fechaFinal = format.parse(((SolicitudVacaciones) solicitud).getFechaFinVacaciones());
                     for (Date d = fechaInicio; d.toInstant().isBefore(fechaFinal.toInstant()); d = new Date(d.getTime() + UN_DIA_EN_MILISEGUNDOS)) {
                         jornadaService.marcarDiaLibre(d, solicitud.getEmpleado());
                     }
@@ -116,6 +118,7 @@ public class SolicitudService {
 
     /**
      * Añade una solicitud simple
+     *
      * @param solicitud a añadir
      */
     @Transactional
@@ -128,6 +131,7 @@ public class SolicitudService {
 
     /**
      * Rechaza una solicitud dado su id
+     *
      * @param idSolicitud id de la solicitud
      */
     @Transactional
@@ -137,6 +141,7 @@ public class SolicitudService {
 
     /**
      * Busca las solicitudes de intercambio y simples de un empleado dado su id
+     *
      * @param idEmpleado id del empleado
      * @return Lista de las solicitudes
      */
@@ -149,6 +154,7 @@ public class SolicitudService {
 
     /**
      * Busca las solicitudes de intercambio enviadas por otros compañeros
+     *
      * @param empleado que busca solicitudes
      * @return Lista de las solicitudes
      */
@@ -180,6 +186,7 @@ public class SolicitudService {
 
     /**
      * Busca las solicitudes de vacaciones de un empleado
+     *
      * @param idEmpleado id del empleado
      * @return lista de las solicitudes de vacaciones
      */
@@ -189,6 +196,7 @@ public class SolicitudService {
 
     /**
      * Añade una solicitud de vacaciones
+     *
      * @param solicitud a añadir
      */
     public void solicitarVacaciones(SolicitudVacaciones solicitud) {
@@ -205,6 +213,7 @@ public class SolicitudService {
 
     /**
      * Añade una solicitud de intercambio
+     *
      * @param solicitud a añadir
      */
     @Transactional
@@ -223,5 +232,17 @@ public class SolicitudService {
         solicitudIntercambioRepository.deleteAll();
         solicitudSimpleRepository.deleteAll();
         solicitudVacacionesRepository.deleteAll();
+    }
+
+    public boolean findSolicitudByDateEmployee(String fecha, Long idEmpleado) {
+        List<Solicitud> solicitudes = new ArrayList<>();
+        solicitudes.addAll(solicitudSimpleRepository.findNotRechazadas(fecha, idEmpleado));
+        solicitudes.addAll(solicitudVacacionesRepository.findNotRechazadas(fecha, idEmpleado));
+        solicitudes.addAll(solicitudIntercambioRepository.findNotRechazadas(fecha, idEmpleado));
+        return solicitudes.size() != 0;
+    }
+
+    public List<SolicitudVacaciones> findSolicitudesVacacionesPendientes(Long idEmpleado) {
+        return solicitudVacacionesRepository.findSolicitudesVacacionesPendientes(idEmpleado);
     }
 }

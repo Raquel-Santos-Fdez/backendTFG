@@ -4,14 +4,13 @@ import com.uniovi.entities.Empleado;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 public interface EmpleadoRepository extends CrudRepository<Empleado, Long> {
 
-    @Query("select e from Empleado e where e.username=?1 and e.password=?2")
-    Empleado findByUsernamePassword(String username, String password);
+    @Query("select e from Empleado e where e.username= ?1 and e.password=?2")
+    Empleado findByUsernamePassword( String username, String password);
 
     @Modifying
     @Transactional

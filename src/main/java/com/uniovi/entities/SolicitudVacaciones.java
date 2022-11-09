@@ -1,7 +1,6 @@
 package com.uniovi.entities;
 
 import javax.persistence.Entity;
-import java.util.Date;
 
 @Entity
 public class SolicitudVacaciones extends Solicitud{

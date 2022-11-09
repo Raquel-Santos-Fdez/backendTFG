@@ -25,4 +25,8 @@ public interface SolicitudIntercambioRepository extends CrudRepository<Solicitud
     @Modifying
     @Query("update SolicitudIntercambio s set s.nuevoEmpleado=?2 where s.id=?1")
     void asignarNuevoEmpleado(Long id, Empleado nuevoEmpleado);
+
+    @Query("select s from SolicitudIntercambio s where s.fecha=?1 and s.empleado.id=?2 and s.estado<>'RECHAZADA'")
+    List<SolicitudIntercambio> findNotRechazadas(String fecha, Long idEmpleado);
+
 }

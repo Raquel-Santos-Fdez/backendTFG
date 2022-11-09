@@ -1,6 +1,9 @@
 package com.uniovi.controllers;
 
-import com.uniovi.entities.*;
+import com.uniovi.entities.Jornada;
+import com.uniovi.entities.SolicitudIntercambio;
+import com.uniovi.entities.Tarea;
+import com.uniovi.entities.Tarea_stops;
 import com.uniovi.services.JornadaService;
 import com.uniovi.services.TareaService;
 import com.uniovi.services.TareaStopsService;

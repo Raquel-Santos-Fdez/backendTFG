@@ -5,7 +5,6 @@ import com.uniovi.services.SolicitudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 @RestController
@@ -24,16 +23,24 @@ public class SolicitudController {
         return solicitudService.findOwnSolicitudes(id);
     }
 
-
-
     @RequestMapping(value = "/solicitudes/find-solicitudes-vacaciones/{id}")
     public List<SolicitudVacaciones> findSolicitudesVacaciones(@PathVariable Long id) {
         return solicitudService.findSolicitudesVacaciones(id);
     }
 
+    @RequestMapping(value = "/solicitudes/find-solicitudes-vacaciones-pendientes/{id}")
+    public List<SolicitudVacaciones> findSolicitudesVacacionesPendientes(@PathVariable Long id) {
+        return solicitudService.findSolicitudesVacacionesPendientes(id);
+    }
+
     @RequestMapping(value="/solicitudes/ver-solicitudes-pendientes")
     public List<Solicitud> getAllSolicitudesPendientes(){
         return solicitudService.getAllSolicitudesPendientes();
+    }
+
+    @RequestMapping(value = "/solicitudes/findSolicitudByDateEmployee/{fecha}/{idEmpleado}")
+    public boolean findSolicitudByDateEmployee(@PathVariable String fecha, @PathVariable Long idEmpleado){
+        return solicitudService.findSolicitudByDateEmployee(fecha, idEmpleado);
     }
 
     //Put

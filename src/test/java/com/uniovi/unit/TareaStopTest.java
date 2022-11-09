@@ -1,7 +1,10 @@
 package com.uniovi.unit;
 
-import com.uniovi.entities.*;
-import com.uniovi.services.*;
+import com.uniovi.entities.Estacion;
+import com.uniovi.entities.Tarea;
+import com.uniovi.entities.Tarea_stops;
+import com.uniovi.services.EstacionService;
+import com.uniovi.services.TareaStopsService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -12,13 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringRunner.class)

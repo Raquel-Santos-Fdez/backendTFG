@@ -1,7 +1,7 @@
 package com.uniovi.controllers;
 
-import com.uniovi.entities.Ruta;
 import com.uniovi.entities.Route_stop;
+import com.uniovi.entities.Ruta;
 import com.uniovi.services.RutaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -19,6 +19,9 @@ public class LoaderEstacionesService {
     @Autowired
     private RutaService rutaService;
 
+    @Autowired
+    private EmpleadoService empleadoService;
+
     //Leemos de fichero
     private final LectorCSV lector = new LectorCSV();
 
@@ -91,6 +94,17 @@ public class LoaderEstacionesService {
         return rutas_stops;
     }
 
+    private void addEmpleados(){
+        Empleado admin=new Empleado("admin1", "Admin", "Prueba", "admin1@gmail.com",
+                "11111111A", "Password1", Empleado.Rol.ADMIN, 100);
+        empleadoService.addEmpleado(admin);
+
+        Empleado empleado1=new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com",
+                "22222222B", "Password1", Empleado.Rol.MAQUINISTA, 100);
+        empleadoService.addEmpleado(empleado1);
+
+    }
+
     @PostConstruct
     public void init() {
 
@@ -114,6 +128,8 @@ public class LoaderEstacionesService {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        addEmpleados();
     }
 
 }
