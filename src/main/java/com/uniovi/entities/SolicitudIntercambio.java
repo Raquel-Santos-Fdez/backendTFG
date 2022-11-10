@@ -15,7 +15,7 @@ public class SolicitudIntercambio extends Solicitud{
 
 
 
-    public SolicitudIntercambio( String fecha, String motivo, Empleado empleado, String fechaDescanso, Empleado nuevoEmpleado) {
+    public SolicitudIntercambio( String fecha, MotivoAusencia motivo, Empleado empleado, String fechaDescanso, Empleado nuevoEmpleado) {
         super( fecha, motivo, empleado);
         ArgumentValidator.isNotEmpty(fechaDescanso);
         this.fechaDescanso = fechaDescanso;

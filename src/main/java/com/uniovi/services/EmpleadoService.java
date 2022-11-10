@@ -38,6 +38,7 @@ public class EmpleadoService {
     /**
      * Añade un empleado
      * @param empleado Empleado a añadir
+     * @return Empleado añadido o null si no cumple los criterios
      */
     public void addEmpleado(Empleado empleado) {
         if (checkValues(empleado)) {
@@ -52,11 +53,30 @@ public class EmpleadoService {
      * @return true en caso de que no exista, false en caso de que exista
      */
     private boolean checkValues(Empleado empleado) {
-        if(findByUsername(empleado.getUsername())!=null)
+        if(findByUsername(empleado.getUsername())!=null && findByEmail(empleado.getEmail())!=null && findByDni(empleado.getDni())!=null)
             return false;
-//        if(empleado.getEmail())
         return true;
     }
+
+    /**
+     * Busca un empleado por dni
+     * @param dni dni a buscar
+     * @return empleado encontrado o null
+     */
+    public Empleado findByDni(String dni) {
+        return empleadoRepository.findByDni(dni);
+    }
+
+    /**
+     * Busca un empleado por email
+     * @param email email a buscar
+     * @return empleado encontrado o null
+     */
+    public Empleado findByEmail(String email) {
+        return empleadoRepository.findByEmail(email);
+    }
+
+
 
     /**
      * Busca un empleado por nombre de usuario

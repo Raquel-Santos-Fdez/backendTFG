@@ -13,11 +13,6 @@ public class SolicitudController {
     @Autowired
     private SolicitudService solicitudService;
 
-    @RequestMapping(value = "/solicitudes/findSolicitudByFechaEmpleado/{date}/{id}")
-    public List<Solicitud> findSolicitudByFechaEmpleado(@PathVariable String date, @PathVariable Long id) {
-        return solicitudService.findSolicitudByFechaEmpleado(date, id);
-    }
-
     @RequestMapping(value = "/solicitudes/find-own-solicitudes/{id}")
     public List<Solicitud> findOwnSolicitudes(@PathVariable Long id) {
         return solicitudService.findOwnSolicitudes(id);
@@ -38,9 +33,9 @@ public class SolicitudController {
         return solicitudService.getAllSolicitudesPendientes();
     }
 
-    @RequestMapping(value = "/solicitudes/findSolicitudByDateEmployee/{fecha}/{idEmpleado}")
-    public boolean findSolicitudByDateEmployee(@PathVariable String fecha, @PathVariable Long idEmpleado){
-        return solicitudService.findSolicitudByDateEmployee(fecha, idEmpleado);
+    @RequestMapping(value = "/solicitudes/existeSolicitud/{fecha}/{idEmpleado}")
+    public boolean existeSolicitud(@PathVariable String fecha, @PathVariable Long idEmpleado){
+        return solicitudService.existeSolicitud(fecha, idEmpleado);
     }
 
     //Put

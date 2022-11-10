@@ -60,7 +60,7 @@ public class SolicitudTest {
     public void pr02setSolicitudTest() {
         Empleado empleado=new Empleado();
         empleadoService.addEmpleado(empleado);
-        solicitudService.setSolicitud(new SolicitudSimple("2022-10-17", "Detraible", empleado));
+        solicitudService.setSolicitud(new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado));
         assertEquals(solicitudService.getAllSolicitudesPendientes().size(), 1);
     }
 
@@ -68,7 +68,7 @@ public class SolicitudTest {
     public void pr04rechazarSolicitudTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
+        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.setSolicitud(solicitudSimple);
         assertEquals(solicitudService.getAllSolicitudesPendientes().size(), 1);
         solicitudService.rechazarSolicitud(solicitudService.getAllSolicitudesPendientes().get(0).getId());
@@ -84,8 +84,8 @@ public class SolicitudTest {
     public void pr06getAllSolicitudesPendientesVariasTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
-        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", "Licencia", empleado);
+        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
+        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.setSolicitud(solicitudSimple);
         solicitudService.solicitarVacaciones(solicitudVacaciones);
         assertEquals(solicitudService.getAllSolicitudesPendientes().size(), 2);
@@ -95,8 +95,8 @@ public class SolicitudTest {
     public void pr07getAllSolicitudesPendientesConRechazadasTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
-        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", "Licencia", empleado);
+        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
+        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.setSolicitud(solicitudSimple);
         solicitudService.solicitarVacaciones(solicitudVacaciones);
         solicitudService.rechazarSolicitud(solicitudService.getAllSolicitudesPendientes().get(0).getId());
@@ -117,7 +117,7 @@ public class SolicitudTest {
 
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
+        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.addSolicitudIntercambio(solicitudSimple);
         assertEquals(solicitudService.getAllSolicitudesPendientes().size(), 0);
         assertEquals(solicitudService.findOwnSolicitudes(empleado.getId()).size(), 0);
@@ -133,7 +133,7 @@ public class SolicitudTest {
     public void pr11addSolicitudIntercambioTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", "Licencia",
+        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", Solicitud.MotivoAusencia.LICENCIA,
                 empleado, "2022-11-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio);
         assertEquals(solicitudService.findOwnSolicitudes(empleado.getId()).size(), 1);
@@ -149,9 +149,9 @@ public class SolicitudTest {
     public void pr13solicitarVacacionesTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", "Licencia", empleado);
+        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.solicitarVacaciones(solicitudVacaciones);
-        SolicitudVacaciones solicitudVacaciones2 = new SolicitudVacaciones("2022-11-17", "Licencia", empleado);
+        SolicitudVacaciones solicitudVacaciones2 = new SolicitudVacaciones("2022-11-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.solicitarVacaciones(solicitudVacaciones2);
         assertEquals(solicitudService.getAllSolicitudesPendientes().size(), 2);
     }
@@ -172,9 +172,9 @@ public class SolicitudTest {
     public void pr16findSolicitudesVacacionesTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", "Licencia", empleado);
+        SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.solicitarVacaciones(solicitudVacaciones);
-        SolicitudVacaciones solicitudVacaciones2 = new SolicitudVacaciones("2022-11-17", "Licencia", empleado);
+        SolicitudVacaciones solicitudVacaciones2 = new SolicitudVacaciones("2022-11-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.solicitarVacaciones(solicitudVacaciones2);
         assertEquals(solicitudService.findSolicitudesVacaciones(empleado.getId()).size(), 2);
 
@@ -187,13 +187,13 @@ public class SolicitudTest {
         Empleado empleado2 = new Empleado();
         empleadoService.addEmpleado(empleado2);
 
-        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", "Licencia", empleado, "2022-11-17", null);
+        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado, "2022-11-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
+        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.setSolicitud(solicitudSimple);
 
-        SolicitudSimple solicitudSimple2 = new SolicitudSimple("2022-10-17", "Licencia", empleado2);
+        SolicitudSimple solicitudSimple2 = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado2);
         solicitudService.setSolicitud(solicitudSimple2);
 
         assertEquals(solicitudService.findOwnSolicitudes(empleado.getId()).size(), 2);
@@ -210,25 +210,6 @@ public class SolicitudTest {
     }
 
     @Test
-    public void pr20findSolicitudesByFechaEmpleadoInvalidTest() {
-        assertEquals(solicitudService.findSolicitudByFechaEmpleado("", null).size(), 0);
-    }
-
-    @Test
-    public void pr21findSolicitudesByFechaEmpleadoTest() {
-        Empleado empleado = new Empleado();
-        empleadoService.addEmpleado(empleado);
-
-        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", "Licencia", empleado, "2022-11-17", null);
-        solicitudService.addSolicitudIntercambio(solicitudIntercambio);
-
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
-        solicitudService.setSolicitud(solicitudSimple);
-
-        assertEquals(solicitudService.findSolicitudByFechaEmpleado("2022-10-17", empleado.getId()).size(), 2);
-    }
-
-    @Test
     public void pr22findOthersSolicitudesPendientesInvalidTest() {
         assertEquals(solicitudService.findOthersSolicitudesPendientes(null).size(), 0);
     }
@@ -240,7 +221,7 @@ public class SolicitudTest {
         Empleado empleado2 = new Empleado();
         empleadoService.addEmpleado(empleado2);
 
-        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", "Licencia", empleado2, "2022-11-17", null);
+        SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado2, "2022-11-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
         assertEquals(solicitudService.findOthersSolicitudesPendientes(empleado).size(), 0);
@@ -264,7 +245,7 @@ public class SolicitudTest {
             e.printStackTrace();
         }
 
-        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", "Licencia", empleado2, "2022-10-17", null);
+        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", Solicitud.MotivoAusencia.LICENCIA, empleado2, "2022-10-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio2);
 
         assertEquals(solicitudService.findOthersSolicitudesPendientes(empleado).size(), 1);
@@ -290,7 +271,7 @@ public class SolicitudTest {
             e.printStackTrace();
         }
 
-        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", "Licencia", empleado2, "2022-10-17", null);
+        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", Solicitud.MotivoAusencia.LICENCIA, empleado2, "2022-10-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio2);
 
         assertEquals(solicitudService.findOthersSolicitudesPendientes(empleado).size(), 0);
@@ -318,7 +299,7 @@ public class SolicitudTest {
             e.printStackTrace();
         }
 
-        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", "Licencia", empleado2, "2022-10-17", null);
+        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", Solicitud.MotivoAusencia.LICENCIA, empleado2, "2022-10-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio2);
 
         assertEquals(solicitudService.findOthersSolicitudesPendientes(empleado).size(), 0);
@@ -328,7 +309,7 @@ public class SolicitudTest {
     public void pr27aceptarSolicitudIntercambioTest() {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
-        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", "Licencia", empleado, "2022-10-17", null);
+        SolicitudIntercambio solicitudIntercambio2 = new SolicitudIntercambio("2022-11-17", Solicitud.MotivoAusencia.LICENCIA, empleado, "2022-10-17", null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio2);
 
         solicitudService.aceptarSolicitud(solicitudIntercambio2);
@@ -341,7 +322,7 @@ public class SolicitudTest {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
 
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
+        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.setSolicitud(solicitudSimple);
 
         solicitudSimple = (SolicitudSimple) solicitudService.getAllSolicitudesPendientes().get(0);
@@ -368,7 +349,7 @@ public class SolicitudTest {
         Empleado empleado = new Empleado();
         empleadoService.addEmpleado(empleado);
 
-        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", "Licencia", empleado);
+        SolicitudSimple solicitudSimple = new SolicitudSimple("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado);
         solicitudService.setSolicitud(solicitudSimple);
 
         solicitudSimple = (SolicitudSimple) solicitudService.getAllSolicitudesPendientes().get(0);
@@ -412,7 +393,7 @@ public class SolicitudTest {
             fecha = sdf.parse("2022-10-17");
             fechaFinal = sdf.parse("2022-10-20");
 
-            SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", "Licencia", empleado, "2022-10-20");
+            SolicitudVacaciones solicitudVacaciones = new SolicitudVacaciones("2022-10-17", Solicitud.MotivoAusencia.LICENCIA, empleado, "2022-10-20");
             solicitudService.solicitarVacaciones(solicitudVacaciones);
 
             solicitudService.aceptarSolicitud(solicitudVacaciones);

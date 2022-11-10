@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class SolicitudSimple extends Solicitud{
 
-    public SolicitudSimple( String fecha, String motivo, Empleado empleado) {
+    public SolicitudSimple( String fecha, MotivoAusencia motivo, Empleado empleado) {
         super(fecha, motivo, empleado);
     }
 

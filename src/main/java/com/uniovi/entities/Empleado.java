@@ -43,7 +43,6 @@ public class Empleado {
     @JsonIgnore
     private Set<Solicitud> solicitudes = new HashSet<>();
 
-
     public Empleado(String username, String name, String surname, String email, String dni, String password, Rol rol, int nDiasLibres) {
         super();
 

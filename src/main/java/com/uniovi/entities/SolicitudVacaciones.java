@@ -7,11 +7,11 @@ public class SolicitudVacaciones extends Solicitud{
 
     private String fechaFinVacaciones;
 
-    public SolicitudVacaciones(String fecha, String motivo, Empleado empleado) {
+    public SolicitudVacaciones(String fecha, MotivoAusencia motivo, Empleado empleado) {
         super( fecha, motivo, empleado);
     }
 
-    public SolicitudVacaciones(String fecha, String motivo, Empleado empleado, String fechaFinVacaciones) {
+    public SolicitudVacaciones(String fecha, MotivoAusencia motivo, Empleado empleado, String fechaFinVacaciones) {
         super( fecha, motivo, empleado);
         this.fechaFinVacaciones=fechaFinVacaciones;
     }

@@ -45,20 +45,6 @@ public class SolicitudService {
 
 
     /**
-     * Busca las solicitudes por fecha y por id de empleado
-     *
-     * @param date fecha
-     * @param id   del empleado
-     * @return Lista de las solicitudes
-     */
-    public List<Solicitud> findSolicitudByFechaEmpleado(String date, Long id) {
-        List<Solicitud> solicitudes = new ArrayList<>();
-        solicitudes.addAll(solicitudIntercambioRepository.findSolicitudIntercambioByFechaEmpleado(date, id));
-        solicitudes.addAll(solicitudSimpleRepository.findSolicitudSimpleByFechaEmpleado(date, id));
-        return solicitudes;
-    }
-
-    /**
      * Acepta una solicitud simple o de vacaciones
      *
      * @param solicitud a aceptar
@@ -226,6 +212,7 @@ public class SolicitudService {
 
     /**
      * Elimina todas las solicitudes
+     *
      */
     public void deleteAllSolicitudes() {
         solicitudRepository.deleteAll();
@@ -234,7 +221,7 @@ public class SolicitudService {
         solicitudVacacionesRepository.deleteAll();
     }
 
-    public boolean findSolicitudByDateEmployee(String fecha, Long idEmpleado) {
+    public boolean existeSolicitud(String fecha, Long idEmpleado) {
         List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudSimpleRepository.findNotRechazadas(fecha, idEmpleado));
         solicitudes.addAll(solicitudVacacionesRepository.findNotRechazadas(fecha, idEmpleado));

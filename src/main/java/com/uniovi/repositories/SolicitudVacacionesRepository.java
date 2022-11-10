@@ -11,7 +11,7 @@ public interface SolicitudVacacionesRepository extends CrudRepository<SolicitudV
     @Query("select s from SolicitudVacaciones s where s.empleado.id=?1 order by s.estado")
     List<SolicitudVacaciones> findByEmpleado(Long idEmpleado);
 
-    @Query("select s from SolicitudVacaciones s where s.estado='PENDIENTE'")
+    @Query("select s from SolicitudVacaciones s where s.estado='PENDIENTE' order by s.empleado.nDiasLibres desc")
     List<SolicitudVacaciones> findAllPending();
 
     @Query("select s from SolicitudVacaciones s where s.fecha=?1 and s.empleado.id=?2 and s.estado<>'RECHAZADA'")

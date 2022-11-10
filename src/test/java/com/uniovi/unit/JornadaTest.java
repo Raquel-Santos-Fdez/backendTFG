@@ -349,7 +349,7 @@ public class JornadaTest {
         Empleado empleado2=new Empleado();
         empleadoService.addEmpleado(empleado2);
         SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
-                "2022-10-17", "Licencia",empleado, "2022-11-17",empleado2);
+                "2022-10-17", Solicitud.MotivoAusencia.LICENCIA,empleado, "2022-11-17",empleado2);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
         jornadaService.reasignar(solicitudIntercambio);
@@ -365,7 +365,7 @@ public class JornadaTest {
         Empleado empleado2=new Empleado();
         empleadoService.addEmpleado(empleado2);
         SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
-                "2022-10-17", "Licencia",empleado, "2022-11-17",null);
+                "2022-10-17", Solicitud.MotivoAusencia.LICENCIA,empleado, "2022-11-17",null);
         solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
         jornadaService.reasignar(solicitudIntercambio);
@@ -393,7 +393,7 @@ public class JornadaTest {
             jornadaService.addJornada(jornada2);
 
             SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
-                    "2022-10-17", "Detraibe",empleado, "2022-11-17",empleado2);
+                    "2022-10-17", Solicitud.MotivoAusencia.LICENCIA,empleado, "2022-11-17",empleado2);
             solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
             assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado2.getId()).size(),0);

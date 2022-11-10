@@ -19,4 +19,10 @@ public interface EmpleadoRepository extends CrudRepository<Empleado, Long> {
 
     @Query("select e from Empleado e where e.username=?1")
     Empleado findByUsername(String username);
+
+    @Query("select e from Empleado e where e.email=?1")
+    Empleado findByEmail(String email);
+
+    @Query("select e from Empleado e where e.dni=?1")
+    Empleado findByDni(String dni);
 }

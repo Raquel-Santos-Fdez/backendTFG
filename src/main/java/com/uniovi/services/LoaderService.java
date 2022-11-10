@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //@Service
-public class LoaderEstacionesService {
+public class LoaderService {
 
     @Autowired
     private EstacionService estacionService;
@@ -21,6 +21,9 @@ public class LoaderEstacionesService {
 
     @Autowired
     private EmpleadoService empleadoService;
+
+    @Autowired
+    private TrenService trenService;
 
     //Leemos de fichero
     private final LectorCSV lector = new LectorCSV();
@@ -105,6 +108,14 @@ public class LoaderEstacionesService {
 
     }
 
+    private void addTrenes(){
+        Tren tren1=new Tren();
+        trenService.addTren(tren1);
+
+        Tren tren2=new Tren();
+        trenService.addTren(tren2);
+    }
+
     @PostConstruct
     public void init() {
 
@@ -130,6 +141,7 @@ public class LoaderEstacionesService {
         }
 
         addEmpleados();
+        addTrenes();
     }
 
 }

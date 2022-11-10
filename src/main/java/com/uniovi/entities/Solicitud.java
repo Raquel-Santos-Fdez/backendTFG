@@ -3,6 +3,7 @@ package com.uniovi.entities;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.uniovi.validators.ArgumentValidator;
+import org.openqa.grid.common.exception.RemoteUnregisterException;
 
 import javax.persistence.*;
 
@@ -20,12 +21,18 @@ public abstract class Solicitud {
         PENDIENTE, ACEPTADA, RECHAZADA, REASIGNADA
     }
 
+    public enum MotivoAusencia{
+        LICENCIA, OTRO_MOTIVO, FORMACION, VISITA_MEDICA, VACACIONES
+    }
+
     @Id
     @GeneratedValue
     private Long id;
 
     private String fecha;
-    private String motivo;
+
+    @Enumerated(EnumType.STRING)
+    private MotivoAusencia motivo;
 
     @ManyToOne
     private Empleado empleado;
@@ -33,10 +40,10 @@ public abstract class Solicitud {
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado=EstadoSolicitud.PENDIENTE;
 
-    public  Solicitud( String fecha, String motivo, Empleado empleado) {
+    public  Solicitud(String fecha, MotivoAusencia motivo, Empleado empleado) {
         super();
         ArgumentValidator.isNotEmpty(fecha);
-        ArgumentValidator.isNotEmpty(motivo);
+        ArgumentValidator.isNotNull(motivo);
         ArgumentValidator.isNotNull(empleado);
 
         this.fecha = fecha;
@@ -65,11 +72,11 @@ public abstract class Solicitud {
         this.fecha = date;
     }
 
-    public String getMotivo() {
+    public MotivoAusencia getMotivo() {
         return motivo;
     }
 
-    public void setMotivo(String motivo) {
+    public void setMotivo(MotivoAusencia motivo) {
         this.motivo = motivo;
     }
 
