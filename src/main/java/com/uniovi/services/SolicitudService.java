@@ -221,6 +221,12 @@ public class SolicitudService {
         solicitudVacacionesRepository.deleteAll();
     }
 
+    /**
+     * Comprueba si existen solicitudes para la fecha y empleado señalados
+     * @param fecha fecha a buscar
+     * @param idEmpleado id del empleado a consultar
+     * @return true en caso de que existan jornadas, false en caso contrario
+     */
     public boolean existeSolicitud(String fecha, Long idEmpleado) {
         List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudSimpleRepository.findNotRechazadas(fecha, idEmpleado));
@@ -229,6 +235,11 @@ public class SolicitudService {
         return solicitudes.size() != 0;
     }
 
+    /**
+     * Busca las solicitudes de vacaciones de un empleado con estado pendiente
+     * @param idEmpleado id del empelado a consultar
+     * @return lista de las solicitudes de vacaciones encontradas
+     */
     public List<SolicitudVacaciones> findSolicitudesVacacionesPendientes(Long idEmpleado) {
         return solicitudVacacionesRepository.findSolicitudesVacacionesPendientes(idEmpleado);
     }

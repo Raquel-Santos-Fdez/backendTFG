@@ -37,7 +37,7 @@ public class JornadaService {
     /**
      * Obtiene las tareas de un empleado dado su id y una fecha
      * @param id del empleado
-     * @param date
+     * @param date fecha a buscar
      * @return Lista de tareas
      */
     public List<Tarea> getTareasByFechaEmpleado(Long id, Date date) {
@@ -48,7 +48,7 @@ public class JornadaService {
 
     /**
      * Reasigna una solicitud de intercambio
-     * @param solicitud
+     * @param solicitud solicitud a reasignar
      */
     @Transactional
     public void reasignar(SolicitudIntercambio solicitud) {
@@ -99,7 +99,7 @@ public class JornadaService {
 
     /**
      * Busca las jornadas existentes en una fecha
-     * @param date
+     * @param date fecha a buscar
      * @return lista de las jornadas
      */
     public List<Jornada> findJornadaByFecha(Date date) {
@@ -129,8 +129,8 @@ public class JornadaService {
 
     /**
      * Añade una nueva jornada
-     * @param jornada
-     * @return
+     * @param jornada jornada a añadir
+     * @return Jornada añadida
      */
     public Jornada addJornada(Jornada jornada) {
         return jornadaRepository.save(jornada);
@@ -138,8 +138,8 @@ public class JornadaService {
 
     /**
      * Marca un día como libre
-     * @param fecha
-     * @param empleado
+     * @param fecha fecha a marcar como dia libre
+     * @param empleado empleado con nueva jornada libre
      */
     public void marcarDiaLibre(Date fecha, Empleado empleado) {
 

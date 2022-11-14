@@ -39,7 +39,7 @@ public class Empleado {
     @JsonIgnore
     private Set<Jornada> jornadas;
 
-    @OneToMany(mappedBy = "empleado", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Solicitud> solicitudes = new HashSet<>();
 
@@ -61,16 +61,16 @@ public class Empleado {
         this.username = username;
         this.name = name;
         this.surname = surname;
-        this.nDiasLibres=nDiasLibres;
-        this.email=email;
-        this.dni=dni;
-        this.role=rol;
-        this.password=password;
+        this.nDiasLibres = nDiasLibres;
+        this.email = email;
+        this.dni = dni;
+        this.role = rol;
+        this.password = password;
 
     }
 
     public Empleado() {
-        this.nDiasLibres=100;
+        this.nDiasLibres = 100;
 
     }
 
