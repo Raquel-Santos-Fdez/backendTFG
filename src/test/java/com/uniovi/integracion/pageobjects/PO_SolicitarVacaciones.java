@@ -13,12 +13,11 @@ public class PO_SolicitarVacaciones {
         driver.findElement(By.id("solicitarV")).click();
     }
 
-    public static void solicitarVacacionesRepetida(WebDriver driver) {
+    public static void solicitarVacacionesRepetida(WebDriver driver, int i) {
 
         driver.findElement(By.id("solVacacionesBtn")).click();
 
-        PO_View.checkElement(driver, "text", "2022-12-01 - 2022-12-20 Estado: PENDIENTE");
-        PO_View.checkElement(driver, "text", "2022-06-16 - 2022-06-30 Estado: PENDIENTE");
+        PO_View.checkElement(driver, "text", "Las solicitudes de vacaciones existentes");
 
 
 

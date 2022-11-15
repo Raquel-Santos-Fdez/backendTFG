@@ -3,12 +3,11 @@ package com.uniovi.services;
 import com.uniovi.entities.Empleado;
 import com.uniovi.repositories.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Servicios encargado de la gestión de los empleados
@@ -23,6 +22,9 @@ public class EmpleadoService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private SolicitudService solicitudService;
 
 
     /**
@@ -92,6 +94,7 @@ public class EmpleadoService {
      * @param idEmpleado id del empleado
      */
     public void deleteEmpleado(Long idEmpleado) {
+        solicitudService.deleteNuevoEmpleado(idEmpleado);
         empleadoRepository.deleteById(idEmpleado);
     }
 

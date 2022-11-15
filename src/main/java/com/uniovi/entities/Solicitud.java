@@ -3,7 +3,6 @@ package com.uniovi.entities;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.uniovi.validators.ArgumentValidator;
-import org.openqa.grid.common.exception.RemoteUnregisterException;
 
 import javax.persistence.*;
 

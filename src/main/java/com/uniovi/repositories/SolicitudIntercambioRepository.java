@@ -29,4 +29,6 @@ public interface SolicitudIntercambioRepository extends CrudRepository<Solicitud
     @Query("select s from SolicitudIntercambio s where s.fecha=?1 and s.empleado.id=?2 and s.estado<>'RECHAZADA'")
     List<SolicitudIntercambio> findNotRechazadas(String fecha, Long idEmpleado);
 
+    @Query("select s from SolicitudIntercambio s where s.nuevoEmpleado.id=?1")
+    List<SolicitudIntercambio> findByNuevoEmpleado(Long idEmpleado);
 }

@@ -2,6 +2,7 @@ package com.uniovi.unit;
 
 import com.uniovi.entities.Estacion;
 import com.uniovi.services.EstacionService;
+import com.uniovi.services.LoaderService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -22,6 +23,7 @@ public class EstacionTest {
 
     @Autowired
     private EstacionService estacionService;
+
 
     @Before
     public void antesDeCadaMetodo() {
@@ -79,8 +81,4 @@ public class EstacionTest {
         assertEquals(estacionService.getEstaciones().size(), nEstaciones - 1);
     }
 
-    @Test(expected = Exception.class)
-    public void pr07deleteEstacionNoValidaTest() {
-        estacionService.deleteEstacion("15118");
-    }
 }

@@ -2,10 +2,7 @@ package com.uniovi.unit;
 
 import com.uniovi.entities.Empleado;
 import com.uniovi.services.EmpleadoService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +20,14 @@ public class EmpleadoTest {
     @Autowired
     private EmpleadoService empleadoService;
 
+    public static boolean dbInit = false;
+
     @Before
     public void antesDeCadaTest() {
-        empleadoService.getEmpleados().forEach(s -> empleadoService.deleteEmpleado(s.getId()));
+        if(!dbInit) {
+            empleadoService.getEmpleados().forEach(s -> empleadoService.deleteEmpleado(s.getId()));
+            dbInit=true;
+        }
     }
 
     @After

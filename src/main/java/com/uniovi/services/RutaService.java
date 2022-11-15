@@ -52,7 +52,7 @@ public class RutaService {
         for(Route_stop rs_origen: rutas_stops_origen) {
             for(Route_stop rs_destino:rutas_stops_destino) {
                 if(rs_origen.getOrderParada()<rs_destino.getOrderParada())
-                    if(rs_origen.getRuta().getRuta_id()==rs_destino.getRuta().getRuta_id())
+                    if(rs_origen.getRuta().getRuta_id().equals(rs_destino.getRuta().getRuta_id()))
                         rutas_conjuntas.add(rs_origen);
             }
         }

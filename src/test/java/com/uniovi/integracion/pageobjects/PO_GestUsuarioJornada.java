@@ -134,4 +134,13 @@ public class PO_GestUsuarioJornada extends PO_View{
 
 
     }
+
+    public static void filtrarEmpleado(WebDriver driver, String empleadop) {
+        WebElement empleado=driver.findElement(By.name("filtroUsuarios"));
+        empleado.click();
+        empleado.clear();
+        empleado.sendKeys(empleadop);
+
+
+    }
 }

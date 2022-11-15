@@ -243,4 +243,28 @@ public class SolicitudService {
     public List<SolicitudVacaciones> findSolicitudesVacacionesPendientes(Long idEmpleado) {
         return solicitudVacacionesRepository.findSolicitudesVacacionesPendientes(idEmpleado);
     }
+
+    /**
+     * Comprueba si existen solicirudes de vacaiones para la feha y empleado dados
+     * @param fecha fecha a comprobar
+     * @param idEmpleado empleado a comprobar
+     * @return true en caso de que existan, false en caso contrario
+     */
+    public boolean existenVacacionesByFechaEmpleado(String fecha, Long idEmpleado){
+        List<SolicitudVacaciones> solicitudes=solicitudVacacionesRepository.existenVacacionesByFechaEmpleado(fecha, idEmpleado);
+        return(solicitudes.size()!=0);
+    }
+
+    /**
+     * Elimina el nuevo empleado asignado a las solicitudes de vacaciones
+     * @param idEmpleado empleado a eliminar de las solicitudes
+     */
+    public void deleteNuevoEmpleado(Long idEmpleado) {
+        List<SolicitudIntercambio> intercambios=solicitudIntercambioRepository.findByNuevoEmpleado(idEmpleado);
+        for(SolicitudIntercambio si: intercambios){
+            si.setNuevoEmpleado(null);
+            si.setEstado(Solicitud.EstadoSolicitud.PENDIENTE);
+            solicitudIntercambioRepository.save(si);
+        }
+    }
 }

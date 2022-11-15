@@ -33,8 +33,8 @@ public class PO_ConsultarJornada {
         horaFin.clear();
         horaFin.sendKeys(hFinalp);
 
-        driver.findElement(By.id("selectMotivo")).click();
-        List<WebElement> options=driver.findElements(By.xpath("//mat-option[@class='motivo']"));
+        driver.findElement(By.name("selectMotivo")).click();
+        List<WebElement> options=driver.findElements(By.xpath("//mat-option[@id='motivo']"));
 
         for(WebElement option: options) {
             if (option.getText().contains(motivo)) {
@@ -48,11 +48,14 @@ public class PO_ConsultarJornada {
 
     public static void addIncidencia(WebDriver driver, String incidenciap) {
 
-        WebElement incidencia=driver.findElement(By.name("nuevaIncidencia"));
+        WebElement modalContainer = driver.findElement(
+                By.className("dialog-detalles-jornada"));
+
+        WebElement incidencia=modalContainer.findElement(By.id("nuevasIncidencias"));
         incidencia.click();
         incidencia.clear();
         incidencia.sendKeys(incidenciap);
 
-        driver.findElement(By.id("addIncidencia")).click();
+        modalContainer.findElement(By.id("addIncidencia")).click();
     }
 }

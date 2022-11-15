@@ -19,4 +19,7 @@ public interface SolicitudVacacionesRepository extends CrudRepository<SolicitudV
 
     @Query("select s from SolicitudVacaciones s where s.empleado.id=?1 and s.estado='PENDIENTE'")
     List<SolicitudVacaciones> findSolicitudesVacacionesPendientes(Long idEmpleado);
+
+    @Query("select s from SolicitudVacaciones s where s.fecha=?1 and s.empleado.id=?2")
+    List<SolicitudVacaciones> existenVacacionesByFechaEmpleado(String fecha, Long idEmpleado);
 }

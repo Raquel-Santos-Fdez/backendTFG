@@ -115,4 +115,15 @@ public class SeleniumUtils {
 	}
 
 
+	static public void esperarSegundos(WebDriver driver, int segundos){
+
+		synchronized(driver){
+			try {
+				driver.wait(segundos * 1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

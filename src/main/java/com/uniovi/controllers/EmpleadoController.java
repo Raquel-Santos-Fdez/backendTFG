@@ -3,7 +3,6 @@ package com.uniovi.controllers;
 import com.uniovi.entities.Empleado;
 import com.uniovi.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

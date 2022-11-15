@@ -1,12 +1,16 @@
 package com.uniovi.integracion;
 
+import com.uniovi.entities.Empleado;
 import com.uniovi.integracion.pageobjects.*;
+import com.uniovi.services.EmpleadoService;
 import com.uniovi.utils.SeleniumUtils;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -90,7 +94,7 @@ public class TestClass {
         driver.findElement(boton).click();
 
         PO_GestUsuarioJornada.addUsuario(driver, "empleado2", "Empleado2", "Prueba",
-                "33333333C", "empleado2@gmail.com", "REVISOR");
+                "33333333C", "empleado2@gmail.com", "MAQUINISTA");
 
         PO_View.checkElement(driver, "text", "empleado2");
     }
@@ -113,7 +117,7 @@ public class TestClass {
         driver.findElement(boton).click();
 
         PO_GestUsuarioJornada.addUsuario(driver, "empleado2", "Empleado2", "Prueba",
-                "33333333C", "empleado2@gmail.com", "REVISOR");
+                "33333333C", "empleado2@gmail.com", "MAQUINISTA");
         PO_GestUsuarioJornada.verDetallesEmpleado(driver, "empleado2");
         PO_View.checkElement(driver, "text", "Detalles");
     }
@@ -124,10 +128,10 @@ public class TestClass {
         By boton=By.id("gestUJBtn");
         driver.findElement(boton).click();
 
-        PO_GestUsuarioJornada.addTarea(driver, "October 5, 2022", "empleado1", "1", "tarea prueba integracion 5oct",
+        PO_GestUsuarioJornada.addTarea(driver, "November 30, 2022", "empleado1", "1", "tarea prueba integracion 30nov",
                 "PUENTE DE LOS FIERROS", "POLA DE LENA", "10:00", "12:00", "1");
 
-        PO_View.checkElement(driver, "text", "tarea prueba integracion 5oct");
+        PO_View.checkElement(driver, "text", "Tarea añadida correctamente");
 
     }
 
@@ -137,7 +141,7 @@ public class TestClass {
         By boton=By.id("gestUJBtn");
         driver.findElement(boton).click();
 
-        driver.findElement(By.cssSelector("button[aria-label='October 25, 2022']")).click();
+        driver.findElement(By.cssSelector("button[aria-label='November 30, 2022']")).click();
 
         driver.findElement(By.id("btnNuevaTarea")).click();
 
@@ -146,13 +150,11 @@ public class TestClass {
 
     @Test
     public void pr10verDetallesTarea(){
-        PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "admin1", "Password1");
 
         By boton=By.id("gestUJBtn");
         driver.findElement(boton).click();
 
-        PO_GestUsuarioJornada.verDetallesTarea(driver, "empleado1", "tarea prueba integracion 5oct");
+        PO_GestUsuarioJornada.verDetallesTarea(driver, "empleado1", "tarea prueba integracion 30nov");
 
         PO_View.checkElement(driver, "text", "Detalles de la tarea");
 
@@ -165,14 +167,14 @@ public class TestClass {
     public void pr11consultarJornada(){
         PO_Home.logout(driver);
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "empleado1", "Password5");
+        PO_Login.fillForm(driver, "empleado1", "Password1");
 
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
 
-        PO_ConsultarJornada.consultarJornada(driver, "October 22, 2022");
+        PO_ConsultarJornada.consultarJornada(driver, "November 30, 2022");
 
-        PO_ConsultarJornada.verDetallesTarea(driver, "tarea 22oct");
+        PO_ConsultarJornada.verDetallesTarea(driver, "tarea prueba integracion 30nov");
 
         PO_View.checkElement(driver, "text", "Consultar jornada");
     }
@@ -183,16 +185,17 @@ public class TestClass {
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
 
-        PO_ConsultarJornada.consultarJornada(driver, "October 22, 2022");
+        PO_ConsultarJornada.consultarJornada(driver, "November 30, 2022");
 
-        PO_ConsultarJornada.verDetallesTarea(driver, "tarea 22oct");
+        PO_ConsultarJornada.verDetallesTarea(driver, "tarea prueba integracion 30nov");
 
-        PO_ConsultarJornada.addIncidencia(driver, "Prueba intedgracion add incidencia");
+        SeleniumUtils.esperarSegundos(driver, 1);
+
+        PO_ConsultarJornada.addIncidencia(driver, "Prueba integracion add incidencia");
     }
 
     @Test
     public void pr13solicitarDiaLibre(){
-
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
 
@@ -200,11 +203,11 @@ public class TestClass {
         Locale locale = new Locale("en", "USA");
         String monthName=c.getDisplayName(Calendar.MONTH, Calendar.LONG, locale);
 
-        PO_ConsultarJornada.consultarJornada(driver, monthName+" 30, 2022");
+        PO_ConsultarJornada.consultarJornada(driver, monthName+" 29, 2022");
 
-        PO_ConsultarJornada.solicitarDiaLibre(driver, "10:30", "12:30", "Otro motivo");
+        PO_ConsultarJornada.solicitarDiaLibre(driver, "10:30", "12:30", "OTRO_MOTIVO");
 
-        PO_View.checkElement(driver, "text", "DIA LIBRE");
+        PO_View.checkElement(driver, "text", "La solicitud ha sido enviada correctamente");
     }
 
     @Test
@@ -219,12 +222,13 @@ public class TestClass {
     }
 
     @Test
-    public void pr15solicitarVacacionesRepetidas(){
+    public void pr15volverASolicitarVacaciones(){
 
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
 
-        PO_SolicitarVacaciones.solicitarVacacionesRepetida(driver);
+
+        PO_SolicitarVacaciones.solicitarVacacionesRepetida(driver,3);
     }
 
     @Test
@@ -235,7 +239,7 @@ public class TestClass {
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.addSolicitud(driver, "10/22/2022", "12/25/2022", "Otro motivo");
+        PO_PortalSolicitudes.addSolicitud(driver, "11/30/2022", "12/25/2022", "OTRO_MOTIVO");
 
         PO_View.checkElement(driver, "text", "La solicitud ha sido añadida correctamente");
 
@@ -249,7 +253,7 @@ public class TestClass {
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.addSolicitud(driver, "12/20/2022", "12/25/2022", "Otro motivo");
+        PO_PortalSolicitudes.addSolicitud(driver, "12/20/2022", "12/25/2022", "OTRO_MOTIVO");
 
         PO_View.checkElement(driver, "text", "Debe seleccionar un intercambio para un día con una jornada asignada");
 
@@ -258,13 +262,12 @@ public class TestClass {
     @Test
     public void pr18consultarMisSolicitudes(){
 
-
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.consultarMisSolicitudes(driver, "2022-10-22", "2022-12-25", "PENDIENTE");
+        PO_PortalSolicitudes.consultarMisSolicitudes(driver, "2022-11-30", "2022-12-25", "PENDIENTE");
 
     }
 
@@ -293,69 +296,70 @@ public class TestClass {
 
         PO_Home.clickOption(driver, "/ver-perfil", "class", "verPerfil");
 
-        PO_Perfil.modificarPassword(driver, "Password1", "Password1");
-        PO_Perfil.comprobarPassword(driver, "Password1");
+        PO_Perfil.modificarPassword(driver, "Password5", "Password5");
+        PO_Perfil.comprobarPassword(driver, "Password5");
 
-        PO_Home.logout(driver);
+        PO_View.checkElement(driver, "text", "Contraseña modificada correctamente");
     }
 
     @Test
     public void pr22modificarPasswordNoCoincidente(){
+
         PO_Home.clickOption(driver, "/ver-perfil", "class", "verPerfil");
 
         PO_Perfil.modificarPassword(driver, "Password1", "Password5");
-        SeleniumUtils.textoPresentePagina(driver, "Las contraseñas no coinciden");
+
+        PO_View.checkElement(driver, "text", "Las contraseñas no coinciden");
 
     }
 
     @Test
     public void pr23verSolicitudes(){
+        PO_Home.logout(driver);
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
         PO_Login.fillForm(driver, "admin1", "Password1");
 
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
 
-        //TODO
+        PO_VerSolicitudes.comprobarSolicitud(driver, "2022-11-29","OTRO_MOTIVO", "empleado1");
+    }
+
+
+
+    @Test
+    public void pr24rechazarSolicitudSimple(){
+
+        By menu=By.id("verSolBtn");
+        driver.findElement(menu).click();
+
+        PO_VerSolicitudes.rechazarSolicitud(driver,"2022-11-29", "empleado1");
+        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-11-29", "empleado1");
     }
 
     @Test
-    public void pr24aceptarSolicitudSimple(){
+    public void pr25aceptarSolicitudSimple(){
+
+        PO_Home.logout(driver);
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "admin1", "Password1");
-
-        By menu=By.id("verSolBtn");
-        driver.findElement(menu).click();
-
-        Calendar c=Calendar.getInstance();
-
-        int mes=c.get(Calendar.MONTH)+1;
-
-        PO_VerSolicitudes.aceptarSolicitud(driver, "2022-"+mes +"-30", "empleado1");
-
-        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-"+mes +"-30", "empleado1");
-    }
-
-    @Test
-    public void pr25rechazarSolicitudSimple(){
-        By menu=By.id("verSolBtn");
-        driver.findElement(menu).click();
+        PO_Login.fillForm(driver, "empleado1", "Password5");
 
         pr13solicitarDiaLibre();
 
-        Calendar c=Calendar.getInstance();
+        PO_Home.logout(driver);
+        PO_Home.clickOption(driver, "/login", "class", "identificarse");
+        PO_Login.fillForm(driver, "admin1", "Password1");
 
-        int mes=c.get(Calendar.MONTH)+1;
+        By menu=By.id("verSolBtn");
+        driver.findElement(menu).click();
 
-        PO_VerSolicitudes.rechazarSolicitud(driver,"2022-"+mes +"-30", "empleado1");
+        PO_VerSolicitudes.aceptarSolicitud(driver, "2022-11-29", "empleado1");
 
-        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-"+mes +"-30", "empleado1");
+        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-11-29", "empleado1");
     }
 
     @Test
     public void pr26aceptarSolicitudVacaciones(){
-        PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "admin1", "Password1");
 
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
@@ -368,22 +372,39 @@ public class TestClass {
 
     @Test
     public void pr27filtarEmpleados(){
-        //TODO
+
+        By boton=By.id("gestUJBtn");
+        driver.findElement(boton).click();
+
+        PO_GestUsuarioJornada.filtrarEmpleado(driver, "empleado1");
+
+        SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "empleado2", PO_View.getTimeout());
     }
 
     @Test
     public void pr28aceptarSolicitudIntercambio(){
+
+        By boton=By.id("gestUJBtn");
+        driver.findElement(boton).click();
+
+        driver.findElement(By.cssSelector("button[aria-label='Next month']")).click();
+
+        PO_GestUsuarioJornada.addTarea(driver, "December 25, 2022", "empleado2", "1", "tarea prueba integracion 25dic",
+                "PUENTE DE LOS FIERROS", "POLA DE LENA", "10:00", "12:00", "1");
+
         PO_Home.logout(driver);
 
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "empleado2", "E5G2T1EA9J");
+        PO_Login.fillForm(driver, "empleado2", "9EWLB9M6H4W");
 
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
 
-        //TODO
+        driver.findElement(By.id("portalSolBtn")).click();
 
+        PO_PortalSolicitudes.aceptarSolicitudIntercambio(driver, "2022-11-30", "2022-12-25", "empleado1");
 
+        PO_View.checkElement(driver, "text", "La solicitud ha sido aceptada");
 
     }
 

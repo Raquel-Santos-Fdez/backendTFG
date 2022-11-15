@@ -3,7 +3,6 @@ package com.uniovi.services;
 import com.uniovi.entities.*;
 import com.uniovi.util.LectorCSV;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;

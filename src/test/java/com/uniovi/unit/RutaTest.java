@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -33,6 +35,8 @@ public class RutaTest {
         rutaService.eliminarRutaStops();
         if (rutaService.getRutaById("1") != null)
             rutaService.eliminarRuta(rutaService.getRutaById("1"));
+        estacionService.deleteEstacion("1");
+        estacionService.deleteEstacion("2");
     }
 
     @After
@@ -40,6 +44,8 @@ public class RutaTest {
         rutaService.eliminarRutaStops();
         if (rutaService.getRutaById("1") != null)
             rutaService.eliminarRuta(rutaService.getRutaById("1"));
+        estacionService.deleteEstacion("1");
+        estacionService.deleteEstacion("2");
     }
 
     @Test
@@ -101,7 +107,9 @@ public class RutaTest {
         rutaService.addRutaStop(ruta_stop);
         rutaService.addRutaStop(ruta_stop2);
 
-        assertTrue(rutaService.findRutaByEstaciones(estacion1.getId(), estacion2.getId()).size()>0);
+        List<Route_stop> rs=rutaService.findRutaByEstaciones(estacion1.getId(), estacion2.getId());
+
+        assertTrue(rs.size()>0);
     }
 
     @Test

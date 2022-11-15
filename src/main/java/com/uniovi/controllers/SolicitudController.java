@@ -38,6 +38,11 @@ public class SolicitudController {
         return solicitudService.existeSolicitud(fecha, idEmpleado);
     }
 
+    @RequestMapping(value="/solicitudes/existenVacacionesByFechaEmpleado/{fecha}/{idEmpleado}")
+    public boolean existenVacacionesByFechaEmpleado(@PathVariable String fecha, @PathVariable Long idEmpleado){
+        return solicitudService.existenVacacionesByFechaEmpleado(fecha, idEmpleado);
+    }
+
     //Put
 
     @CrossOrigin(origins = "http://localhost:4200")

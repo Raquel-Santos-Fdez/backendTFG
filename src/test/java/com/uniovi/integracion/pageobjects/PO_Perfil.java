@@ -36,7 +36,7 @@ public class PO_Perfil extends PO_View {
 
         driver.findElement(By.id("aceptarModificacion")).click();
 
-        checkElement(driver, "text", "Contraseña modificada correctamente");
+
 
 
     }
