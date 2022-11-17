@@ -1,6 +1,6 @@
 package com.uniovi.entities;
 
-import com.uniovi.validators.ArgumentValidator;
+import com.uniovi.util.validators.ArgumentValidator;
 
 import javax.persistence.*;
 

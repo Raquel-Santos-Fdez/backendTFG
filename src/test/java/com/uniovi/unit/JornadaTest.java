@@ -348,13 +348,24 @@ public class JornadaTest {
         empleadoService.addEmpleado(empleado);
         Empleado empleado2=new Empleado();
         empleadoService.addEmpleado(empleado2);
-        SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
-                "2022-10-17", Solicitud.MotivoAusencia.LICENCIA,empleado, "2022-11-17",empleado2);
-        solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
-        jornadaService.reasignar(solicitudIntercambio);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        Date fecha2 = null;
+        try {
+            fecha = sdf.parse("2022-10-17");
+            fecha2 = sdf.parse("2022-11-17");
+            //trabaja en la fechaDescanso y descansa en fecha
+            SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
+                    fecha, Solicitud.MotivoAusencia.LICENCIA,empleado, fecha2,empleado2);
+            solicitudService.addSolicitudIntercambio(solicitudIntercambio);
+            jornadaService.reasignar(solicitudIntercambio);
 
-        assertEquals(solicitudIntercambio.getEstado(), Solicitud.EstadoSolicitud.PENDIENTE);
+            assertEquals(solicitudIntercambio.getEstado(), Solicitud.EstadoSolicitud.PENDIENTE);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     //Se solicita reasignar con el nuevo empleado null
@@ -364,13 +375,24 @@ public class JornadaTest {
         empleadoService.addEmpleado(empleado);
         Empleado empleado2=new Empleado();
         empleadoService.addEmpleado(empleado2);
-        SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
-                "2022-10-17", Solicitud.MotivoAusencia.LICENCIA,empleado, "2022-11-17",null);
-        solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
-        jornadaService.reasignar(solicitudIntercambio);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        Date fecha2 = null;
+        try {
+            fecha = sdf.parse("2022-10-17");
+            fecha2 = sdf.parse("2022-11-17");
+            //trabaja en la fechaDescanso y descansa en fecha
+            SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
+                    fecha, Solicitud.MotivoAusencia.LICENCIA,empleado, fecha2,null);
+            solicitudService.addSolicitudIntercambio(solicitudIntercambio);
+            jornadaService.reasignar(solicitudIntercambio);
 
-        assertEquals(solicitudIntercambio.getEstado(), Solicitud.EstadoSolicitud.PENDIENTE);
+            assertEquals(solicitudIntercambio.getEstado(), Solicitud.EstadoSolicitud.PENDIENTE);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -393,7 +415,7 @@ public class JornadaTest {
             jornadaService.addJornada(jornada2);
 
             SolicitudIntercambio solicitudIntercambio=new SolicitudIntercambio(
-                    "2022-10-17", Solicitud.MotivoAusencia.LICENCIA,empleado, "2022-11-17",empleado2);
+                    fecha, Solicitud.MotivoAusencia.LICENCIA,empleado, fecha2,empleado2);
             solicitudService.addSolicitudIntercambio(solicitudIntercambio);
 
             assertEquals(jornadaService.findJornadaByFechaEmpleado(fecha, empleado2.getId()).size(),0);

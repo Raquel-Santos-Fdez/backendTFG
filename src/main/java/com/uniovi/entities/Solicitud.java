@@ -2,9 +2,10 @@ package com.uniovi.entities;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.uniovi.validators.ArgumentValidator;
+import com.uniovi.util.validators.ArgumentValidator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -28,7 +29,7 @@ public abstract class Solicitud {
     @GeneratedValue
     private Long id;
 
-    private String fecha;
+    private Date fecha;
 
     @Enumerated(EnumType.STRING)
     private MotivoAusencia motivo;
@@ -39,9 +40,9 @@ public abstract class Solicitud {
     @Enumerated(EnumType.STRING)
     private EstadoSolicitud estado=EstadoSolicitud.PENDIENTE;
 
-    public  Solicitud(String fecha, MotivoAusencia motivo, Empleado empleado) {
+    public  Solicitud(Date fecha, MotivoAusencia motivo, Empleado empleado) {
         super();
-        ArgumentValidator.isNotEmpty(fecha);
+        ArgumentValidator.isNotNull(fecha);
         ArgumentValidator.isNotNull(motivo);
         ArgumentValidator.isNotNull(empleado);
 
@@ -63,11 +64,11 @@ public abstract class Solicitud {
         this.id = id;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String date) {
+    public void setFecha(Date date) {
         this.fecha = date;
     }
 

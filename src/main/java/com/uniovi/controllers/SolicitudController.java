@@ -5,6 +5,7 @@ import com.uniovi.services.SolicitudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,12 +35,12 @@ public class SolicitudController {
     }
 
     @RequestMapping(value = "/solicitudes/existeSolicitud/{fecha}/{idEmpleado}")
-    public boolean existeSolicitud(@PathVariable String fecha, @PathVariable Long idEmpleado){
+    public boolean existeSolicitud(@PathVariable Date fecha, @PathVariable Long idEmpleado){
         return solicitudService.existeSolicitud(fecha, idEmpleado);
     }
 
     @RequestMapping(value="/solicitudes/existenVacacionesByFechaEmpleado/{fecha}/{idEmpleado}")
-    public boolean existenVacacionesByFechaEmpleado(@PathVariable String fecha, @PathVariable Long idEmpleado){
+    public boolean existenVacacionesByFechaEmpleado(@PathVariable Date fecha, @PathVariable Long idEmpleado){
         return solicitudService.existenVacacionesByFechaEmpleado(fecha, idEmpleado);
     }
 

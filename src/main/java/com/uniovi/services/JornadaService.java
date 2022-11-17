@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -66,25 +67,26 @@ public class JornadaService {
      */
     private void realizarCambio(SolicitudIntercambio solicitudIntercambio) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date fecha = null;
-        Date fechaDescanso = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            fecha = sdf.parse(solicitudIntercambio.getFecha());
-            fechaDescanso = sdf.parse(solicitudIntercambio.getFechaDescanso());
+            Jornada jornadaEmpleadoViejo = jornadaRepository.findJornadaByDateEmpleado(format.parse(
+                    new java.sql.Date(solicitudIntercambio.getFecha().getTime()).toString()),
+                    solicitudIntercambio.getEmpleado().getId()).get(0);
+
+            Jornada jornadaEmpleadoNuevo = jornadaRepository.findJornadaByDateEmpleado(format.parse(
+                    new java.sql.Date(solicitudIntercambio.getFechaDescanso().getTime()).toString()),
+                    solicitudIntercambio.getNuevoEmpleado().getId()).get(0);
+
+            //la jornada del empleado viejo pasa a ser la fecha de descanso
+            jornadaRepository.cambiarJornadaEmpleado(solicitudIntercambio.getNuevoEmpleado(), jornadaEmpleadoViejo.getId());
+
+            //la jornada del nuevo empelado pasa a ser la fecha
+            jornadaRepository.cambiarJornadaEmpleado(solicitudIntercambio.getEmpleado(), jornadaEmpleadoNuevo.getId());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Jornada jornadaEmpleadoViejo = jornadaRepository.findJornadaByDateEmpleado(new java.sql.Date(fecha.getTime()),
-                solicitudIntercambio.getEmpleado().getId()).get(0);
-        Jornada jornadaEmpleadoNuevo = jornadaRepository.findJornadaByDateEmpleado(new java.sql.Date(fechaDescanso.getTime()),
-                solicitudIntercambio.getNuevoEmpleado().getId()).get(0);
 
-        //la jornada del empleado viejo pasa a ser la fecha de descanso
-        jornadaRepository.cambiarJornadaEmpleado(solicitudIntercambio.getNuevoEmpleado(), jornadaEmpleadoViejo.getId());
 
-        //la jornada del nuevo empelado pasa a ser la fecha
-        jornadaRepository.cambiarJornadaEmpleado(solicitudIntercambio.getEmpleado(), jornadaEmpleadoNuevo.getId());
     }
 
     /**
@@ -161,5 +163,21 @@ public class JornadaService {
      */
     public void eliminarTodos(){
         jornadaRepository.deleteAll();
+    }
+
+
+    public boolean existeTarea(Date fecha, Long idEmpleado, LocalTime horaSalida, LocalTime horaFin) {
+        List<Tarea> tareas=jornadaRepository.findTareaByFechaEmpleado(idEmpleado,fecha);
+        for(Tarea t: tareas){
+            LocalTime tInicio=t.getHoraSalida();
+            LocalTime tFinal=t.getHoraFin();
+
+            if( horaFin.isBefore(tInicio))
+                return false;
+            else if(horaSalida.isAfter(tFinal))
+                return false;
+            return true;
+        }
+        return false;
     }
 }

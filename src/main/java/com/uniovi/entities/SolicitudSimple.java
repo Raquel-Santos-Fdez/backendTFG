@@ -1,11 +1,12 @@
 package com.uniovi.entities;
 
 import javax.persistence.Entity;
+import java.util.Date;
 
 @Entity
 public class SolicitudSimple extends Solicitud{
 
-    public SolicitudSimple( String fecha, MotivoAusencia motivo, Empleado empleado) {
+    public SolicitudSimple(Date fecha, MotivoAusencia motivo, Empleado empleado) {
         super(fecha, motivo, empleado);
     }
 

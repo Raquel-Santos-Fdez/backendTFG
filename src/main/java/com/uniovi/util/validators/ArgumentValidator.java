@@ -1,4 +1,4 @@
-package com.uniovi.validators;
+package com.uniovi.util.validators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

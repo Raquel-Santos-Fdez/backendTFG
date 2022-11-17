@@ -10,6 +10,7 @@ import com.uniovi.services.TareaStopsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +55,12 @@ public class JornadaController {
         return tareaService.findTareaById(id);
     }
 
+    @RequestMapping(value="/jornada/existeTarea/{fecha}/{idEmpleado}/{horaSalida}/{horaFin}")
+    public boolean existeTarea(@PathVariable Date fecha, @PathVariable Long idEmpleado, @PathVariable LocalTime horaSalida, @PathVariable LocalTime horaFin){
+        return jornadaService.existeTarea(fecha, idEmpleado, horaSalida, horaFin);
+    }
+
+    //Put
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping(value="jornada/reasignar")

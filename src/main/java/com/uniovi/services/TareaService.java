@@ -5,6 +5,7 @@ import com.uniovi.repositories.TareaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,4 +52,5 @@ public class TareaService {
         tareaRepository.findAll().forEach(tareas::add);
         return tareas;
     }
+
 }

@@ -1,17 +1,18 @@
 package com.uniovi.entities;
 
 import javax.persistence.Entity;
+import java.util.Date;
 
 @Entity
 public class SolicitudVacaciones extends Solicitud{
 
-    private String fechaFinVacaciones;
+    private Date fechaFinVacaciones;
 
-    public SolicitudVacaciones(String fecha, MotivoAusencia motivo, Empleado empleado) {
+    public SolicitudVacaciones(Date fecha, MotivoAusencia motivo, Empleado empleado) {
         super( fecha, motivo, empleado);
     }
 
-    public SolicitudVacaciones(String fecha, MotivoAusencia motivo, Empleado empleado, String fechaFinVacaciones) {
+    public SolicitudVacaciones(Date fecha, MotivoAusencia motivo, Empleado empleado, Date fechaFinVacaciones) {
         super( fecha, motivo, empleado);
         this.fechaFinVacaciones=fechaFinVacaciones;
     }
@@ -20,11 +21,11 @@ public class SolicitudVacaciones extends Solicitud{
         super();
     }
 
-    public String getFechaFinVacaciones() {
+    public Date getFechaFinVacaciones() {
         return fechaFinVacaciones;
     }
 
-    public void setFechaFinVacaciones(String fechaFinVacaciones) {
+    public void setFechaFinVacaciones(Date fechaFinVacaciones) {
         this.fechaFinVacaciones = fechaFinVacaciones;
     }
 }

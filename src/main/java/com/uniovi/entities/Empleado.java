@@ -2,7 +2,7 @@ package com.uniovi.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.uniovi.validators.ArgumentValidator;
+import com.uniovi.util.validators.ArgumentValidator;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public interface SolicitudIntercambioRepository extends CrudRepository<SolicitudIntercambio, Long> {
@@ -27,7 +28,7 @@ public interface SolicitudIntercambioRepository extends CrudRepository<Solicitud
     void asignarNuevoEmpleado(Long id, Empleado nuevoEmpleado);
 
     @Query("select s from SolicitudIntercambio s where s.fecha=?1 and s.empleado.id=?2 and s.estado<>'RECHAZADA'")
-    List<SolicitudIntercambio> findNotRechazadas(String fecha, Long idEmpleado);
+    List<SolicitudIntercambio> findNotRechazadas(Date fecha, Long idEmpleado);
 
     @Query("select s from SolicitudIntercambio s where s.nuevoEmpleado.id=?1")
     List<SolicitudIntercambio> findByNuevoEmpleado(Long idEmpleado);

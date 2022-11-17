@@ -62,7 +62,7 @@ public class SolicitudService {
 
                 Date fechaFormateada;
                 try {
-                    fechaFormateada = format.parse(solicitud.getFecha());
+                    fechaFormateada = format.parse(new java.sql.Date(solicitud.getFecha().getTime()).toString());
 
                     List<Tarea> tareas = jornadaService.getTareasByFechaEmpleado(solicitud.getEmpleado().getId(), fechaFormateada);
                     //eliminamos las tareas de la jornada libre
@@ -85,8 +85,8 @@ public class SolicitudService {
                 Date fechaInicio;
                 Date fechaFinal;
                 try {
-                    fechaInicio = format.parse(solicitud.getFecha());
-                    fechaFinal = format.parse(((SolicitudVacaciones) solicitud).getFechaFinVacaciones());
+                    fechaInicio = format.parse(new java.sql.Date(solicitud.getFecha().getTime()).toString());
+                    fechaFinal = format.parse(new java.sql.Date(((SolicitudVacaciones) solicitud).getFechaFinVacaciones().getTime()).toString());
                     for (Date d = fechaInicio; d.toInstant().isBefore(fechaFinal.toInstant()); d = new Date(d.getTime() + UN_DIA_EN_MILISEGUNDOS)) {
                         jornadaService.marcarDiaLibre(d, solicitud.getEmpleado());
                     }
@@ -150,14 +150,14 @@ public class SolicitudService {
         if (empleado != null) {
             List<SolicitudIntercambio> solicitudesPending = solicitudIntercambioRepository.findOthersSolicitudesPendientes(empleado.getId(), empleado.getRole());
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date fecha = null;
-            Date fechaDescanso = null;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date fecha=null;
+            Date fechaDescanso=null;
 
             for (SolicitudIntercambio s : solicitudesPending) {
                 try {
-                    fecha = sdf.parse(s.getFecha());
-                    fechaDescanso = sdf.parse(s.getFechaDescanso());
+                    fecha = format.parse(new java.sql.Date(s.getFecha().getTime()).toString());
+                    fechaDescanso = format.parse(new java.sql.Date(s.getFechaDescanso().getTime()).toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -227,7 +227,7 @@ public class SolicitudService {
      * @param idEmpleado id del empleado a consultar
      * @return true en caso de que existan jornadas, false en caso contrario
      */
-    public boolean existeSolicitud(String fecha, Long idEmpleado) {
+    public boolean existeSolicitud(Date fecha, Long idEmpleado) {
         List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudSimpleRepository.findNotRechazadas(fecha, idEmpleado));
         solicitudes.addAll(solicitudVacacionesRepository.findNotRechazadas(fecha, idEmpleado));
@@ -250,7 +250,7 @@ public class SolicitudService {
      * @param idEmpleado empleado a comprobar
      * @return true en caso de que existan, false en caso contrario
      */
-    public boolean existenVacacionesByFechaEmpleado(String fecha, Long idEmpleado){
+    public boolean existenVacacionesByFechaEmpleado(Date fecha, Long idEmpleado){
         List<SolicitudVacaciones> solicitudes=solicitudVacacionesRepository.existenVacacionesByFechaEmpleado(fecha, idEmpleado);
         return(solicitudes.size()!=0);
     }
