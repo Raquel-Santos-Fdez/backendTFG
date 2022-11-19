@@ -245,7 +245,7 @@ public class SolicitudService {
     }
 
     /**
-     * Comprueba si existen solicirudes de vacaiones para la feha y empleado dados
+     * Comprueba si existen solicitudes de vacaciones para la fecha y empleado dados
      * @param fecha fecha a comprobar
      * @param idEmpleado empleado a comprobar
      * @return true en caso de que existan, false en caso contrario

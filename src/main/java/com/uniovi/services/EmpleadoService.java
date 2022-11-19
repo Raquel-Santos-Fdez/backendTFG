@@ -179,6 +179,7 @@ public class EmpleadoService {
      * @param empleado Empleado con la nueva contaseña
      */
     public void actualizarPassword(Empleado empleado) {
+        empleado.setPassword(bCryptPasswordEncoder.encode(empleado.getPassword()));
         empleadoRepository.actualizarPassword(empleado.getId(), empleado.getPassword());
     }
 }

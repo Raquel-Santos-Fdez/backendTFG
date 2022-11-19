@@ -13,7 +13,7 @@ public class PO_SolicitarVacaciones {
         driver.findElement(By.id("solicitarV")).click();
     }
 
-    public static void solicitarVacacionesRepetida(WebDriver driver, int i) {
+    public static void solicitarVacacionesRepetida(WebDriver driver) {
 
         driver.findElement(By.id("solVacacionesBtn")).click();
 

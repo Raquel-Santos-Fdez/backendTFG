@@ -1,7 +1,7 @@
 package com.uniovi.controllers;
 
 import com.uniovi.entities.Estacion;
-import com.uniovi.entities.Stop_time;
+import com.uniovi.entities.Horario;
 import com.uniovi.services.EstacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,16 +22,9 @@ public class EstacionController {
         return estaciones;
     }
 
-    @RequestMapping(value = "/stopTimes")
-    public List<Stop_time> getStopTimes() {
-        return estacionService.getStopTimes();
-    }
-
-
-
-    @RequestMapping(value = "/stopTimes/{rutaId}/{stopId}")
-    public List<Stop_time> findStopTimeByRouteStop(@PathVariable String rutaId,@PathVariable String stopId) {
-        return estacionService.findStopTimeByRouteStop(rutaId, stopId);
+    @RequestMapping(value = "/horarios/{rutaId}/{estacionId}")
+    public List<Horario> findHorarioByRutaEstacion(@PathVariable String rutaId, @PathVariable String estacionId) {
+        return estacionService.findHorarioByRutaEstacion(rutaId, estacionId);
     }
 
 }

@@ -19,10 +19,6 @@ public interface SolicitudIntercambioRepository extends CrudRepository<Solicitud
     @Query("select s from SolicitudIntercambio s where s.empleado.id=?1")
     List<SolicitudIntercambio> findOwnSolicitudesIntercambio(Long idEmpleado);
 
-
-    @Query("select s from SolicitudIntercambio s where s.fecha=?1 and s.empleado.id=?2")
-    List<SolicitudIntercambio> findSolicitudIntercambioByFechaEmpleado(String date, Long idEmpleado);
-
     @Modifying
     @Query("update SolicitudIntercambio s set s.nuevoEmpleado=?2 where s.id=?1")
     void asignarNuevoEmpleado(Long id, Empleado nuevoEmpleado);

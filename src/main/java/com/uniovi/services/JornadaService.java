@@ -166,6 +166,14 @@ public class JornadaService {
     }
 
 
+    /**
+     * Comprueba si existe una tarea para un empleado en una fecha concreta que coincida con el horario dado.
+     * @param fecha fecha de la jornada
+     * @param idEmpleado id del empleado
+     * @param horaSalida hora de comienzo de la tarea
+     * @param horaFin hora de fin de la tarea
+     * @return true en caso de que exista, false en caso contrario
+     */
     public boolean existeTarea(Date fecha, Long idEmpleado, LocalTime horaSalida, LocalTime horaFin) {
         List<Tarea> tareas=jornadaRepository.findTareaByFechaEmpleado(idEmpleado,fecha);
         for(Tarea t: tareas){

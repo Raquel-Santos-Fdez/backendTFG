@@ -1,11 +1,11 @@
 package com.uniovi.services;
 
 import com.uniovi.entities.Estacion;
-import com.uniovi.entities.Stop_time;
-import com.uniovi.entities.Trip;
+import com.uniovi.entities.Horario;
+import com.uniovi.entities.Trayecto;
 import com.uniovi.repositories.EstacionRepository;
-import com.uniovi.repositories.StopTimeRepository;
-import com.uniovi.repositories.TripRepository;
+import com.uniovi.repositories.HorarioRepository;
+import com.uniovi.repositories.TrayectoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +26,10 @@ public class EstacionService {
     private EstacionRepository estacionRepository;
 
     @Autowired
-    private StopTimeRepository stopTimeRepository;
+    private HorarioRepository horarioRepository;
 
     @Autowired
-    private TripRepository tripRepository;
+    private TrayectoRepository trayectoRepository;
 
     /**
      * Añade una nueva estación
@@ -62,51 +62,41 @@ public class EstacionService {
     }
 
     /**
-     * Añade una nueva stop_time
-     * @param st nueva stop_time a añadir
+     * Añade un nuevo horario
+     * @param st nuevo horario a añadir
      */
-    public void addStopTimes(Stop_time st) {
-        stopTimeRepository.save(st);
+    public void addHorario(Horario st) {
+        horarioRepository.save(st);
     }
 
     /**
-     * Obtiene todas las stop_times
-     * @return Lista con todas las stop_times
+     * Añade un nuevo trayecto
+     * @param trayecto nuevo trayecto a añadir
      */
-    public List<Stop_time> getStopTimes() {
-        List<Stop_time> stopTimes = new ArrayList<>();
-        stopTimeRepository.findAll().forEach(stopTimes::add);
-        return stopTimes;
+    public void addTrayecto(Trayecto trayecto) {
+        trayectoRepository.save(trayecto);
     }
 
     /**
-     * Añade un nuevo "trip"
-     * @param trip nuevo trip a añadir
+     * Busca un trayecto por id
+     * @param id id del trayecto a encontrar
+     * @return trayecto encontrado o null
      */
-    public void addTrip(Trip trip) {
-        tripRepository.save(trip);
-    }
-
-    /**
-     * Busca un trip por id
-     * @param id id del trip a encontrar
-     * @return trip encontrado o null
-     */
-    public Trip getTripById(String id) {
-        Optional<Trip> trip = tripRepository.findById(id);
-        if (trip.isPresent())
-            return trip.get();
+    public Trayecto getTrayectoById(String id) {
+        Optional<Trayecto> trayecto = trayectoRepository.findById(id);
+        if (trayecto.isPresent())
+            return trayecto.get();
         return null;
     }
 
     /**
-     * Obtiene las stop_times de una ruta que incluye una estacion
-     * @param routeId id de la ruta
-     * @param stopId id de la estacion
-     * @return lista de las stop_times
+     * Obtiene los horarios de una ruta que incluye una estacion
+     * @param rutaId id de la ruta
+     * @param estacionId id de la estacion
+     * @return lista de los horarios
      */
-    public List<Stop_time> findStopTimeByRouteStop(String routeId, String stopId) {
-        return stopTimeRepository.findStopTimeByRouteStop(routeId, stopId);
+    public List<Horario> findHorarioByRutaEstacion(String rutaId, String estacionId) {
+        return horarioRepository.findHorariosByRutaEstacion(rutaId, estacionId);
     }
 
     /**

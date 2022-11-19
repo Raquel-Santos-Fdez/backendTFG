@@ -59,7 +59,7 @@ public class TestClass {
     @Test
     public void pr01Login(){
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "admin1", "Password1");
+        PO_Login.fillForm(driver, "admin1", "Password10");
         PO_View.checkElement(driver, "id", "idSlider");
         PO_Home.logout(driver);
     }
@@ -67,7 +67,7 @@ public class TestClass {
     @Test
     public void pr02LoginError(){
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "a", "Password1");
+        PO_Login.fillForm(driver, "a", "Password10");
         PO_Login.checkIncorrecto(driver);
     }
 
@@ -88,7 +88,7 @@ public class TestClass {
     @Test
     public void pr05addEmpleado(){
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "admin1", "Password1");
+        PO_Login.fillForm(driver, "admin1", "Password10");
 
         By boton=By.id("gestUJBtn");
         driver.findElement(boton).click();
@@ -167,7 +167,7 @@ public class TestClass {
     public void pr11consultarJornada(){
         PO_Home.logout(driver);
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "empleado1", "Password1");
+        PO_Login.fillForm(driver, "empleado1", "Password11");
 
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
@@ -228,7 +228,7 @@ public class TestClass {
         driver.findElement(menu).click();
 
 
-        PO_SolicitarVacaciones.solicitarVacacionesRepetida(driver,3);
+        PO_SolicitarVacaciones.solicitarVacacionesRepetida(driver);
     }
 
     @Test
@@ -317,7 +317,7 @@ public class TestClass {
     public void pr23verSolicitudes(){
         PO_Home.logout(driver);
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "admin1", "Password1");
+        PO_Login.fillForm(driver, "admin1", "Password10");
 
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
@@ -348,7 +348,7 @@ public class TestClass {
 
         PO_Home.logout(driver);
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "admin1", "Password1");
+        PO_Login.fillForm(driver, "admin1", "Password10");
 
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();

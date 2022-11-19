@@ -1,8 +1,8 @@
 package com.uniovi.entities;
 
+import com.uniovi.util.validators.ArgumentValidator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.uniovi.util.validators.ArgumentValidator;
 
 import javax.persistence.*;
 import java.util.HashSet;

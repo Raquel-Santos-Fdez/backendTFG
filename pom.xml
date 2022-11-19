@@ -9,13 +9,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.uniovi</groupId>
-    <artifactId>renfe</artifactId>
+    <artifactId>TFG</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>renfe</name>
-    <description>Proyecto inicial TFG</description>
+    <name>TFG</name>
+    <description>Aplicación de gestión laboral para empleados de Renfe Cercanías Asturias y visualización de información para pasajeros</description>
     <properties>
         <java.version>11</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -52,15 +53,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>net.sourceforge.nekohtml</groupId>-->
-<!--            <artifactId>nekohtml</artifactId>-->
-<!--            <version>1.9.21</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -74,15 +66,18 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.13.1</version>
-        </dependency>
+            </dependency>
+        
+        <dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    </dependency>
 
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.5.5</version>
         </dependency>
-
     </dependencies>
 
     <build>

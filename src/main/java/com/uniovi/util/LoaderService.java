@@ -5,12 +5,13 @@ import com.uniovi.services.EmpleadoService;
 import com.uniovi.services.EstacionService;
 import com.uniovi.services.RutaService;
 import com.uniovi.services.TrenService;
-import com.uniovi.util.LectorCSV;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,34 +47,47 @@ public class LoaderService {
         return estacions;
     }
 
-    private List<Stop_time> getStopTimes() throws FileNotFoundException {
-        List<String> lineas = lector.readLines("stop_times.csv");
-        String[] stop_time;
-        List<Stop_time> stop_times = new ArrayList<>();
+    private List<Horario> getHorarios() throws FileNotFoundException {
+        List<String> lineas = lector.readLines("horarios.csv");
+        String[] horariosString;
+        List<Horario> horarios = new ArrayList<>();
         for (int i = 1; i < lineas.size(); i++) {
-            stop_time = lineas.get(i).split(";");
+            horariosString = lineas.get(i).split(";");
             //hacerlo por consulta o en una clase apropiada
-            Estacion estacion = estacionService.getEstacionById(stop_time[3]);
-            Trip trip = estacionService.getTripById(stop_time[0]);
-            if (estacion != null && trip != null)
-                stop_times.add(new Stop_time(trip, estacion,
-                        stop_time[1], stop_time[2], stop_time[4]));
+            Estacion estacion = estacionService.getEstacionById(horariosString[3]);
+            Trayecto trayecto = estacionService.getTrayectoById(horariosString[0]);
+            horariosString = formatearHorarios(horariosString);
+            if (estacion != null && trayecto != null)
+                horarios.add(new Horario(trayecto, estacion,
+                        LocalTime.parse(horariosString[1]), LocalTime.parse(horariosString[2])));
         }
-        return stop_times;
+        return horarios;
     }
 
-    private List<Trip> getTrips() throws FileNotFoundException {
-        List<String> lineas = lector.readLines("trips.csv");
-        String[] trip;
-        List<Trip> trips = new ArrayList<>();
+    private String[] formatearHorarios(String[] horariosString) {
+        String[] horariosV = horariosString;
+        for (int i = 0; i < horariosString.length-1; i++)
+            if (horariosString[i].length() == 7)
+                horariosV[i] = ("0" + horariosString[i]);
+            else if(horariosString[i].split(":")[0].equals("24"))
+                horariosV[i]=("00:"+horariosString[i].split(":")[1]+":"+horariosString[i].split(":")[2]);
+            else
+                horariosV[i] = horariosString[i];
+
+        return horariosV;
+    }
+
+    private List<Trayecto> getTrayectos() throws FileNotFoundException {
+        List<String> lineas = lector.readLines("trayectos.csv");
+        String[] trayecto;
+        List<Trayecto> trayectos = new ArrayList<>();
         for (int i = 1; i < lineas.size(); i++) {
-            trip = lineas.get(i).split(";");
-            Ruta ruta = rutaService.getRutaById(trip[1]);
-//            Ruta ruta = estacionService.getRutaById(trip[1]);
-            if (ruta != null && trip[0].contains("L"))
-                trips.add(new Trip(trip[0], ruta));
+            trayecto = lineas.get(i).split(";");
+            Ruta ruta = rutaService.getRutaById(trayecto[1]);
+            if (ruta != null && trayecto[0].contains("L"))
+                trayectos.add(new Trayecto(trayecto[0], ruta));
         }
-        return trips;
+        return trayectos;
     }
 
     private List<Ruta> getRutas() throws FileNotFoundException {
@@ -101,22 +115,22 @@ public class LoaderService {
         return rutas_stops;
     }
 
-    private void addEmpleados(){
-        Empleado admin=new Empleado("admin1", "Admin", "Prueba", "admin1@gmail.com",
-                "11111111A", "Password1", Empleado.Rol.ADMIN, 100);
+    private void addEmpleados() {
+        Empleado admin = new Empleado("admin1", "Admin", "Prueba", "admin1@gmail.com",
+                "11111111A", "Password10", Empleado.Rol.ADMIN, 100);
         empleadoService.addEmpleado(admin);
 
-        Empleado empleado1=new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com",
-                "22222222B", "Password1", Empleado.Rol.MAQUINISTA, 100);
+        Empleado empleado1 = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com",
+                "22222222B", "Password11", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado1);
 
     }
 
-    private void addTrenes(){
-        Tren tren1=new Tren();
+    private void addTrenes() {
+        Tren tren1 = new Tren();
         trenService.addTren(tren1);
 
-        Tren tren2=new Tren();
+        Tren tren2 = new Tren();
         trenService.addTren(tren2);
     }
 
@@ -130,14 +144,14 @@ public class LoaderService {
             for (Ruta ruta : getRutas())
                 rutaService.addRuta(ruta);
 
-            for (Trip trip : getTrips())
-                estacionService.addTrip(trip);
+            for (Trayecto trayecto : getTrayectos())
+                estacionService.addTrayecto(trayecto);
 
 
-            for (Stop_time st : getStopTimes())
-                estacionService.addStopTimes(st);
+            for (Horario st : getHorarios())
+                estacionService.addHorario(st);
 
-            for(Route_stop rs:getRutaStops())
+            for (Route_stop rs : getRutaStops())
                 rutaService.addRutaStop(rs);
 
         } catch (FileNotFoundException e) {

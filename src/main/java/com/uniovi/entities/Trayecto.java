@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Trip {
+public class Trayecto {
 
     @Id
     private String id;
@@ -13,13 +13,13 @@ public class Trip {
     @ManyToOne
     private Ruta ruta;
 
-    public Trip(String id, Ruta ruta) {
+    public Trayecto(String id, Ruta ruta) {
         super();
         this.id = id;
         this.ruta = ruta;
     }
 
-    public Trip() {
+    public Trayecto() {
 
     }
 
@@ -27,8 +27,8 @@ public class Trip {
         return id;
     }
 
-    public void setId(String trip_id) {
-        this.id = trip_id;
+    public void setId(String trayecto_id) {
+        this.id = trayecto_id;
     }
 
     public Ruta getRoute() {

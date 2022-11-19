@@ -8,9 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface EmpleadoRepository extends CrudRepository<Empleado, Long> {
 
-    @Query("select e from Empleado e where e.username= ?1 and e.password=?2")
-    Empleado findByUsernamePassword( String username, String password);
-
     @Modifying
     @Transactional
     @Query("update Empleado e set e.password=?2 where e.id=?1")
