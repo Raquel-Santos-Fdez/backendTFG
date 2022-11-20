@@ -16,8 +16,8 @@ public class PO_PortalSolicitudes {
                 By.className("nueva-solicitud"));
 
         WebElement diaSolicitar = dialog.findElement(By.name("diaSolicitar"));
-        diaSolicitar.click();
-        diaSolicitar.clear();
+//        diaSolicitar.click();
+//        diaSolicitar.clear();
         diaSolicitar.sendKeys(diaSolicitarp);
 
         WebElement diaCubrir = dialog.findElement(By.name("diaCubrir"));

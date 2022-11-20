@@ -31,11 +31,11 @@ public class Trayecto {
         this.id = trayecto_id;
     }
 
-    public Ruta getRoute() {
+    public Ruta getRuta() {
         return ruta;
     }
 
-    public void setRoute(Ruta ruta) {
+    public void setRuta(Ruta ruta) {
         this.ruta = ruta;
     }
 }

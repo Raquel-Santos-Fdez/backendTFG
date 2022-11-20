@@ -1,5 +1,6 @@
 package com.uniovi.integracion.pageobjects;
 
+import com.uniovi.utils.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +9,6 @@ import java.util.List;
 
 public class PO_ConsultarJornada {
     public static void consultarJornada(WebDriver driver, String fecha) {
-
         By consultarBtn=By.id("consultarJornadaBtn");
         driver.findElement(consultarBtn).click();
 
@@ -22,16 +22,6 @@ public class PO_ConsultarJornada {
 
     public static void solicitarDiaLibre(WebDriver driver, String hIniciop, String hFinalp, String motivo) {
         driver.findElement(By.id("diaLibrePanel")).click();
-
-        WebElement horaInicio=driver.findElement(By.name("horaInicio"));
-        horaInicio.click();
-        horaInicio.clear();
-        horaInicio.sendKeys(hIniciop);
-
-        WebElement horaFin=driver.findElement(By.name("horaFin"));
-        horaFin.click();
-        horaFin.clear();
-        horaFin.sendKeys(hFinalp);
 
         driver.findElement(By.name("selectMotivo")).click();
         List<WebElement> options=driver.findElements(By.xpath("//mat-option[@id='motivo']"));

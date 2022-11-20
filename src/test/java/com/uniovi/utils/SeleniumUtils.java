@@ -114,6 +114,10 @@ public class SeleniumUtils {
 		assertTrue("El texto "+texto+" no está presente", inputText.equals(texto));
 	}
 
+	static public void checkTexto( String textoElemento, String textoEsperado){
+		assertTrue(textoElemento.equals(textoEsperado));
+	}
+
 
 	static public void esperarSegundos(WebDriver driver, int segundos){
 

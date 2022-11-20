@@ -1,6 +1,6 @@
 package com.uniovi.controllers;
 
-import com.uniovi.entities.Route_stop;
+import com.uniovi.entities.Ruta_estacion;
 import com.uniovi.entities.Ruta;
 import com.uniovi.services.RutaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class RutaController {
     }
 
     @RequestMapping(value = "/ruta/{origenId}/{destinoId}")
-    public List<Route_stop> findRutaByEstaciones(@PathVariable String origenId, @PathVariable String destinoId) {
+    public List<Ruta_estacion> findRutaByEstaciones(@PathVariable String origenId, @PathVariable String destinoId) {
         return rutaService.findRutaByEstaciones(origenId, destinoId);
     }
 

@@ -1,8 +1,8 @@
 package com.uniovi.services;
 
-import com.uniovi.entities.Route_stop;
+import com.uniovi.entities.Ruta_estacion;
 import com.uniovi.entities.Ruta;
-import com.uniovi.repositories.RouteStopsRepository;
+import com.uniovi.repositories.RutaEstacionRepository;
 import com.uniovi.repositories.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class RutaService {
     private RutaRepository rutaRepository;
 
     @Autowired
-    private RouteStopsRepository routeStopsRepository;
+    private RutaEstacionRepository rutaEstacionRepository;
 
     /**
      * Busca todas las rutas
@@ -42,15 +42,15 @@ public class RutaService {
      * @param destinoId id de la estacion de destino
      * @return lista de las rutas que cumplen el criterio
      */
-    public List<Route_stop> findRutaByEstaciones(String origenId, String destinoId) {
-        List<Route_stop> rutas_conjuntas=new ArrayList<>();
+    public List<Ruta_estacion> findRutaByEstaciones(String origenId, String destinoId) {
+        List<Ruta_estacion> rutas_conjuntas=new ArrayList<>();
 
-        List<Route_stop> rutas_stops_origen=rutaRepository.findRutaByEstaciones(origenId, destinoId);
+        List<Ruta_estacion> rutas_estaciones_origen=rutaRepository.findRutaByEstaciones(origenId, destinoId);
 
-        List<Route_stop> rutas_stops_destino=rutaRepository.findRutaByEstaciones(destinoId, origenId);
+        List<Ruta_estacion> rutas_estaciones_destino=rutaRepository.findRutaByEstaciones(destinoId, origenId);
 
-        for(Route_stop rs_origen: rutas_stops_origen) {
-            for(Route_stop rs_destino:rutas_stops_destino) {
+        for(Ruta_estacion rs_origen: rutas_estaciones_origen) {
+            for(Ruta_estacion rs_destino:rutas_estaciones_destino) {
                 if(rs_origen.getOrderParada()<rs_destino.getOrderParada())
                     if(rs_origen.getRuta().getRuta_id().equals(rs_destino.getRuta().getRuta_id()))
                         rutas_conjuntas.add(rs_origen);
@@ -90,17 +90,17 @@ public class RutaService {
     }
 
     /**
-     * Añade una route_stop
-     * @param route_stop route_stop a añadir
+     * Añade una ruta_estacion
+     * @param rutaestacion ruta_estacion a añadir
      */
-    public void addRutaStop(Route_stop route_stop){
-        routeStopsRepository.save(route_stop);
+    public void addRutaEstacion(Ruta_estacion rutaestacion){
+        rutaEstacionRepository.save(rutaestacion);
     }
 
     /**
-     * Elimina todas las route_stops
+     * Elimina todas las ruta_estacion
      */
-    public void eliminarRutaStops() {
-        routeStopsRepository.deleteAll();
+    public void eliminarRutaEstaciones() {
+        rutaEstacionRepository.deleteAll();
     }
 }

@@ -1,7 +1,7 @@
 package com.uniovi.unit;
 
 import com.uniovi.entities.Estacion;
-import com.uniovi.entities.Route_stop;
+import com.uniovi.entities.Ruta_estacion;
 import com.uniovi.entities.Ruta;
 import com.uniovi.services.EstacionService;
 import com.uniovi.services.RutaService;
@@ -32,7 +32,7 @@ public class RutaTest {
 
     @Before
     public void antesDeCadaTest() {
-        rutaService.eliminarRutaStops();
+        rutaService.eliminarRutaEstaciones();
         if (rutaService.getRutaById("1") != null)
             rutaService.eliminarRuta(rutaService.getRutaById("1"));
         estacionService.deleteEstacion("1");
@@ -41,7 +41,7 @@ public class RutaTest {
 
     @After
     public void despuesDeCadaTest() {
-        rutaService.eliminarRutaStops();
+        rutaService.eliminarRutaEstaciones();
         if (rutaService.getRutaById("1") != null)
             rutaService.eliminarRuta(rutaService.getRutaById("1"));
         estacionService.deleteEstacion("1");
@@ -101,13 +101,13 @@ public class RutaTest {
         Ruta ruta=new Ruta("1", "p", "prueba");
         rutaService.addRuta(ruta);
 
-        Route_stop ruta_stop=new Route_stop(1, estacion1, ruta);
-        Route_stop ruta_stop2=new Route_stop(2, estacion2, ruta);
+        Ruta_estacion ruta_stop=new Ruta_estacion(1, estacion1, ruta);
+        Ruta_estacion ruta_stop2=new Ruta_estacion(2, estacion2, ruta);
 
-        rutaService.addRutaStop(ruta_stop);
-        rutaService.addRutaStop(ruta_stop2);
+        rutaService.addRutaEstacion(ruta_stop);
+        rutaService.addRutaEstacion(ruta_stop2);
 
-        List<Route_stop> rs=rutaService.findRutaByEstaciones(estacion1.getId(), estacion2.getId());
+        List<Ruta_estacion> rs=rutaService.findRutaByEstaciones(estacion1.getId(), estacion2.getId());
 
         assertTrue(rs.size()>0);
     }

@@ -39,12 +39,12 @@ public class JornadaTest {
     private SolicitudService solicitudService;
 
     @Autowired
-    private TareaStopsService tareaStopsService;
+    private TareaEstacionService tareaEstacionService;
 
     @Before
     public void antesDeCadaMetodo() {
 
-        tareaStopsService.eliminarTodos();
+        tareaEstacionService.eliminarTodos();
         tareaService.getTareas().forEach(t-> tareaService.eliminarTarea(t));
         jornadaService.eliminarTodos();
         solicitudService.deleteAllSolicitudes();
@@ -53,7 +53,7 @@ public class JornadaTest {
 
     @After
     public void despuesDeCadaMetodo() {
-        tareaStopsService.eliminarTodos();
+        tareaEstacionService.eliminarTodos();
         tareaService.getTareas().forEach(t-> tareaService.eliminarTarea(t));
         solicitudService.deleteAllSolicitudes();
         jornadaService.eliminarTodos();
@@ -62,7 +62,7 @@ public class JornadaTest {
 
     @Test
     public void pr01AddJornadaTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -84,9 +84,9 @@ public class JornadaTest {
 
     @Test
     public void pr03findJornadaByDateTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2 = new Empleado();
+        Empleado empleado2 = new Empleado("empleado11", "Empleado10", "Prueba", "empleado11@gmail.com", "77777777Z","Password10" , Empleado.Rol.MAQUINISTA,100);
         empleadoService.addEmpleado(empleado2);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -117,7 +117,7 @@ public class JornadaTest {
 
     @Test
     public void pr05findJornadaByEmpleadoTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -144,7 +144,7 @@ public class JornadaTest {
 
     @Test
     public void pr07findJornadaByDateEmpleadoTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -160,7 +160,7 @@ public class JornadaTest {
 
     @Test
     public void pr08marcarDiaLibreJornadaExistenteTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -171,8 +171,8 @@ public class JornadaTest {
             Tarea tarea = new Tarea();
             Set<Tarea> tareas = new HashSet<>();
 
-            Set<Tarea_stops> ts=new HashSet<>();
-            ts.add(new Tarea_stops());
+            Set<Tarea_estacion> ts=new HashSet<>();
+            ts.add(new Tarea_estacion());
             tarea.setStops(ts);
 
             tareas.add(tarea);
@@ -192,7 +192,7 @@ public class JornadaTest {
 
     @Test
     public void pr09marcarDiaLibreJornadaInexistenteTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -223,7 +223,8 @@ public class JornadaTest {
 
     @Test
     public void pr11getTareasByFechaEmpleadoTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -246,7 +247,8 @@ public class JornadaTest {
 
     @Test
     public void pr12getTareasByFechaEmpleadoSinTareasTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -269,7 +271,8 @@ public class JornadaTest {
 
     @Test
     public void pr14getTareasByFechaEmpleadoSinJornadaTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -284,9 +287,11 @@ public class JornadaTest {
 
     @Test
     public void pr15getTareasByFechaEmpleadoOtroEmpleadoTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2=new Empleado();
+        Empleado empleado2 = new Empleado("empleado11", "Empleado10", "Prueba", "empleado11@gmail.com", "77777777Z","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado2);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -309,7 +314,8 @@ public class JornadaTest {
 
     @Test
     public void pr16getTareasByFechaEmpleadoOtraFechaTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = null;
@@ -332,21 +338,14 @@ public class JornadaTest {
         }
     }
 
-    //No existe jornada
-    //No existe ninguna tarea
-    //Datos invalidos
-    //Existe y es correcta
-    //El empleado no existe
-    //Existen tareas para ese empleado pero en otra fecha
-    //Existen tareas para esa fecha pero otro empleado
-
-
     //El empleado que la solicita no tiene una jornada ese dia
     @Test
     public void pr17reasignarSinJornadaTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2=new Empleado();
+        Empleado empleado2 = new Empleado("empleado11", "Empleado10", "Prueba", "empleado11@gmail.com", "77777777Z","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado2);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -371,9 +370,11 @@ public class JornadaTest {
     //Se solicita reasignar con el nuevo empleado null
     @Test
     public void pr18reasignarNuevoNullTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2=new Empleado();
+        Empleado empleado2 = new Empleado("empleado11", "Empleado10", "Prueba", "empleado11@gmail.com", "77777777Z","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado2);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -397,9 +398,11 @@ public class JornadaTest {
 
     @Test
     public void pr19reasignarTest(){
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2=new Empleado();
+        Empleado empleado2 = new Empleado("empleado11", "Empleado10", "Prueba", "empleado11@gmail.com", "77777777Z","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado2);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

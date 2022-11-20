@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.FileNotFoundException;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,16 +100,16 @@ public class LoaderService {
         return rutas;
     }
 
-    private List<Route_stop> getRutaStops() throws FileNotFoundException {
+    private List<Ruta_estacion> getRutaStops() throws FileNotFoundException {
         List<String> lineas = lector.readLines("ruta_stops.csv");
         String[] ruta_stop;
-        List<Route_stop> rutas_stops = new ArrayList<>();
+        List<Ruta_estacion> rutas_stops = new ArrayList<>();
         for (int i = 1; i < lineas.size(); i++) {
             ruta_stop = lineas.get(i).split(";");
             Estacion estacion = estacionService.getEstacionById(ruta_stop[1]);
             Ruta ruta = rutaService.getRutaById(ruta_stop[2]);
             if (estacion != null && ruta != null)
-                rutas_stops.add(new Route_stop(Integer.parseInt(ruta_stop[0]), estacion, ruta));
+                rutas_stops.add(new Ruta_estacion(Integer.parseInt(ruta_stop[0]), estacion, ruta));
         }
         return rutas_stops;
     }
@@ -123,6 +122,10 @@ public class LoaderService {
         Empleado empleado1 = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com",
                 "22222222B", "Password11", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado1);
+
+        Empleado empleado3 = new Empleado("empleado3", "Empleado3", "Prueba", "empleado3@gmail.com",
+                "22222222C", "Password12", Empleado.Rol.MAQUINISTA, 100);
+        empleadoService.addEmpleado(empleado3);
 
     }
 
@@ -151,8 +154,8 @@ public class LoaderService {
             for (Horario st : getHorarios())
                 estacionService.addHorario(st);
 
-            for (Route_stop rs : getRutaStops())
-                rutaService.addRutaStop(rs);
+            for (Ruta_estacion rs : getRutaStops())
+                rutaService.addRutaEstacion(rs);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

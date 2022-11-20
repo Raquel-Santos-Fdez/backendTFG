@@ -60,7 +60,7 @@ public class TestClass {
     public void pr01Login(){
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
         PO_Login.fillForm(driver, "admin1", "Password10");
-        PO_View.checkElement(driver, "id", "idSlider");
+        PO_View.checkElement(driver, "id", "horariosBtnHome");
         PO_Home.logout(driver);
     }
 
@@ -73,16 +73,18 @@ public class TestClass {
 
     @Test
     public void pr03ConsultarHorarios(){
-        PO_Home.clickOption(driver,"/horarios", "id", "aHorarios" );
+        By boton=By.id("aHorarios");
+        driver.findElement(boton).click();
         PO_Horarios.seleccionarEstaciones(driver, "PUENTE DE LOS FIERROS", "POLA DE LENA");
         PO_View.checkElement(driver, "text", "HORARIO");
     }
 
     @Test
     public void pr04ConsultarHorariosSinRuta(){
-        PO_Home.clickOption(driver,"/horarios", "id", "aHorarios" );
+        By boton=By.id("aHorarios");
+        driver.findElement(boton).click();
         PO_Horarios.seleccionarEstaciones(driver, "GIJON", "AVILES");
-        driver.switchTo().alert().accept();
+        PO_View.checkElement(driver, "text", "No existe recorrido entre estas dos estaciones");
     }
 
     @Test
@@ -96,6 +98,7 @@ public class TestClass {
         PO_GestUsuarioJornada.addUsuario(driver, "empleado2", "Empleado2", "Prueba",
                 "33333333C", "empleado2@gmail.com", "MAQUINISTA");
 
+        SeleniumUtils.esperarSegundos(driver,1);
         PO_View.checkElement(driver, "text", "empleado2");
     }
 
@@ -176,11 +179,12 @@ public class TestClass {
 
         PO_ConsultarJornada.verDetallesTarea(driver, "tarea prueba integracion 30nov");
 
-        PO_View.checkElement(driver, "text", "Consultar jornada");
+        PO_View.checkElement(driver, "text", "Consultar mi jornada");
     }
 
     @Test
     public void pr12addIncidencia(){
+
 
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
@@ -205,7 +209,7 @@ public class TestClass {
 
         PO_ConsultarJornada.consultarJornada(driver, monthName+" 29, 2022");
 
-        PO_ConsultarJornada.solicitarDiaLibre(driver, "10:30", "12:30", "OTRO_MOTIVO");
+        PO_ConsultarJornada.solicitarDiaLibre(driver, "10:30", "12:30", "Licencia");
 
         PO_View.checkElement(driver, "text", "La solicitud ha sido enviada correctamente");
     }
@@ -239,7 +243,7 @@ public class TestClass {
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.addSolicitud(driver, "11/30/2022", "12/25/2022", "OTRO_MOTIVO");
+        PO_PortalSolicitudes.addSolicitud(driver, "November 30, 2022", "December 25,2022", "Licencia");
 
         PO_View.checkElement(driver, "text", "La solicitud ha sido añadida correctamente");
 
@@ -253,7 +257,7 @@ public class TestClass {
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.addSolicitud(driver, "12/20/2022", "12/25/2022", "OTRO_MOTIVO");
+        PO_PortalSolicitudes.addSolicitud(driver, "December 20, 2022", "December 25,2022", "Licencia");
 
         PO_View.checkElement(driver, "text", "Debe seleccionar un intercambio para un día con una jornada asignada");
 
@@ -267,7 +271,7 @@ public class TestClass {
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.consultarMisSolicitudes(driver, "2022-11-30", "2022-12-25", "PENDIENTE");
+        PO_PortalSolicitudes.consultarMisSolicitudes(driver, "30-11-2022", "25-12-2022", "PENDIENTE");
 
     }
 
@@ -279,7 +283,7 @@ public class TestClass {
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.consultarVacaciones(driver, "2022-12-01 -- 2022-12-20", "2022-06-16 -- 2022-06-30", "PENDIENTE");
+        PO_PortalSolicitudes.consultarVacaciones(driver, "01-12-2022 -- 20-12-2022", "16-06-2022 -- 30-06-2022", "PENDIENTE");
 
     }
 
@@ -297,7 +301,6 @@ public class TestClass {
         PO_Home.clickOption(driver, "/ver-perfil", "class", "verPerfil");
 
         PO_Perfil.modificarPassword(driver, "Password5", "Password5");
-        PO_Perfil.comprobarPassword(driver, "Password5");
 
         PO_View.checkElement(driver, "text", "Contraseña modificada correctamente");
     }
@@ -322,7 +325,7 @@ public class TestClass {
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
 
-        PO_VerSolicitudes.comprobarSolicitud(driver, "2022-11-29","OTRO_MOTIVO", "empleado1");
+        PO_VerSolicitudes.comprobarSolicitud(driver, "29-11-2022","LICENCIA", "empleado1");
     }
 
 
@@ -333,8 +336,8 @@ public class TestClass {
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
 
-        PO_VerSolicitudes.rechazarSolicitud(driver,"2022-11-29", "empleado1");
-        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-11-29", "empleado1");
+        PO_VerSolicitudes.rechazarSolicitud(driver,"29-11-2022", "empleado1");
+        PO_VerSolicitudes.checkNoSolicitud(driver, "29-11-2022", "empleado1");
     }
 
     @Test
@@ -353,9 +356,9 @@ public class TestClass {
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
 
-        PO_VerSolicitudes.aceptarSolicitud(driver, "2022-11-29", "empleado1");
+        PO_VerSolicitudes.aceptarSolicitud(driver, "29-11-2022", "empleado1");
 
-        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-11-29", "empleado1");
+        PO_VerSolicitudes.checkNoSolicitud(driver, "29-11-2022", "empleado1");
     }
 
     @Test
@@ -364,10 +367,10 @@ public class TestClass {
         By menu=By.id("verSolBtn");
         driver.findElement(menu).click();
 
-        PO_VerSolicitudes.aceptarSolicitud(driver, "2022-12-01 - 2022-12-20", "empleado1");
+        PO_VerSolicitudes.aceptarSolicitud(driver, "01-12-2022 -- 20-12-2022", "empleado1");
         PO_VerSolicitudes.aceptarVacaciones(driver );
 
-        PO_VerSolicitudes.checkNoSolicitud(driver, "2022-12-01 - 2022-12-20", "empleado1");
+        PO_VerSolicitudes.checkNoSolicitud(driver, "01-12-2022 -- 20-12-2022", "empleado1");
     }
 
     @Test
@@ -389,20 +392,20 @@ public class TestClass {
 
         driver.findElement(By.cssSelector("button[aria-label='Next month']")).click();
 
-        PO_GestUsuarioJornada.addTarea(driver, "December 25, 2022", "empleado2", "1", "tarea prueba integracion 25dic",
+        PO_GestUsuarioJornada.addTarea(driver, "December 25, 2022", "empleado3", "1", "tarea prueba integracion 25dic",
                 "PUENTE DE LOS FIERROS", "POLA DE LENA", "10:00", "12:00", "1");
 
         PO_Home.logout(driver);
 
         PO_Home.clickOption(driver, "/login", "class", "identificarse");
-        PO_Login.fillForm(driver, "empleado2", "9EWLB9M6H4W");
+        PO_Login.fillForm(driver, "empleado3", "Password12");
 
         By menu=By.id("menuGestionBtn");
         driver.findElement(menu).click();
 
         driver.findElement(By.id("portalSolBtn")).click();
 
-        PO_PortalSolicitudes.aceptarSolicitudIntercambio(driver, "2022-11-30", "2022-12-25", "empleado1");
+        PO_PortalSolicitudes.aceptarSolicitudIntercambio(driver, "30-11-2022", "25-12-2022", "empleado1");
 
         PO_View.checkElement(driver, "text", "La solicitud ha sido aceptada");
 

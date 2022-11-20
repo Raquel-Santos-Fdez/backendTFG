@@ -20,7 +20,7 @@ public class Ruta {
 
     @OneToMany(mappedBy = "ruta")
     @JsonIgnore
-    private Set<Route_stop> stops=new HashSet<>();
+    private Set<Ruta_estacion> stops=new HashSet<>();
 
     public Ruta(){
 
@@ -60,11 +60,11 @@ public class Ruta {
         this.ruta_largo = ruta_largo;
     }
 
-    public Set<Route_stop> getStops() {
+    public Set<Ruta_estacion> getStops() {
         return stops;
     }
 
-    public void setStops(Set<Route_stop> stops) {
+    public void setStops(Set<Ruta_estacion> stops) {
         this.stops = stops;
     }
 

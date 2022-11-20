@@ -60,7 +60,8 @@ public class SolicitudTest {
 
     @Test
     public void pr02setSolicitudTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         try {
@@ -74,7 +75,8 @@ public class SolicitudTest {
 
     @Test
     public void pr04rechazarSolicitudTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         try {
@@ -96,7 +98,8 @@ public class SolicitudTest {
 
     @Test
     public void pr06getAllSolicitudesPendientesVariasTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         try {
@@ -113,7 +116,8 @@ public class SolicitudTest {
 
     @Test
     public void pr07getAllSolicitudesPendientesConRechazadasTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         try {
@@ -130,7 +134,8 @@ public class SolicitudTest {
 
     @Test
     public void pr08getAllSolicitudesPendientesIntercambioTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         SolicitudIntercambio solicitudIntercambio = new SolicitudIntercambio();
         solicitudService.addSolicitudIntercambio(solicitudIntercambio);
@@ -140,7 +145,8 @@ public class SolicitudTest {
     @Test
     public void pr09addSolicitudIntercambioSimpleTest() {
 
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         try {
@@ -161,7 +167,7 @@ public class SolicitudTest {
 
     @Test
     public void pr11addSolicitudIntercambioTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com", "11111111A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         Date fechaDescanso = null;
@@ -186,7 +192,8 @@ public class SolicitudTest {
 
     @Test
     public void pr13solicitarVacacionesTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         Date fecha2=null;
@@ -218,7 +225,8 @@ public class SolicitudTest {
 
     @Test
     public void pr16findSolicitudesVacacionesTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
         Date fecha = null;
         Date fecha2=null;
@@ -238,9 +246,11 @@ public class SolicitudTest {
 
     @Test
     public void pr17findOwnSolicitudesTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2 = new Empleado();
+        Empleado empleado2 = new Empleado("empleado11", "Empleado10", "Prueba", "empleado11@gmail.com", "77777777z","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado2);
 
         Date fecha = null;
@@ -282,9 +292,11 @@ public class SolicitudTest {
 
     @Test
     public void pr23findOthersSolicitudesPendientesFechasNoCoincidentesTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2 = new Empleado();
+        Empleado empleado2 = new Empleado("empleado11", "Empleado10", "Prueba", "empleado11@gmail.com", "77777777Z","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado2);
 
         Date fecha = null;
@@ -332,9 +344,9 @@ public class SolicitudTest {
     //Tiene una jornada pero es diaLibre
     @Test
     public void pr25findOthersSolicitudesPendientesDiaLibreTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com", "11111111A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2 = new Empleado();
+        Empleado empleado2 = new Empleado("empleado2", "Empleado1", "Prueba", "empleado2@gmail.com", "22222222A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado2);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -361,9 +373,9 @@ public class SolicitudTest {
     //Tiene jornada en ambas fechas
     @Test
     public void pr26findOthersSolicitudesPendientesOcupadoTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com", "11111111A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado);
-        Empleado empleado2 = new Empleado();
+        Empleado empleado2 = new Empleado("empleado2", "Empleado1", "Prueba", "empleado2@gmail.com", "22222222A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado2);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -386,7 +398,7 @@ public class SolicitudTest {
 
     @Test
     public void pr27aceptarSolicitudIntercambioTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com", "11111111A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado);
 
         Date fecha = null;
@@ -409,7 +421,7 @@ public class SolicitudTest {
     //la jornada para la fecha de la solicitud no existe
     @Test
     public void pr28aceptarSolicitudSimpleTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com", "11111111A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado);
 
         Date fecha = null;
@@ -436,7 +448,7 @@ public class SolicitudTest {
 
     @Test
     public void pr29aceptarSolicitudSimpleJornadaTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com", "11111111A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado);
 
         Date fecha = null;
@@ -471,7 +483,7 @@ public class SolicitudTest {
 
     @Test
     public void pr30aceptarSolicitudVacacionesTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado1", "Empleado1", "Prueba", "empleado1@gmail.com", "11111111A", "Password1", Empleado.Rol.MAQUINISTA, 100);
         empleadoService.addEmpleado(empleado);
 
         int UN_DIA_EN_MILISEGUNDOS = 1000 * 60 * 60 * 24;

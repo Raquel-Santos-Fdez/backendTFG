@@ -35,7 +35,7 @@ public class Tarea {
 
     @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name="tarea_id")
-    private Set<Tarea_stops> stops = new HashSet<>();
+    private Set<Tarea_estacion> stops = new HashSet<>();
 
     public Tarea() {
 
@@ -81,11 +81,11 @@ public class Tarea {
         this.tren = tren;
     }
 
-    public Set<Tarea_stops> getStops() {
+    public Set<Tarea_estacion> getStops() {
         return stops;
     }
 
-    public void setStops(Set<Tarea_stops> stops) {
+    public void setStops(Set<Tarea_estacion> stops) {
         this.stops = stops;
     }
 

@@ -20,11 +20,11 @@ public class Estacion {
 
     @OneToMany(mappedBy = "estacion", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Tarea_stops> tareas=new HashSet<>();
+    private Set<Tarea_estacion> tareas=new HashSet<>();
 
     @OneToMany(mappedBy = "estacion")
     @JsonIgnore
-    private Set<Route_stop> routes=new HashSet<>();
+    private Set<Ruta_estacion> rutas =new HashSet<>();
 
 
     public Estacion(){
@@ -74,19 +74,19 @@ public class Estacion {
         this.nombre = nombre;
     }
 
-    public Set<Route_stop> getRoutes() {
-        return routes;
+    public Set<Ruta_estacion> getRutas() {
+        return rutas;
     }
 
-    public void setRoutes(Set<Route_stop> routes) {
-        this.routes = routes;
+    public void setRutas(Set<Ruta_estacion> routes) {
+        this.rutas = routes;
     }
 
-    public Set<Tarea_stops> getTareas() {
+    public Set<Tarea_estacion> getTareas() {
         return tareas;
     }
 
-    public void setTareas(Set<Tarea_stops> tareas) {
+    public void setTareas(Set<Tarea_estacion> tareas) {
         this.tareas = tareas;
     }
 }

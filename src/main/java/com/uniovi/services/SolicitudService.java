@@ -190,6 +190,10 @@ public class SolicitudService {
             solicitudVacacionesRepository.save(solicitud);
     }
 
+    /**
+     * Obtiene todas las solicitudes simples y de vacaciones en estado pendiente
+     * @return lista con las solicitudes pendientes
+     */
     public List<Solicitud> getAllSolicitudesPendientes() {
         List<Solicitud> solicitudes = new ArrayList<>();
         solicitudes.addAll(solicitudSimpleRepository.findAllPending());

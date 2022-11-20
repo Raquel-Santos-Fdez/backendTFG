@@ -49,7 +49,6 @@ public class EmpleadoService {
      * Añade un empleado
      *
      * @param empleado Empleado a añadir
-     * @return Empleado añadido o null si no cumple los criterios
      */
     public void addEmpleado(Empleado empleado) {
         if (checkValues(empleado)) {
@@ -59,6 +58,12 @@ public class EmpleadoService {
         }
     }
 
+    /**
+     * Envía un correo electrónico a el nuevo empleado con su contraseña de acceso
+     * @param destinatario destinatario del correo electrónico
+     * @param asunto asunto del correo
+     * @param cuerpo cuerpo del correo
+     */
     private void enviarCorreo(String destinatario, String asunto, String cuerpo) {
         //La dirección de correo de envío
         String remitente = "TFGUO266047@gmail.com";
@@ -153,11 +158,13 @@ public class EmpleadoService {
      */
     public Empleado findByUsernamePassword(String username, String password) {
         Empleado e= empleadoRepository.findByUsername(username);
-        if(e.getPassword().equals(password))
-            return e;
-        else {
-            if (bCryptPasswordEncoder.matches(password, e.getPassword())) {
+        if(e!=null) {
+            if (e.getPassword().equals(password))
                 return e;
+            else {
+                if (bCryptPasswordEncoder.matches(password, e.getPassword())) {
+                    return e;
+                }
             }
         }
         return null;

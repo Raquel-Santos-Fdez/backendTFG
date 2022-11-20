@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Route_stop {
+public class Ruta_estacion {
 
     @Id
     @GeneratedValue
@@ -20,11 +20,11 @@ public class Route_stop {
 
     private int orderParada;
 
-    public Route_stop() {
+    public Ruta_estacion() {
 
     }
 
-    public Route_stop(int orderParada, Estacion estacion, Ruta ruta ) {
+    public Ruta_estacion(int orderParada, Estacion estacion, Ruta ruta ) {
         super();
         this.estacion = estacion;
         this.ruta = ruta;

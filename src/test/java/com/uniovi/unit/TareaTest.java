@@ -52,7 +52,8 @@ public class TareaTest {
 
     @Test
     public void pr01findTareaByIdTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -82,7 +83,8 @@ public class TareaTest {
 
     @Test
     public void pr03eliminarTareaTest() {
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,7 +120,8 @@ public class TareaTest {
     @Test
     public void pr05getTareasTest() {
 
-        Empleado empleado = new Empleado();
+        Empleado empleado = new Empleado("empleado10", "Empleado10", "Prueba", "empleado10@gmail.com", "77777777X","Password10" , Empleado.Rol.MAQUINISTA,100);
+
         empleadoService.addEmpleado(empleado);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
